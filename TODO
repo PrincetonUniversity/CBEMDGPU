@@ -1,0 +1,19 @@
+NVT still seems buggy
+Figure out if brute force rebuilding of cell lists is better than linked list maintenance
+benchmark OMP (reductions?)
+	don't really see a speed up for some reason
+	PROFILE (-gp)
+
+test if rebuld is actually faster (rs = 0)
+maintain "real" positions for MSD calc (gr done automatically with vmd through snapshots)
+add googletests
+Add LJ potential
+
+
+GPU
+1. offload integration
+2. then try offloading force calc (can use CPU cell list to build verlet lists for GPU)
+
+Notes:
+pbcDist2 much faster than pbcDist
+cell lists much better than brute force for > 1000 atoms
