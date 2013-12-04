@@ -1,5 +1,5 @@
 /*!
- * Integration (velocity) verlet step
+ * Integration
  * \author Nathan A. Mahynski
  * \date 11/19/13
  */
@@ -12,82 +12,84 @@
 #include <omp.h>
 
 /*!
- * Update the positions and velocities using velocity verlet integration.
- * This uses the accelerations stored on each atom.
+ * Calculate the pairwise forces in a system.  This also calculates the potential energy of a system.
+ * The kinetic energy is calculated during the verlet integration.
  *
- * \param [in] sys System definition
- */ 
-void integrator::verletStep_ (systemDefinition &sys) {
-	static int start = 1;
-	if (start) {
-		try {
-			lastAccelerations_.resize(sys.numAtoms());
-		} catch (std::exception &e) {
-			std::cerr << e.what() << std::endl;
-			throw customException("Failed to initialize integrator due to memory constraints");
-			return;
-		}
-		// calculate the forces initially (sets Up)
-		calcForce_ (sys);
-		
-		// also get initial T
-		float Uk = 0.0, tmp = 0.0;
-		#pragma omp parallel
-		{
-			#pragma omp for shared(sys.atoms) schedule(dynamic, OMP_CHUNK) nowait
-			for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
-				sys.atoms[i].vel.x += dt_*0.5*(lastAccelerations_[i].x+sys.atoms[i].acc.x);
-				sys.atoms[i].vel.y += dt_*0.5*(lastAccelerations_[i].y+sys.atoms[i].acc.y);
-				sys.atoms[i].vel.z += dt_*0.5*(lastAccelerations_[i].z+sys.atoms[i].acc.z);
-			}
-			#pragma omp reduction(+:Uk) schedule(dynamic, OMP_CHUNK) nowait
-			for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
-				Uk += (sys.atoms[i].vel.x*sys.atoms[i].vel.x)+(sys.atoms[i].vel.y*sys.atoms[i].vel.y)+(sys.atoms[i].vel.z*sys.atoms[i].vel.z);
-			}
-		}
-		Uk *= sys.mass();
-		tmp = Uk;
-		Uk *= 0.5;
-		tmp /= (3.0*(sys.numAtoms()-1.0));
-		sys.updateInstantTemp(tmp);
-		sys.setKinE(Uk);
-		start = 0;
-	}
+ * \param [in, out] sys System definition
+ */
+void integrator::calcForce (systemDefinition &sys) {
+	// For cache coeherency allocate new space for calculations
+	float3 empty;
+	empty.x = 0; empty.y = 0; empty.z = 0;
+	std::vector <float3> acc (sys.numAtoms(), empty);
+	const float rc = sys.rcut();
+    
+	// every time, check if the cell list needs to be updated first
+	cl_.checkUpdate(sys);
+    
+	// Find pairwise forces to get accelerations (cell lists)
+	// Get Up and Uk at this time
+	// Keep loop "linear" so OMP can handle this loop best
+	float Up = 0.0;
+	const float3 box = sys.box();
+	const float invMass = 1.0/sys.mass();
 	
-	// update positions based on current positions
-	#pragma omp parallel
+	// brute force for comparison with cell lists (make sure to comment out checkUpdate above too when doing speed calc)
+	/*for (int i = 0; i < sys.numAtoms(); ++i) {
+     for (int j = i+1; j < sys.numAtoms(); ++j) {
+     float3 pf;
+     Up += sys.potential (&sys.atoms[i].pos, &sys.atoms[j].pos, &pf, &box, &rc);
+     acc[i].x -= pf.x*invMass;
+     acc[i].y -= pf.y*invMass;
+     acc[i].z -= pf.z*invMass;
+     acc[j].x += pf.x*invMass;
+     acc[j].y += pf.y*invMass;
+     acc[j].z += pf.z*invMass;
+     }
+     }*/
+	
+    #pragma omp parallel
 	{
-		#pragma omp for shared(sys.atoms) schedule(dynamic, OMP_CHUNK) nowait
-		for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
-			sys.atoms[i].pos.x += dt_*(sys.atoms[i].vel.x+0.5*dt_*sys.atoms[i].acc.x);
-			sys.atoms[i].pos.y += dt_*(sys.atoms[i].vel.y+0.5*dt_*sys.atoms[i].acc.y);
-			sys.atoms[i].pos.z += dt_*(sys.atoms[i].vel.z+0.5*dt_*sys.atoms[i].acc.z);
-			lastAccelerations_[i] = sys.atoms[i].acc;
-		}	
-	}
-
-	// calculate new forces at new positions
-	calcForce_ (sys);
-
-	// update velocities and get Uk and kinetic temperature
-	float tmp = 0.0, Uk = 0.0;
-	#pragma omp parallel
-	{
-		#pragma omp for shared(sys.atoms) schedule(dynamic, OMP_CHUNK) nowait
-		for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
-			sys.atoms[i].vel.x += dt_*0.5*(lastAccelerations_[i].x+sys.atoms[i].acc.x);
-			sys.atoms[i].vel.y += dt_*0.5*(lastAccelerations_[i].y+sys.atoms[i].acc.y);
-			sys.atoms[i].vel.z += dt_*0.5*(lastAccelerations_[i].z+sys.atoms[i].acc.z);
+    #pragma omp for shared(acc, Up) schedule(dynamic, OMP_CHUNK) nowait
+		for (unsigned int cellID = 0; cellID < cl_.nCells.x*cl_.nCells.y*cl_.nCells.z; ++cellID) {
+			int atom1 = cl_.head(cellID);
+			while (atom1 >= 0) {
+				std::vector < int > neighbors = cl_.neighbors(cellID);
+				for (unsigned int index = 0; index < neighbors.size(); ++index) {
+					const int cellID2 = neighbors[index];
+					int atom2 = cl_.head(cellID2);
+					// only compute for i > j (prevents i == i and uses 3rd Law)
+					while (atom2 >= 0) {
+						if (atom1 > atom2) {
+							float3 pf;
+							Up += sys.potential (&sys.atoms[atom1].pos, &sys.atoms[atom2].pos, &pf, &box, &rc);
+							acc[atom1].x -= pf.x*invMass;
+							acc[atom1].y -= pf.y*invMass;
+							acc[atom1].z -= pf.z*invMass;
+							acc[atom2].x += pf.x*invMass;
+							acc[atom2].y += pf.y*invMass;
+							acc[atom2].z += pf.z*invMass;
+						}
+						atom2 = cl_.list(atom2);
+					}
+				}
+				atom1 = cl_.list(atom1);
+			}
 		}
-		#pragma omp reduction(+:Uk) schedule(dynamic, OMP_CHUNK) nowait
-		for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
-			Uk += (sys.atoms[i].vel.x*sys.atoms[i].vel.x)+(sys.atoms[i].vel.y*sys.atoms[i].vel.y)+(sys.atoms[i].vel.z*sys.atoms[i].vel.z);
-		}
 	}
-	Uk *= sys.mass();
-	tmp = Uk;
-	Uk *= 0.5;
-	tmp /= (3.0*(sys.numAtoms()-1.0));
-	sys.updateInstantTemp(tmp);
-	sys.setKinE(Uk);
+    
+	/*// apply thermal friction
+     #pragma omp parallel
+     {
+     #pragma omp for shared(acc, sys.atoms) schedule(dynamic, OMP_CHUNK) nowait
+     for (unsigned int atom1 = 0; atom1 < sys.numAtoms(); ++atom1) {
+     acc[atom1].x -= gamma_*sys.atoms[atom1].vel.x;
+     acc[atom1].y -= gamma_*sys.atoms[atom1].vel.y;
+     acc[atom1].z -= gamma_*sys.atoms[atom1].vel.z;
+     sys.atoms[atom1].acc = acc[atom1];
+     }
+     }*/
+    
+    // set Up
+    sys.setPotE(Up);
 }

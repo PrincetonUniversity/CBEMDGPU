@@ -9,6 +9,8 @@ maintain "real" positions for MSD calc (gr done automatically with vmd through s
 add googletests
 Add LJ potential
 
+integrator verletStep is for NVE only now, add a class for this
+change “start” to be local in each class for integrators
 
 GPU
 1. offload integration

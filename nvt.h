@@ -11,13 +11,12 @@
 #include "integrator.h"
 
 class nvt_NH : public integrator {
-	public:
-		nvt_NH (const float Q);
-		~nvt_NH () {}
-		void step (systemDefinition &sys);
-	private:
-		void calcForce_ (systemDefinition &sys);
-		float Q_, gamma_;
+public:
+    nvt_NH (const float Q);
+    ~nvt_NH () {}
+    void step (systemDefinition &sys);
+private:
+    float Q_, gamma_;
 };
 
 #endif
