@@ -30,7 +30,7 @@ int main (int argc, char* argv[]) {
 	nvt_NH integrate (1000.0);
 	integrate.setTimestep(0.005);
 
-	const int nSteps = 1e6;
+	const int nSteps = 1000000;
 	const int report = 10; //nSteps/1000;
 	for (unsigned int long step = 0; step < nSteps; ++step) {
 		integrate.step(a);
