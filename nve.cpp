@@ -36,7 +36,7 @@ void nve::step (systemDefinition &sys) {
 		// also get initial T
         #pragma omp parallel
 		{
-            #pragma omp for shared(sys.atoms) schedule(dynamic, OMP_CHUNK) nowait
+            #pragma omp for shared(sys.atoms) schedule(dynamic, OMP_CHUNK) 
 			for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
 				sys.atoms[i].vel.x += dt_*0.5*(lastAccelerations_[i].x+sys.atoms[i].acc.x);
 				sys.atoms[i].vel.y += dt_*0.5*(lastAccelerations_[i].y+sys.atoms[i].acc.y);
@@ -47,7 +47,7 @@ void nve::step (systemDefinition &sys) {
         float tmp = 0.0, Uk = 0.0;
         #pragma omp parallel
 		{
-            #pragma omp reduction(+:Uk) schedule(dynamic, OMP_CHUNK) nowait
+            #pragma omp reduction(+:Uk) schedule(dynamic, OMP_CHUNK) 
 			for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
 				Uk += (sys.atoms[i].vel.x*sys.atoms[i].vel.x)+(sys.atoms[i].vel.y*sys.atoms[i].vel.y)+(sys.atoms[i].vel.z*sys.atoms[i].vel.z);
 			}
@@ -64,7 +64,7 @@ void nve::step (systemDefinition &sys) {
 	// update positions based on current positions
     #pragma omp parallel
 	{
-        #pragma omp for shared(sys.atoms) schedule(dynamic, OMP_CHUNK) nowait
+        #pragma omp for shared(sys.atoms) schedule(dynamic, OMP_CHUNK) 
 		for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
 			sys.atoms[i].pos.x += dt_*(sys.atoms[i].vel.x+0.5*dt_*sys.atoms[i].acc.x);
 			sys.atoms[i].pos.y += dt_*(sys.atoms[i].vel.y+0.5*dt_*sys.atoms[i].acc.y);
@@ -79,7 +79,7 @@ void nve::step (systemDefinition &sys) {
 	// update velocities and get Uk and kinetic temperature
     #pragma omp parallel
 	{
-        #pragma omp for shared(sys.atoms) schedule(dynamic, OMP_CHUNK) nowait
+        #pragma omp for shared(sys.atoms) schedule(dynamic, OMP_CHUNK) 
 		for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
 			sys.atoms[i].vel.x += dt_*0.5*(lastAccelerations_[i].x+sys.atoms[i].acc.x);
 			sys.atoms[i].vel.y += dt_*0.5*(lastAccelerations_[i].y+sys.atoms[i].acc.y);
@@ -91,7 +91,7 @@ void nve::step (systemDefinition &sys) {
     float tmp = 0.0, Uk = 0.0;
     #pragma omp parallel
 	{
-        #pragma omp reduction(+:Uk) schedule(dynamic, OMP_CHUNK) nowait
+        #pragma omp reduction(+:Uk) schedule(dynamic, OMP_CHUNK) 
 		for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
 			Uk += (sys.atoms[i].vel.x*sys.atoms[i].vel.x)+(sys.atoms[i].vel.y*sys.atoms[i].vel.y)+(sys.atoms[i].vel.z*sys.atoms[i].vel.z);
 		}

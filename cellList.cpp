@@ -159,7 +159,7 @@ void cellList_cpu::checkUpdate (const systemDefinition &sys) {
 		float3 dummy;
 		#pragma omp parallel
 		{
-			#pragma omp for shared (drMax2_, drMax1_) schedule(dynamic, OMP_CHUNK) nowait 
+			#pragma omp for shared (drMax2_, drMax1_) schedule(dynamic, OMP_CHUNK)  
 			for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
 				const float dr2 = pbcDist2 (sys.atoms[i].pos, posAtLastBuild_[i], dummy, sys.box());
 				if (dr2 > drMax1_*drMax1_) {
@@ -187,7 +187,7 @@ void cellList_cpu::checkUpdate (const systemDefinition &sys) {
 		}
 		#pragma omp parallel
 		{
-			#pragma omp for shared(list_, head_, posAtLastBuild_) schedule(dynamic, OMP_CHUNK) nowait
+			#pragma omp for shared(list_, head_, posAtLastBuild_) schedule(dynamic, OMP_CHUNK) 
 			for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
 				const int icell = cell(sys.atoms[i].pos);
 				list_[i] = head_[icell];

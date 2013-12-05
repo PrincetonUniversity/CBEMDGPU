@@ -15,8 +15,9 @@ public:
     nvt_NH (const float Q);
     ~nvt_NH () {}
     void step (systemDefinition &sys);
+    void step2 (systemDefinition &sys);
 private:
-    float Q_, gamma_;
+    float Q_, gamma_, tau2_, gammadot_, gammadd_;
 };
 
 #endif

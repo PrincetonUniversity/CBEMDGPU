@@ -50,7 +50,7 @@ void integrator::calcForce (systemDefinition &sys) {
 	
     #pragma omp parallel
 	{
-    #pragma omp for shared(acc, Up) schedule(dynamic, OMP_CHUNK) nowait
+    #pragma omp for shared(acc, Up) schedule(dynamic, OMP_CHUNK) 
 		for (unsigned int cellID = 0; cellID < cl_.nCells.x*cl_.nCells.y*cl_.nCells.z; ++cellID) {
 			int atom1 = cl_.head(cellID);
 			while (atom1 >= 0) {
@@ -81,7 +81,7 @@ void integrator::calcForce (systemDefinition &sys) {
 	/*// apply thermal friction
      #pragma omp parallel
      {
-     #pragma omp for shared(acc, sys.atoms) schedule(dynamic, OMP_CHUNK) nowait
+     #pragma omp for shared(acc, sys.atoms) schedule(dynamic, OMP_CHUNK) 
      for (unsigned int atom1 = 0; atom1 < sys.numAtoms(); ++atom1) {
      acc[atom1].x -= gamma_*sys.atoms[atom1].vel.x;
      acc[atom1].y -= gamma_*sys.atoms[atom1].vel.y;
