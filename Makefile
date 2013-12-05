@@ -1,5 +1,5 @@
 CXX = g++
-CFLAGS = -O2 
+CFLAGS = -O2 -pedantic  
 Default: MD
 OMP = cellList.o integrator.o main.o nvt.o potential.o system.o utils.o
 
