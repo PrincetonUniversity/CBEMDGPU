@@ -77,59 +77,55 @@ void systemDefinition::initRandom (const int N, const int rngSeed) {
 void systemDefinition::initThermal (const int N, const float Tset, const int rngSeed) {
     float3 totMomentum;
     totMomentum.x = 0; totMomentum.y = 0; totMomentum.z = 0;
-    
-    if (N < 1) {
-        throw customException ("N must be > 0");
-        return;
-    }
-	
-    srand(rngSeed);
-	atoms.resize(N);
 
-	// maxwell boltzmann distribution has mean 0 stdev kT/m in each dimension
-	typedef std::tr1::linear_congruential<int, 16807, 0, (int)((1U << 31) -1 ) > Myceng;
-	Myceng eng;
-	float sig = sqrt(Tset/mass_);
-	std::tr1::normal_distribution<float> distribution(0.0,sig);
-	float rannum = 0.0;
-	float tmpT = 0.0;
-    
-	for (unsigned int i = 0; i < N; ++i) {
-	    atoms[i].pos.x = (RNG)*box_.x;
-	    atoms[i].pos.y = (RNG)*box_.y;
-	    atoms[i].pos.z = (RNG)*box_.z;
-	    atoms[i].acc.x = 0;
-	    atoms[i].acc.y = 0;
-	    atoms[i].acc.z = 0;
-	    if (i < N-1) {
-            atoms[i].vel.x = distribution(eng);
-            atoms[i].vel.y = distribution(eng);
-            atoms[i].vel.z = distribution(eng);
-            totMomentum.x += atoms[i].vel.x;
-            totMomentum.y += atoms[i].vel.y;
-            totMomentum.z += atoms[i].vel.z;
-        } else {
-            atoms[i].vel.x = -totMomentum.x;
-            atoms[i].vel.y = -totMomentum.y;
-            atoms[i].vel.z = -totMomentum.z;
-        }
-	    tmpT += (atoms[i].vel.x*atoms[i].vel.x + atoms[i].vel.y*atoms[i].vel.y + atoms[i].vel.z*atoms[i].vel.z);
-	}
-    
-    // do velocity rescaling to get exactly the right T
-	tmpT *= mass_/(3.0*(N-1));
-    tmpT /= Tset;
-    
-    float dummy = 0;
-    for (unsigned int i = 0; i < N; i ++ ) {
-        atoms[i].vel.x = atoms[i].vel.x*sqrt(factor);
-        atoms[i].vel.y = atoms[i].vel.y*sqrt(factor);
-        atoms[i].vel.z = atoms[i].vel.z*sqrt(factor);
-        dummy += (atoms[i].vel.x*atoms[i].vel.x + atoms[i].vel.y*atoms[i].vel.y + atoms[i].vel.z*atoms[i].vel.z);
+    if (N < 1) {
+	throw customException ("N must be > 0");
+	return;
     }
-	
-    std::cout << dummy*mass_/(3.0*(N-1)) << std::endl;
-    exit(-1);
+
+    srand(rngSeed);
+    atoms.resize(N);
+
+    // maxwell boltzmann distribution has mean 0 stdev kT/m in each dimension
+    typedef std::tr1::linear_congruential<int, 16807, 0, (int)((1U << 31) -1 ) > Myceng;
+    Myceng eng;
+    float sig = sqrt(Tset/mass_);
+    std::tr1::normal_distribution<float> distribution(0.0,sig);
+    float rannum = 0.0;
+    float tmpT = 0.0;
+
+    for (unsigned int i = 0; i < N; ++i) {
+	atoms[i].pos.x = (RNG)*box_.x;
+	atoms[i].pos.y = (RNG)*box_.y;
+	atoms[i].pos.z = (RNG)*box_.z;
+	atoms[i].acc.x = 0;
+	atoms[i].acc.y = 0;
+	atoms[i].acc.z = 0;
+	if (i < N-1) {
+	    atoms[i].vel.x = distribution(eng);
+	    atoms[i].vel.y = distribution(eng);
+	    atoms[i].vel.z = distribution(eng);
+	    totMomentum.x += atoms[i].vel.x;
+	    totMomentum.y += atoms[i].vel.y;
+	    totMomentum.z += atoms[i].vel.z;
+	} else {
+	    atoms[i].vel.x = -totMomentum.x;
+	    atoms[i].vel.y = -totMomentum.y;
+	    atoms[i].vel.z = -totMomentum.z;
+	}
+	tmpT += (atoms[i].vel.x*atoms[i].vel.x + atoms[i].vel.y*atoms[i].vel.y + atoms[i].vel.z*atoms[i].vel.z);
+    }
+
+    // do velocity rescaling to get exactly the right T
+    tmpT *= mass_/(3.0*(N-1));
+    tmpT /= Tset;
+    tmpT = 1.0/tmpT;
+
+    for (unsigned int i = 0; i < N; i ++ ) {
+	atoms[i].vel.x = atoms[i].vel.x*sqrt(tmpT);
+	atoms[i].vel.y = atoms[i].vel.y*sqrt(tmpT);
+	atoms[i].vel.z = atoms[i].vel.z*sqrt(tmpT);
+    }
 }
 
 /*!

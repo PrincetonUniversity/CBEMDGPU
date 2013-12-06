@@ -15,7 +15,7 @@
 int main (int argc, char* argv[]) {
 	omp_set_num_threads(atoi(argv[1]));		
 	const int rngSeed = 3145;
-	float Temp = 0.50; // this should be input to main
+	float Temp = 0.5; // this should be input to main
 	float timestep = 0.005; // this should be input to main
 	float tau2 = timestep*timestep;
 	systemDefinition a;
@@ -24,7 +24,7 @@ int main (int argc, char* argv[]) {
 	a.setMass(1.0);
 	a.setRskin(1.0);
 	a.setRcut(1.0);
-	a.initThermal(500, Temp, rngSeed);
+	a.initThermal(50, 1.01*Temp, rngSeed);
 
 	pointFunction_t pp = pairUF;
 	a.setPotential(pp);
