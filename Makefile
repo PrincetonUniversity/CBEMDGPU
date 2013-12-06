@@ -1,5 +1,5 @@
 CXX = g++
-PATHTOBOOST = /scratch/pvfs2/gkhoury/boost_1_52_0/
+PATHTOBOOST = boost_1_52_0/
 CFLAGS = -O2 -pedantic -I $(PATHTOBOOST) 
 Default: MD
 OMP = cellList.o integrator.o main.o nvt.o potential.o system.o utils.o
