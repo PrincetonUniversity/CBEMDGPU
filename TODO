@@ -1,7 +1,7 @@
-NVT still seems buggy
+NVT still seems buggy (FIXED)
 check NVE working that it conserves energy- that means all the rest of the parts are working.
 
-nate bets that on the first loop setting the accel vel and position on the thermostat on first loop not doing very well
+nate bets that on the first loop setting the accel vel and position on the thermostat on first loop not doing very well (fixed due to velocity rescaling)
 Figure out if brute force rebuilding of cell lists is better than linked list maintenance
 benchmark OMP (reductions?)
 	don't really see a speed up for some reason
