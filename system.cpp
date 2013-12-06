@@ -74,23 +74,26 @@ void systemDefinition::initRandom (const int N, const int rngSeed) {
 * \param [in] N Number of atoms to create
 * \param [in] rngSeed Random number generator seed
 */
-void systemDefinition::initThermal (const int N, const int rngSeed) {
+void systemDefinition::initThermal (const int N, const float Tset, const int rngSeed) {
     float3 totMomentum;
     totMomentum.x = 0; totMomentum.y = 0; totMomentum.z = 0;
+    
     if (N < 1) {
-	throw customException ("N must be > 0");
-	return;}
-	srand(rngSeed);
+        throw customException ("N must be > 0");
+        return;
+    }
+	
+    srand(rngSeed);
 	atoms.resize(N);
 
-	// maxwell boltzmann distribution has mean 0 stdev kT/m in each
-	// dimension
+	// maxwell boltzmann distribution has mean 0 stdev kT/m in each dimension
 	typedef std::tr1::linear_congruential<int, 16807, 0, (int)((1U << 31) -1 ) > Myceng;
 	Myceng eng;
-	float sig = sqrt(targetT_/mass_);
+	float sig = sqrt(Tset/mass_);
 	std::tr1::normal_distribution<float> distribution(0.0,sig);
-	float rannum;
-	float Uk;
+	float rannum = 0.0;
+	float tmpT = 0.0;
+    
 	for (unsigned int i = 0; i < N; ++i) {
 	    atoms[i].pos.x = (RNG)*box_.x;
 	    atoms[i].pos.y = (RNG)*box_.y;
@@ -98,39 +101,35 @@ void systemDefinition::initThermal (const int N, const int rngSeed) {
 	    atoms[i].acc.x = 0;
 	    atoms[i].acc.y = 0;
 	    atoms[i].acc.z = 0;
-	    //if (i < N-1) {
-		atoms[i].vel.x = distribution(eng);
-		atoms[i].vel.y = distribution(eng);
-		atoms[i].vel.z = distribution(eng);	
-	    Uk+= mass_*(atoms[i].vel.x*atoms[i].vel.x + atoms[i].vel.y*atoms[i].vel.y + atoms[i].vel.z*atoms[i].vel.z)/(3.0*(numAtoms()-1.0));
-		//std::cout << atoms[i].vel.x << " " << atoms[i].vel.y << std::endl;
-		//totMomentum.x += atoms[i].vel.x;
-		//totMomentum.y += atoms[i].vel.y;
-		//totMomentum.z += atoms[i].vel.z;
-		//std::cout << totMomentum.x << std::endl;
-	    //}
-	    //else {
-		//std::cout << totMomentum.x << " " << totMomentum.y << " " << totMomentum.z << std::endl;
-	 	//atoms[i].vel.x = -totMomentum.x;
-		//atoms[i].vel.y = -totMomentum.y;
-		//atoms[i].vel.z = -totMomentum.z;
-	    //}
+	    if (i < N-1) {
+            atoms[i].vel.x = distribution(eng);
+            atoms[i].vel.y = distribution(eng);
+            atoms[i].vel.z = distribution(eng);
+            totMomentum.x += atoms[i].vel.x;
+            totMomentum.y += atoms[i].vel.y;
+            totMomentum.z += atoms[i].vel.z;
+        } else {
+            atoms[i].vel.x = -totMomentum.x;
+            atoms[i].vel.y = -totMomentum.y;
+            atoms[i].vel.z = -totMomentum.z;
+        }
+	    tmpT += (atoms[i].vel.x*atoms[i].vel.x + atoms[i].vel.y*atoms[i].vel.y + atoms[i].vel.z*atoms[i].vel.z);
 	}
-	std::cout << "KE  " << Uk << std::endl;
-	// do some velocity rescaling
-	//float factor = 0.0;
-	//float kinvel = 0.0;
-	//for (unsigned int i = 0; i < N; i++) {
-	//    kinvel += atoms[i].vel.x*atoms[i].vel.x + atoms[i].vel.y*atoms[i].vel.y + atoms[i].vel.z*atoms[i].vel.z;
-//	}
-//	kinvel *= mass_;
-//	kinvel /= (3.0*(numAtoms()-1.0));
-//	factor = kinvel/targetT_;
-//	for (unsigned int i = 0; i < N; i ++ ) {
-//	    atoms[i].vel.x = atoms[i].vel.x*sqrt(factor);
-//	    atoms[i].vel.y = atoms[i].vel.y*sqrt(factor);
-//	    atoms[i].vel.z = atoms[i].vel.z*sqrt(factor);
-//	}
+    
+    // do velocity rescaling to get exactly the right T
+	tmpT *= mass_/(3.0*(N-1));
+    tmpT /= Tset;
+    
+    float dummy = 0;
+    for (unsigned int i = 0; i < N; i ++ ) {
+        atoms[i].vel.x = atoms[i].vel.x*sqrt(factor);
+        atoms[i].vel.y = atoms[i].vel.y*sqrt(factor);
+        atoms[i].vel.z = atoms[i].vel.z*sqrt(factor);
+        dummy += (atoms[i].vel.x*atoms[i].vel.x + atoms[i].vel.y*atoms[i].vel.y + atoms[i].vel.z*atoms[i].vel.z);
+    }
+	
+    std::cout << dummy*mass_/(3.0*(N-1)) << std::endl;
+    exit(-1);
 }
 
 /*!

@@ -19,7 +19,7 @@ class systemDefinition {
 		systemDefinition () {mass_ = -1; instantT_ = 0; targetT_ = 0; snapFile_ = NULL; Uk_ = 0.0; Up_ = 0.0; rc_ = 0; rs_ = 0;}
 		~systemDefinition () {if (snapFile_ != NULL) fclose(snapFile_);}
 		void initRandom (const int N, const int rngSeed);
-		void initThermal (const int N, const int rngSeed);
+		void initThermal (const int N, const float Tset, const int rngSeed);
 		void updateInstantTemp (const float T) {instantT_ = T;}
 		void setTemp (const float T) {targetT_ = T;}
 		void setMass (const float m) {mass_ = m;}

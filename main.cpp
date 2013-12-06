@@ -24,12 +24,11 @@ int main (int argc, char* argv[]) {
 	a.setMass(1.0);
 	a.setRskin(1.0);
 	a.setRcut(1.0);
-	a.initThermal(500, rngSeed);
+	a.initThermal(500, Temp, rngSeed);
 
 	pointFunction_t pp = pairUF;
 	a.setPotential(pp);
-        const float Q = (3.0*(a.numAtoms()-1.0))*Temp*tau2;
-	nvt_NH integrate (10000.0);
+	nvt_NH integrate (1.0);
 	integrate.setTimestep(timestep);
 
 	const int nSteps = 1000000;
