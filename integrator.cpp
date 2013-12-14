@@ -48,9 +48,6 @@ void integrator::calcForce (systemDefinition &sys) {
      }
      }*/
 	
-    #pragma omp parallel
-	{
-    #pragma omp for shared(acc, Up) schedule(dynamic, OMP_CHUNK) 
 		for (unsigned int cellID = 0; cellID < cl_.nCells.x*cl_.nCells.y*cl_.nCells.z; ++cellID) {
 			int atom1 = cl_.head(cellID);
 			while (atom1 >= 0) {
@@ -76,7 +73,6 @@ void integrator::calcForce (systemDefinition &sys) {
 				atom1 = cl_.list(atom1);
 			}
 		}
-	}
     
 	/*// apply thermal friction
      #pragma omp parallel

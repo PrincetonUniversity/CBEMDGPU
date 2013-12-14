@@ -70,7 +70,7 @@ void nvt_NH::step (systemDefinition &sys) {
     // update positions based on current positions
 #pragma omp parallel
     {
-#pragma omp for shared(sys.atoms) schedule(dynamic, OMP_CHUNK) 
+#pragma omp for schedule(dynamic, OMP_CHUNK) 
 	for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
 	    sys.atoms[i].pos.x += dt_*(sys.atoms[i].vel.x+0.5*dt_*(sys.atoms[i].acc.x - gamma_*sys.atoms[i].vel.x));
 	    sys.atoms[i].pos.y += dt_*(sys.atoms[i].vel.y+0.5*dt_*(sys.atoms[i].acc.y - gamma_*sys.atoms[i].vel.y));
@@ -79,9 +79,9 @@ void nvt_NH::step (systemDefinition &sys) {
     }
 
     // take a "half step" with the velocity integration
-#pragma omp parallel
+#pragma omp parallel 
     {
-#pragma omp for shared(sys.atoms) schedule(dynamic, OMP_CHUNK) 
+#pragma omp for schedule(dynamic, OMP_CHUNK) 
 	for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
 	    sys.atoms[i].vel.x += 0.5*dt_*(sys.atoms[i].acc.x - gamma_*sys.atoms[i].vel.x);
 	    sys.atoms[i].vel.y += 0.5*dt_*(sys.atoms[i].acc.y - gamma_*sys.atoms[i].vel.y);
@@ -109,9 +109,9 @@ void nvt_NH::step (systemDefinition &sys) {
     calcForce (sys);
 
     // second "half step" with the velocity integration
-#pragma omp parallel
+#pragma omp parallel 
     {
-#pragma omp for shared(sys.atoms) schedule(dynamic, OMP_CHUNK) 
+#pragma omp for schedule(dynamic, OMP_CHUNK) 
 	for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
 	    sys.atoms[i].vel.x = (sys.atoms[i].vel.x + dt_*0.5*sys.atoms[i].acc.x)*2.0/(2.0+dt_*gamma_);
 	    sys.atoms[i].vel.y = (sys.atoms[i].vel.y + dt_*0.5*sys.atoms[i].acc.y)*2.0/(2.0+dt_*gamma_);
@@ -157,13 +157,9 @@ void nvt_NH::step2 (systemDefinition &sys) {
 	calcForce(sys);
 	
 	float tmp = 0.0, Uk = 0.0;
-#pragma omp parallel 
-	{
-#pragma omp reduction(+:Uk) schedule(dynamic, OMP_CHUNK)
 	    for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
 		Uk += (sys.atoms[i].vel.x*sys.atoms[i].vel.x)+(sys.atoms[i].vel.y*sys.atoms[i].vel.y)+(sys.atoms[i].vel.z*sys.atoms[i].vel.z);
 	    }
-	}
 	Uk *= sys.mass();
 	tmp = Uk;
 	Uk *= 0.5;
@@ -183,48 +179,31 @@ void nvt_NH::step2 (systemDefinition &sys) {
     // position step
     gamma_ += gammadot_*dt_;
     // (2) evolve particle velocities
-#pragma omp parallel
-    {
-#pragma omp for shared(sys.atoms) schedule(dynamic, OMP_CHUNK)
 	for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
 	    sys.atoms[i].vel.x = sys.atoms[i].vel.x*exp(-gammadot_*dt_*0.5) + 0.5*dt_*(sys.atoms[i].acc.x);
 	    sys.atoms[i].vel.y= sys.atoms[i].vel.y*exp(-gammadot_*dt_*0.5) + 0.5*dt_*(sys.atoms[i].acc.y);
 	    sys.atoms[i].vel.z = sys.atoms[i].vel.z*exp(-gammadot_*dt_*0.5) + 0.5*dt_*(sys.atoms[i].acc.z);
 	}
-    }
     // (3) evolve particle positions
-#pragma omp parallel
-    {
-#pragma omp for shared(sys.atoms) schedule(dynamic, OMP_CHUNK)
 	for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
 	    sys.atoms[i].pos.x += sys.atoms[i].vel.x*dt_;
 	    sys.atoms[i].pos.y += sys.atoms[i].vel.y*dt_;
 	    sys.atoms[i].pos.z += sys.atoms[i].vel.z*dt_;
 	}
-    }
     // (4) calc force
     calcForce(sys);
     // (5) evolve particle velocities
-#pragma omp parallel
-    {
-#pragma omp for shared(sys.atoms) schedule(dynamic, OMP_CHUNK)
 	for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
 	    sys.atoms[i].vel.x = (sys.atoms[i].vel.x+sys.atoms[i].acc.x*dt_*0.5)*exp(-gammadot_*dt_*0.5);
 	    sys.atoms[i].vel.y = (sys.atoms[i].vel.y+sys.atoms[i].acc.y*dt_*0.5)*exp(-gammadot_*dt_*0.5);
 	    sys.atoms[i].vel.z = (sys.atoms[i].vel.z+sys.atoms[i].acc.z*dt_*0.5)*exp(-gammadot_*dt_*0.5);
 	}
-    }
-
 
     // get temperature and kinetic energy
     float tmp = 0.0, Uk = 0.0;
-#pragma omp parallel
-    {
-#pragma omp reduction(+:Uk) schedule(dynamic, OMP_CHUNK)
 	for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
 	    Uk += (sys.atoms[i].vel.x*sys.atoms[i].vel.x)+(sys.atoms[i].vel.y*sys.atoms[i].vel.y)+(sys.atoms[i].vel.z*sys.atoms[i].vel.z);
 	}
-    }
     Uk *= sys.mass();
     tmp = Uk;
     Uk *= 0.5;

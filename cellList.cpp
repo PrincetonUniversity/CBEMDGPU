@@ -154,12 +154,9 @@ void cellList_cpu::checkUpdate (const systemDefinition &sys) {
 		build = 1;
 	} else {
 		// check max displacements
-		drMax1_ = 0.0;
-		drMax2_ = 0.0;
+		float drMax1_ = 0.0;
+		float drMax2_ = 0.0;
 		float3 dummy;
-		#pragma omp parallel
-		{
-			#pragma omp for shared (drMax2_, drMax1_) schedule(dynamic, OMP_CHUNK)  
 			for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
 				const float dr2 = pbcDist2 (sys.atoms[i].pos, posAtLastBuild_[i], dummy, sys.box());
 				if (dr2 > drMax1_*drMax1_) {
@@ -169,7 +166,6 @@ void cellList_cpu::checkUpdate (const systemDefinition &sys) {
 					drMax2_ = sqrt(dr2);
 				}
 			}
-		}
 		if (drMax1_+drMax2_ > rs_) {
 			build = 1;
 		} else {
@@ -185,16 +181,12 @@ void cellList_cpu::checkUpdate (const systemDefinition &sys) {
 		for (unsigned int i = 0; i < head_.size(); ++i) {
 			head_[i] = -1;
 		}
-		#pragma omp parallel
-		{
-			#pragma omp for shared(list_, head_, posAtLastBuild_) schedule(dynamic, OMP_CHUNK) 
 			for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
 				const int icell = cell(sys.atoms[i].pos);
 				list_[i] = head_[icell];
 				head_[icell] = i;
 				posAtLastBuild_[i] = sys.atoms[i].pos;
 			}
-		}
 	} 
 
 	return;

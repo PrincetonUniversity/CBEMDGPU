@@ -2,6 +2,9 @@ NVT still seems buggy (FIXED)
 check NVE working that it conserves energy- that means all the rest of the parts are working.
 
 nate bets that on the first loop setting the accel vel and position on the thermostat on first loop not doing very well (fixed due to velocity rescaling)
+OPENMP wasn't working 
+specifically, when use more than one thread the thermostat doesn't properly work
+(fixed, we weren't compiling each function's cpp file with the link to fopenmp which meant compiling that was totally ignoring the pragma statements!
 Figure out if brute force rebuilding of cell lists is better than linked list maintenance
 benchmark OMP (reductions?)
 	don't really see a speed up for some reason
