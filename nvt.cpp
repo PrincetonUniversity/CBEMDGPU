@@ -19,8 +19,8 @@
  * \param [in] Q Thermal mass for thermostat
  */ 
 nvt_NH::nvt_NH (const float Q) {
-	Q_ = Q; 
-	gamma_ = 0.0; 
+    Q_ = Q; 
+    gamma_ = 0.0; 
 }
 
 /*!
@@ -155,11 +155,16 @@ void nvt_NH::step2 (systemDefinition &sys) {
 
 	// get initial temperature
 	calcForce(sys);
-	
-	float tmp = 0.0, Uk = 0.0;
-	    for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
-		Uk += (sys.atoms[i].vel.x*sys.atoms[i].vel.x)+(sys.atoms[i].vel.y*sys.atoms[i].vel.y)+(sys.atoms[i].vel.z*sys.atoms[i].vel.z);
-	    }
+	float tmp=0.0, Uk = 0.0;
+	unsigned int i = 0;
+#pragma omp parallel for \
+	private(i) \
+	schedule(static, OMP_CHUNK) \
+	reduction(+:Uk)
+
+	for (i = 0; i < sys.numAtoms(); ++i) {
+	    Uk += (sys.atoms[i].vel.x*sys.atoms[i].vel.x)+(sys.atoms[i].vel.y*sys.atoms[i].vel.y)+(sys.atoms[i].vel.z*sys.atoms[i].vel.z);
+	}
 	Uk *= sys.mass();
 	tmp = Uk;
 	Uk *= 0.5;
@@ -179,31 +184,36 @@ void nvt_NH::step2 (systemDefinition &sys) {
     // position step
     gamma_ += gammadot_*dt_;
     // (2) evolve particle velocities
-	for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
-	    sys.atoms[i].vel.x = sys.atoms[i].vel.x*exp(-gammadot_*dt_*0.5) + 0.5*dt_*(sys.atoms[i].acc.x);
-	    sys.atoms[i].vel.y= sys.atoms[i].vel.y*exp(-gammadot_*dt_*0.5) + 0.5*dt_*(sys.atoms[i].acc.y);
-	    sys.atoms[i].vel.z = sys.atoms[i].vel.z*exp(-gammadot_*dt_*0.5) + 0.5*dt_*(sys.atoms[i].acc.z);
-	}
+    for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
+	sys.atoms[i].vel.x = sys.atoms[i].vel.x*exp(-gammadot_*dt_*0.5) + 0.5*dt_*(sys.atoms[i].acc.x);
+	sys.atoms[i].vel.y= sys.atoms[i].vel.y*exp(-gammadot_*dt_*0.5) + 0.5*dt_*(sys.atoms[i].acc.y);
+	sys.atoms[i].vel.z = sys.atoms[i].vel.z*exp(-gammadot_*dt_*0.5) + 0.5*dt_*(sys.atoms[i].acc.z);
+    }
     // (3) evolve particle positions
-	for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
-	    sys.atoms[i].pos.x += sys.atoms[i].vel.x*dt_;
-	    sys.atoms[i].pos.y += sys.atoms[i].vel.y*dt_;
-	    sys.atoms[i].pos.z += sys.atoms[i].vel.z*dt_;
-	}
+    for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
+	sys.atoms[i].pos.x += sys.atoms[i].vel.x*dt_;
+	sys.atoms[i].pos.y += sys.atoms[i].vel.y*dt_;
+	sys.atoms[i].pos.z += sys.atoms[i].vel.z*dt_;
+    }
     // (4) calc force
     calcForce(sys);
     // (5) evolve particle velocities
-	for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
-	    sys.atoms[i].vel.x = (sys.atoms[i].vel.x+sys.atoms[i].acc.x*dt_*0.5)*exp(-gammadot_*dt_*0.5);
-	    sys.atoms[i].vel.y = (sys.atoms[i].vel.y+sys.atoms[i].acc.y*dt_*0.5)*exp(-gammadot_*dt_*0.5);
-	    sys.atoms[i].vel.z = (sys.atoms[i].vel.z+sys.atoms[i].acc.z*dt_*0.5)*exp(-gammadot_*dt_*0.5);
-	}
-
+    for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
+	sys.atoms[i].vel.x = (sys.atoms[i].vel.x+sys.atoms[i].acc.x*dt_*0.5)*exp(-gammadot_*dt_*0.5);
+	sys.atoms[i].vel.y = (sys.atoms[i].vel.y+sys.atoms[i].acc.y*dt_*0.5)*exp(-gammadot_*dt_*0.5);
+	sys.atoms[i].vel.z = (sys.atoms[i].vel.z+sys.atoms[i].acc.z*dt_*0.5)*exp(-gammadot_*dt_*0.5);
+    }
+    float Uk = 0.0;
+    unsigned int i = 0;
+    float tmp = 0.0;
+#pragma omp parallel for \
+    private(i) \
+    schedule(static, OMP_CHUNK) \
+    reduction(+:Uk)
     // get temperature and kinetic energy
-    float tmp = 0.0, Uk = 0.0;
-	for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
-	    Uk += (sys.atoms[i].vel.x*sys.atoms[i].vel.x)+(sys.atoms[i].vel.y*sys.atoms[i].vel.y)+(sys.atoms[i].vel.z*sys.atoms[i].vel.z);
-	}
+    for (i = 0; i < sys.numAtoms(); ++i) {
+	Uk += (sys.atoms[i].vel.x*sys.atoms[i].vel.x)+(sys.atoms[i].vel.y*sys.atoms[i].vel.y)+(sys.atoms[i].vel.z*sys.atoms[i].vel.z);
+    }
     Uk *= sys.mass();
     tmp = Uk;
     Uk *= 0.5;
