@@ -21,93 +21,93 @@
  * \param [in] rs Skin Radius
  */
 cellList_cpu::cellList_cpu (const float3 &box, const float rc, const float rs) {
-	if (rc < 0.0) {
-		throw customException("Cutoff radius must be > 0");
-		return;
-	}
-	rc_ = rc;
-	if (rs < 0.0) {
-		throw customException("Skin radius must be > 0");
-		return;
-	}
-	rs_ = rs;
+    if (rc < 0.0) {
+	throw customException("Cutoff radius must be > 0");
+	return;
+    }
+    rc_ = rc;
+    if (rs < 0.0) {
+	throw customException("Skin radius must be > 0");
+	return;
+    }
+    rs_ = rs;
 
-	box_ = box;
+    box_ = box;
 
-	lcell_.x = 1.01*(rc+rs);
-	nCells.x = (int) floor (box.x/lcell_.x);
-	lcell_.x = (box.x/nCells.x);
+    lcell_.x = 1.01*(rc+rs);
+    nCells.x = (int) floor (box.x/lcell_.x);
+    lcell_.x = (box.x/nCells.x);
 
-	lcell_.y = 1.01*(rc+rs);
-	nCells.y = (int) floor (box.y/lcell_.y);
-	lcell_.y = (box.y/nCells.y);
+    lcell_.y = 1.01*(rc+rs);
+    nCells.y = (int) floor (box.y/lcell_.y);
+    lcell_.y = (box.y/nCells.y);
 
-	lcell_.z = 1.01*(rc+rs);
-	nCells.z = (int) floor (box.z/lcell_.z);
-	lcell_.z = (box.z/nCells.z);
+    lcell_.z = 1.01*(rc+rs);
+    nCells.z = (int) floor (box.z/lcell_.z);
+    lcell_.z = (box.z/nCells.z);
 
-	if (lcell_.x <= (rc+rs) || lcell_.y <= (rc+rs) || lcell_.z < (rc+rs)) {
-		throw customException("Cell width must exceed sum of cutoff and skin radius");
-		return;
-	}
+    if (lcell_.x <= (rc+rs) || lcell_.y <= (rc+rs) || lcell_.z < (rc+rs)) {
+	throw customException("Cell width must exceed sum of cutoff and skin radius");
+	return;
+    }
 
-	if (lcell_.x < 1) {
-		throw customException ("Box dimension x too small relative to skin and cutoff radius to use cell lists");
-		return;
-	}
-	if (lcell_.y < 1) {
-		throw customException ("Box dimension y too small relative to skin and cutoff radius to use cell lists");
-		return;
-	}
-	if (lcell_.z < 1) {
-		throw customException ("Box dimension z too small relative to skin and cutoff radius to use cell lists");
-		return;
-	}
-	
-	if (nCells.x < 3 || nCells.y < 3 || nCells.z < 3) {
-		throw customException("Must be able to have at least 3 cells in each direction, change box size, skin, or cutoff radius");
-		return;
-	}
+    if (lcell_.x < 1) {
+	throw customException ("Box dimension x too small relative to skin and cutoff radius to use cell lists");
+	return;
+    }
+    if (lcell_.y < 1) {
+	throw customException ("Box dimension y too small relative to skin and cutoff radius to use cell lists");
+	return;
+    }
+    if (lcell_.z < 1) {
+	throw customException ("Box dimension z too small relative to skin and cutoff radius to use cell lists");
+	return;
+    }
 
-	try {
-		head_.resize(nCells.x*nCells.y*nCells.z, -1);
-	} catch (std::exception &e) {
-		std::cerr << e.what() << std::endl;
-		throw customException ("Unable to initialize head for cell list");
-		return;
-	}
+    if (nCells.x < 3 || nCells.y < 3 || nCells.z < 3) {
+	throw customException("Must be able to have at least 3 cells in each direction, change box size, skin, or cutoff radius");
+	return;
+    }
 
-	// build neighbors for each cell
+    try {
+	head_.resize(nCells.x*nCells.y*nCells.z, -1);
+    } catch (std::exception &e) {
+	std::cerr << e.what() << std::endl;
+	throw customException ("Unable to initialize head for cell list");
+	return;
+    }
+    int chunk = 1;
+    unsigned int cellID = 0;
+    // build neighbors for each cell
 	neighbor_.resize(nCells.x*nCells.y*nCells.z);
-	for (unsigned int cellID = 0; cellID < nCells.x*nCells.y*nCells.z; ++cellID) {
-		const int zref = floor(cellID/(nCells.x*nCells.y));
-		const int yref = floor((cellID - zref*(nCells.x*nCells.y))/nCells.y);
-		const int xref = floor(cellID - zref*(nCells.x*nCells.y) - yref*nCells.x);
-		for (int dx = -1; dx <= 1; ++dx) {
-			int xcell = xref + dx;
-			if (xcell >= nCells.x) xcell = 0;
-			if (xcell < 0) xcell = nCells.x-1;
-			for (int dy = -1; dy <= 1; ++dy) {
-				int ycell = yref + dy;
-				if (ycell >= nCells.y) ycell = 0;
-				if (ycell < 0) ycell = nCells.y-1;
-				for (int dz = -1; dz <= 1; ++dz) {
-					int zcell = zref + dz;
-					if (zcell >= nCells.z) zcell = 0;
-					if (zcell < 0) zcell = nCells.z-1;
-					const int cellID2 = xcell + ycell*nCells.x + zcell*(nCells.x*nCells.y);
-					neighbor_[cellID].push_back(cellID2);
-				}
-			}
+	for (cellID = 0; cellID < nCells.x*nCells.y*nCells.z; ++cellID) {
+	    const int zref = floor(cellID/(nCells.x*nCells.y));
+	    const int yref = floor((cellID - zref*(nCells.x*nCells.y))/nCells.y);
+	    const int xref = floor(cellID - zref*(nCells.x*nCells.y) - yref*nCells.x);
+	    for (int dx = -1; dx <= 1; ++dx) {
+		int xcell = xref + dx;
+		if (xcell >= nCells.x) xcell = 0;
+		if (xcell < 0) xcell = nCells.x-1;
+		for (int dy = -1; dy <= 1; ++dy) {
+		    int ycell = yref + dy;
+		    if (ycell >= nCells.y) ycell = 0;
+		    if (ycell < 0) ycell = nCells.y-1;
+		    for (int dz = -1; dz <= 1; ++dz) {
+			int zcell = zref + dz;
+			if (zcell >= nCells.z) zcell = 0;
+			if (zcell < 0) zcell = nCells.z-1;
+			const int cellID2 = xcell + ycell*nCells.x + zcell*(nCells.x*nCells.y);
+			neighbor_[cellID].push_back(cellID2);
+		    }
 		}
+	    }
 	}
-
-	for (unsigned int cellID = 0; cellID < nCells.x*nCells.y*nCells.z; ++cellID) {
-		if (neighbor_[cellID].size() != 27) {
-			throw customException ("Cell list initial build failed to find 27 neighbors (including self)");
-			return;
-		}
+    for (unsigned int cellID = 0; cellID < nCells.x*nCells.y*nCells.z; ++cellID) {
+	if (neighbor_[cellID].size() != 27) {
+	    throw customException ("Cell list initial build failed to find 27 neighbors (including self)");
+	    return;
 	}
+    }
 }
 
 /*!
@@ -118,11 +118,11 @@ cellList_cpu::cellList_cpu (const float3 &box, const float rc, const float rs) {
  * \return cell
  */ 
 int cellList_cpu::cell (const float3 &pos) {
-	float3 inBox = pbc(pos, box_);
-	const int x = (int) floor(inBox.x/lcell_.x);
-	const int y = (int) floor(inBox.y/lcell_.y);
-	const int z = (int) floor(inBox.z/lcell_.z);
-	return x + y*nCells.x + z*nCells.x*nCells.y;
+    float3 inBox = pbc(pos, box_);
+    const int x = (int) floor(inBox.x/lcell_.x);
+    const int y = (int) floor(inBox.y/lcell_.y);
+    const int z = (int) floor(inBox.z/lcell_.z);
+    return x + y*nCells.x + z*nCells.x*nCells.y;
 }
 
 /*!
@@ -132,11 +132,11 @@ int cellList_cpu::cell (const float3 &pos) {
  * \param [in] sys System definition
  */
 void cellList_cpu::checkUpdate (const systemDefinition &sys) {
-	static int start = 1;
-	int build = 0;
-	if (start) {
-		const int natoms = sys.numAtoms();
-		try {
+    static int start = 1;
+    int build = 0;
+    if (start) {
+	const int natoms = sys.numAtoms();
+	try {
 			list_.resize(natoms, -1);
 		} catch (std::exception& e) {
 			std::cerr << e.what() << std::endl;

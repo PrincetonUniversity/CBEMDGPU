@@ -1,7 +1,7 @@
-CXX = g++
+CXX = icpc
 PATHTOBOOST = /home/gkhoury/boost_1_52_0/
-CFLAGS = -O2 -pedantic -I $(PATHTOBOOST) 
-OMPFLAGS = -fopenmp 
+CFLAGS = -O2 -I $(PATHTOBOOST) 
+OMPFLAGS = -openmp 
 Default: MD
 OMP = cellList.o integrator.o main.o nvt.o potential.o system.o utils.o
 

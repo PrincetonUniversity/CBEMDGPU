@@ -1,0 +1,25 @@
+#!/bin/bash
+#
+# parallel/serial job using 1 node and 8 processor cores per node,
+# and runs for 2 hours (max).
+#PBS -l nodes=1:ppn=4,walltime=02:00:00
+#
+# send email on abortion, beginning and ending
+#PBS -M gkhoury@princeton.edu
+#
+# error and log files
+#PBS -e log.err.4
+#PBS -o log.log.4
+#
+#PBS -V
+# Load openmpi environment
+
+cd $PBS_O_WORKDIR
+pwd
+echo "Job started on `hostname` at `date`"
+
+module load openmpi
+export OMP_NUM_THREADS=4
+#OMP_NESTED=TRUE
+time ./md 4
+

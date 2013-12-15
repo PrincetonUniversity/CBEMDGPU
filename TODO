@@ -1,10 +1,16 @@
-NVT still seems buggy (FIXED)
+NVT still seems buggy (FIXED) 11/20/13
 check NVE working that it conserves energy- that means all the rest of the parts are working.
 
 nate bets that on the first loop setting the accel vel and position on the thermostat on first loop not doing very well (fixed due to velocity rescaling)
-OPENMP wasn't working 
-specifically, when use more than one thread the thermostat doesn't properly work
+11/24/13
+OPENMP wasn't working   12/1/13
+specifically, when use more than one thread the thermostat doesn't properly work (fixed the thermostat issue)
 (fixed, we weren't compiling each function's cpp file with the link to fopenmp which meant compiling that was totally ignoring the pragma statements!
+Still no speedup using openmp is it because of this http://stackoverflow.com/questions/7558965/openmp-wont-utilize-all-cores  12/14/13
+Need to make sure chunks in omp are logical values....!!! i.e. chunksize shouldn't be 100 when dealing wiht celllists if there are only 27. 12/14/13
+Need to figure out HOW TO GET SYSTEM COMPONENTS INTO SHARED LIST IN OPENMP.. i.e. how to get system or atoms into shared lists so can actually speed up.
+
+
 Figure out if brute force rebuilding of cell lists is better than linked list maintenance
 benchmark OMP (reductions?)
 	don't really see a speed up for some reason

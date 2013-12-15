@@ -43,9 +43,13 @@ void systemDefinition::initRandom (const int N, const int rngSeed) {
 	}
 
 	srand(rngSeed);
+	int chunk = OMP_CHUNK;
+	unsigned int i;
 	atoms.resize(N);
-
-	for (unsigned int i = 0; i < N; ++i) {
+#pragma omp parallel private(i)
+	{
+#pragma	omp for schedule(dynamic, chunk)
+	for (i = 0; i < N; ++i) {
 		if (i < N-1) {
 			atoms[i].vel.x = (RNG-0.5);
 			atoms[i].vel.y = (RNG-0.5);
@@ -64,6 +68,7 @@ void systemDefinition::initRandom (const int N, const int rngSeed) {
 		atoms[i].acc.x = 0;
 		atoms[i].acc.y = 0;
 		atoms[i].acc.z = 0;
+	}
 	}
 }
 
@@ -93,7 +98,6 @@ void systemDefinition::initThermal (const int N, const float Tset, const int rng
     std::tr1::normal_distribution<float> distribution(0.0,sig);
     float rannum = 0.0;
     float tmpT = 0.0;
-
     for (unsigned int i = 0; i < N; ++i) {
 	atoms[i].pos.x = (RNG)*box_.x;
 	atoms[i].pos.y = (RNG)*box_.y;
@@ -120,7 +124,6 @@ void systemDefinition::initThermal (const int N, const float Tset, const int rng
     tmpT *= mass_/(3.0*(N-1));
     tmpT /= Tset;
     tmpT = 1.0/tmpT;
-
     for (unsigned int i = 0; i < N; i ++ ) {
 	atoms[i].vel.x = atoms[i].vel.x*sqrt(tmpT);
 	atoms[i].vel.y = atoms[i].vel.y*sqrt(tmpT);

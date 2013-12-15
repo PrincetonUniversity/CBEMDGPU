@@ -7,11 +7,11 @@
 #include "system.h"
 #include "dataTypes.h"
 #include <exception>
+#include <math.h>
 #include "common.h"
 #include "integrator.h"
 #include <omp.h>
 
-#define CHUNKSIZE 100
 /*!
  * Calculate the pairwise forces in a system.  This also calculates the potential energy of a system.
  * The kinetic energy is calculated during the verlet integration.
@@ -19,7 +19,6 @@
  * \param [in, out] sys System definition
  */
 void integrator::calcForce (systemDefinition &sys) {
-    int chunk = OMP_CHUNK;
 	// For cache coeherency allocate new space for calculations
 	float3 empty;
 	empty.x = 0; empty.y = 0; empty.z = 0;
@@ -33,7 +32,14 @@ void integrator::calcForce (systemDefinition &sys) {
 	// Get Up and Uk at this time
 	// Keep loop "linear" so OMP can handle this loop best
 	float Up = 0.0;
-#pragma omp parallel shared(acc)
+	int chunk, nthreads;
+#pragma omp parallel 
+	{
+	nthreads = omp_get_num_threads();
+	chunk = ceil(27.0/nthreads);
+	//std::cout << chunk << std::endl;
+	}
+#pragma omp parallel shared(acc) 
       {
 	const float3 box = sys.box();
 	const float invMass = 1.0/sys.mass();
@@ -55,8 +61,8 @@ void integrator::calcForce (systemDefinition &sys) {
 		for (unsigned int cellID = 0; cellID < cl_.nCells.x*cl_.nCells.y*cl_.nCells.z; ++cellID) {
 			int atom1 = cl_.head(cellID);
 			while (atom1 >= 0) {
-				std::vector < int > neighbors = cl_.neighbors(cellID);
-				for (unsigned int index = 0; index < neighbors.size(); ++index) {
+			        std::vector < int > neighbors = cl_.neighbors(cellID);
+				for (int index = 0; index < neighbors.size(); ++index) {
 					const int cellID2 = neighbors[index];
 					int atom2 = cl_.head(cellID2);
 					// only compute for i > j (prevents i == i and uses 3rd Law)

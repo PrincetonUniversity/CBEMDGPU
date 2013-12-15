@@ -8,7 +8,6 @@
 #include <omp.h>
 #include <stdlib.h>
 
-#define CHUNKSIZE 100 // define chunksize
 
 /*!
  * Invoke the program as 
@@ -23,7 +22,6 @@ int main (int argc, char* argv[]) {
     static int nthreads = atoi(argv[1]);
     omp_set_num_threads(nthreads);
     int tid; // thread number
-    static int chunk = CHUNKSIZE;
     const int rngSeed = 3145;
     float Temp = 0.5; // this should be input to main
     float timestep = 0.005; // this should be input to main
@@ -41,7 +39,7 @@ int main (int argc, char* argv[]) {
     nvt_NH integrate (1.0);
     integrate.setTimestep(timestep);
 
-    const int nSteps = 1000000;
+    const int nSteps = 300;
     const int report = 10; //nSteps/1000;
 #pragma omp parallel 
     {
