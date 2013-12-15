@@ -39,6 +39,8 @@ class systemDefinition {
 		float rcut() const {return rc_;}
 		void writeSnapshot ();
 		int numAtoms() const {return atoms.size();}
+		void setPotentialArgs (const std::vector <float> args) {potentialArgs_ = args;}
+		std::vector <float> potentialArgs () const {return potentialArgs_;}
 #ifdef NVCC
 		__device__ pointFunction_t dev_potential;
 #endif
@@ -53,6 +55,7 @@ class systemDefinition {
 		float targetT_, instantT_;
 		float mass_;
 		float Uk_, Up_;
+		std::vector <float> potentialArgs_;
 };
 
 #endif

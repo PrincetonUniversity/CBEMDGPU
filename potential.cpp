@@ -11,26 +11,27 @@
 #include <math.h>
 
 #ifdef NVCC
-__device__ float pairUF (const float3 *p1, const float3 *p2, float3 *pairForce, const float3 *box, const float *rcut) {
+__device__ float pairUF (const float3 *p1, const float3 *p2, float3 *pairForce, const float3 *box, const float *args, const float *rcut) {
 	return 0.0;
 }
-__device__ float slj (const float3 *p1, const float3 *p2, float3 *pairForce, const float3 *box, const float *args) {
+__device__ float slj (const float3 *p1, const float3 *p2, float3 *pairForce, const float3 *box, const float *args, const float *rcut) {
 	return 0.0
 }
 #else
 
 /*!
- * Pairwise interaction between 2 atoms
+ * Pairwise interaction between 2 atoms (DPD)
  *
  * \param [in] p1 Pointer to atom 1's position
  * \param [in] p2 Pointer to atom 2's position
  * \param [in, out] pairForce Force atom 2 experiences due to atom 1
  * \param [in] box Pointer to box dimensions
+ * \param [in] args Additional arguments, in this case epsilon
  * \param [in] rcut Cutoff distance
  */
-float pairUF (const float3 *p1, const float3 *p2, float3 *pairForce, const float3 *box, const float *rcut) {
+float pairUF (const float3 *p1, const float3 *p2, float3 *pairForce, const float3 *box, const float *args, const float *rcut) {
 	// for now use the same potential as in the HW
-	const float eps = 1.0, rc = *rcut;
+	const float eps = args[0], rc = *rcut;
 	float3 dr;
 	float r2 = pbcDist2 (*p1, *p2, dr, *box);
 	if (r2 < rc*rc) {
@@ -48,7 +49,18 @@ float pairUF (const float3 *p1, const float3 *p2, float3 *pairForce, const float
 	}
 }
 
-float slj (const float3 *p1, const float3 *p2, float3 *pairForce, const float3 *box, const float *args) {
+
+/*!
+ * Pairwise interaction between 2 atoms (shifted lennard-jones)
+ *
+ * \param [in] p1 Pointer to atom 1's position
+ * \param [in] p2 Pointer to atom 2's position
+ * \param [in, out] pairForce Force atom 2 experiences due to atom 1
+ * \param [in] box Pointer to box dimensions
+ * \param [in] args Additional arguments, in this case {epsilon, sigma, delta, ushift}
+ * \param [in] rcut Cutoff distance; NOTE: this MUST already incorporate the delta shift, ie. if r < ((rc' + delta) = rc), then force is computed
+ */
+float slj (const float3 *p1, const float3 *p2, float3 *pairForce, const float3 *box, const float *args, const float *rcut) {
 	float3 dr;
 	float r2 = pbcDist2(*p1, *p2, dr, *box);
 	// check that r > delta and throw/catch
@@ -59,10 +71,10 @@ float slj (const float3 *p1, const float3 *p2, float3 *pairForce, const float3 *
 		pairForce->z = 0.0;
 		return 0.0;
 	}
-	float r = sqrt(r2);
-	float x = r - args[2];
 	// If (r-delta)^2 < rcut^2 compute
-	if (x*x < args[4]) {
+	if (r2 < (*rcut)*(*rcut)) {
+		float r = sqrt(r2);
+        	float x = r - args[2];
 		float b = 1.0/x, a = args[1]*b, a2 = a*a, a6 = a2*a2*a2, factor;
 		factor = 24.0*args[0]*a6*(2.0*a6-1.0)*b/r;
 		pairForce->x = -factor*dr.x;
