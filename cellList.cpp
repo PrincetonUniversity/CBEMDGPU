@@ -76,11 +76,9 @@ cellList_cpu::cellList_cpu (const float3 &box, const float rc, const float rs) {
 	throw customException ("Unable to initialize head for cell list");
 	return;
     }
-    int chunk = 1;
-    unsigned int cellID = 0;
     // build neighbors for each cell
 	neighbor_.resize(nCells.x*nCells.y*nCells.z);
-	for (cellID = 0; cellID < nCells.x*nCells.y*nCells.z; ++cellID) {
+	for (unsigned int cellID = 0; cellID < nCells.x*nCells.y*nCells.z; ++cellID) {
 	    const int zref = floor(cellID/(nCells.x*nCells.y));
 	    const int yref = floor((cellID - zref*(nCells.x*nCells.y))/nCells.y);
 	    const int xref = floor(cellID - zref*(nCells.x*nCells.y) - yref*nCells.x);

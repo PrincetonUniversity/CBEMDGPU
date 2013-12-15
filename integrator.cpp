@@ -36,7 +36,7 @@ void integrator::calcForce (systemDefinition &sys) {
 #pragma omp parallel 
 	{
 	nthreads = omp_get_num_threads();
-	chunk = ceil(27.0/nthreads);
+	chunk = ceil(cl_.nCells.x*cl_.nCells.y*cl_.nCells.z/nthreads);
 	//std::cout << chunk << std::endl;
 	}
 #pragma omp parallel shared(acc) 
