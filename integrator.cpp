@@ -24,10 +24,10 @@ void integrator::calcForce (systemDefinition &sys) {
 	empty.x = 0; empty.y = 0; empty.z = 0;
 	std::vector <float3> acc (sys.numAtoms(), empty);
 	const float rc = sys.rcut();
-    
+
 	// every time, check if the cell list needs to be updated first
 	cl_.checkUpdate(sys);
-    
+
 	// Find pairwise forces to get accelerations (cell lists)
 	// Get Up and Uk at this time
 	// Keep loop "linear" so OMP can handle this loop best
@@ -35,33 +35,33 @@ void integrator::calcForce (systemDefinition &sys) {
 	int chunk, nthreads;
 #pragma omp parallel 
 	{
-	nthreads = omp_get_num_threads();
-	chunk = ceil(cl_.nCells.x*cl_.nCells.y*cl_.nCells.z/nthreads);
-	//std::cout << chunk << std::endl;
+		nthreads = omp_get_num_threads();
+		chunk = ceil(cl_.nCells.x*cl_.nCells.y*cl_.nCells.z/nthreads);
+		//std::cout << chunk << std::endl;
 	}
-#pragma omp parallel shared(sys,acc) 
-      {
-	const float3 box = sys.box();
-	const float invMass = 1.0/sys.mass();
-	
-	// brute force for comparison with cell lists (make sure to comment out checkUpdate above too when doing speed calc)
-	/*for (int i = 0; i < sys.numAtoms(); ++i) {
-     for (int j = i+1; j < sys.numAtoms(); ++j) {
-     float3 pf;
-     Up += sys.potential (&sys.atoms[i].pos, &sys.atoms[j].pos, &pf, &box, &rc);
-     acc[i].x -= pf.x*invMass;
-     acc[i].y -= pf.y*invMass;
-     acc[i].z -= pf.z*invMass;
-     acc[j].x += pf.x*invMass;
-     acc[j].y += pf.y*invMass;
-     acc[j].z += pf.z*invMass;
-     }
-     }*/
-#pragma omp for schedule(dynamic, chunk)
+		const float3 box = sys.box();
+		const float invMass = 1.0/sys.mass();
+
+		// brute force for comparison with cell lists (make sure to comment out checkUpdate above too when doing speed calc)
+		/*for (int i = 0; i < sys.numAtoms(); ++i) {
+		  for (int j = i+1; j < sys.numAtoms(); ++j) {
+		  float3 pf;
+		  Up += sys.potential (&sys.atoms[i].pos, &sys.atoms[j].pos, &pf, &box, &rc);
+		  acc[i].x -= pf.x*invMass;
+		  acc[i].y -= pf.y*invMass;
+		  acc[i].z -= pf.z*invMass;
+		  acc[j].x += pf.x*invMass;
+		  acc[j].y += pf.y*invMass;
+		  acc[j].z += pf.z*invMass;
+		  }
+		  }*/
+#pragma omp parallel shared(box, sys,acc,Up,rc)
+	{
+		#pragma omp for schedule(static, chunk)
 		for (unsigned int cellID = 0; cellID < cl_.nCells.x*cl_.nCells.y*cl_.nCells.z; ++cellID) {
 			int atom1 = cl_.head(cellID);
 			while (atom1 >= 0) {
-			        std::vector < int > neighbors = cl_.neighbors(cellID);
+				std::vector < int > neighbors = cl_.neighbors(cellID);
 				for (int index = 0; index < neighbors.size(); ++index) {
 					const int cellID2 = neighbors[index];
 					int atom2 = cl_.head(cellID2);
@@ -69,7 +69,6 @@ void integrator::calcForce (systemDefinition &sys) {
 					while (atom2 >= 0) {
 						if (atom1 > atom2) {
 							float3 pf;
-							Up += sys.potential (&sys.atoms[atom1].pos, &sys.atoms[atom2].pos, &pf, &box, &rc);
 							acc[atom1].x -= pf.x*invMass;
 							acc[atom1].y -= pf.y*invMass;
 							acc[atom1].z -= pf.z*invMass;
@@ -83,20 +82,39 @@ void integrator::calcForce (systemDefinition &sys) {
 				atom1 = cl_.list(atom1);
 			}
 		}
+	}
+	// traverse cell list and calculate total system potential energy 
+	for (unsigned int cellID = 0; cellID < cl_.nCells.x*cl_.nCells.y*cl_.nCells.z; ++cellID) {
+		int atom1 = cl_.head(cellID);
+		while (atom1 >= 0) {
+			std::vector < int > neighbors = cl_.neighbors(cellID);
+			for (int index = 0; index < neighbors.size(); ++index) {
+				const int cellID2 = neighbors[index];
+				int atom2 = cl_.head(cellID2);
+				while (atom2 >= 0) {
+					if (atom1 > atom2) {
+						float3 pf;
+						Up += sys.potential (&sys.atoms[atom1].pos, &sys.atoms[atom2].pos, &pf, &box, &rc);
+					}
+					atom2 = cl_.list(atom2);
+				}
+			}
+			atom1 = cl_.list(atom1);
+		}
+	}
 	std::cout << Up << std::endl;
-}
 	/*// apply thermal friction
-     #pragma omp parallel
-     {
-     #pragma omp for shared(acc, sys.atoms) schedule(dynamic, OMP_CHUNK) 
-     for (unsigned int atom1 = 0; atom1 < sys.numAtoms(); ++atom1) {
-     acc[atom1].x -= gamma_*sys.atoms[atom1].vel.x;
-     acc[atom1].y -= gamma_*sys.atoms[atom1].vel.y;
-     acc[atom1].z -= gamma_*sys.atoms[atom1].vel.z;
-     sys.atoms[atom1].acc = acc[atom1];
-     }
-     }*/
-    
-    // set Up
-    sys.setPotE(Up);
+#pragma omp parallel
+{
+#pragma omp for shared(acc, sys.atoms) schedule(dynamic, OMP_CHUNK) 
+for (unsigned int atom1 = 0; atom1 < sys.numAtoms(); ++atom1) {
+acc[atom1].x -= gamma_*sys.atoms[atom1].vel.x;
+acc[atom1].y -= gamma_*sys.atoms[atom1].vel.y;
+acc[atom1].z -= gamma_*sys.atoms[atom1].vel.z;
+sys.atoms[atom1].acc = acc[atom1];
+}
+}*/
+
+// set Up
+sys.setPotE(Up);
 }
