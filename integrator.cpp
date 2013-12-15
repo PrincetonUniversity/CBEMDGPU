@@ -55,7 +55,7 @@ void integrator::calcForce (systemDefinition &sys) {
 		  acc[j].z += pf.z*invMass;
 		  }
 		  }*/
-#pragma omp parallel shared(box, sys,acc,Up,rc)
+/*#pragma omp parallel shared(box, sys,acc,Up,rc)
 	{
 		#pragma omp for schedule(static, chunk)
 		for (unsigned int cellID = 0; cellID < cl_.nCells.x*cl_.nCells.y*cl_.nCells.z; ++cellID) {
@@ -82,7 +82,8 @@ void integrator::calcForce (systemDefinition &sys) {
 				atom1 = cl_.list(atom1);
 			}
 		}
-	}
+	}*/
+#pragma omp parallel for reduction(+:Up)
 	// traverse cell list and calculate total system potential energy 
 	for (unsigned int cellID = 0; cellID < cl_.nCells.x*cl_.nCells.y*cl_.nCells.z; ++cellID) {
 		int atom1 = cl_.head(cellID);
@@ -95,6 +96,12 @@ void integrator::calcForce (systemDefinition &sys) {
 					if (atom1 > atom2) {
 						float3 pf;
 						Up += sys.potential (&sys.atoms[atom1].pos, &sys.atoms[atom2].pos, &pf, &box, &rc);
+						acc[atom1].x -= pf.x*invMass; 
+						acc[atom1].y -= pf.y*invMass;
+						acc[atom1].z -= pf.z*invMass;
+						acc[atom2].x += pf.x*invMass;
+						acc[atom2].y += pf.y*invMass;
+						acc[atom2].z += pf.z*invMass;
 					}
 					atom2 = cl_.list(atom2);
 				}
@@ -102,7 +109,6 @@ void integrator::calcForce (systemDefinition &sys) {
 			atom1 = cl_.list(atom1);
 		}
 	}
-	std::cout << Up << std::endl;
 	/*// apply thermal friction
 #pragma omp parallel
 {
