@@ -7,11 +7,15 @@
 #include "potential.h"
 #include "utils.h"
 #include <iostream>
+#include "common.h"
 #include <math.h>
 
 #ifdef NVCC
 __device__ float pairUF (const float3 *p1, const float3 *p2, float3 *pairForce, const float3 *box, const float *rcut) {
 	return 0.0;
+}
+__device__ float slj (const float3 *p1, const float3 *p2, float3 *pairForce, const float3 *box, const float *args) {
+	return 0.0
 }
 #else
 
@@ -43,5 +47,36 @@ float pairUF (const float3 *p1, const float3 *p2, float3 *pairForce, const float
 		return 0.0;
 	}
 }
+
+float slj (const float3 *p1, const float3 *p2, float3 *pairForce, const float3 *box, const float *args) {
+	float3 dr;
+	float r2 = pbcDist2(*p1, *p2, dr, *box);
+	// check that r > delta and throw/catch
+	if (r2 < args[2]*args[2]) {
+		throw customException("dr < delta");
+		pairForce->x = 0.0;
+		pairForce->y = 0.0;
+		pairForce->z = 0.0;
+		return 0.0;
+	}
+	float r = sqrt(r2);
+	float x = r - args[2];
+	// If (r-delta)^2 < rcut^2 compute
+	if (x*x < args[4]) {
+		float b = 1.0/x, a = args[1]*b, a2 = a*a, a6 = a2*a2*a2, factor;
+		factor = 24.0*args[0]*a6*(2.0*a6-1.0)*b/r;
+		pairForce->x = -factor*dr.x;
+		pairForce->y = -factor*dr.y;
+		pairForce->z = -factor*dr.z;
+		return 4.0*args[0]*(a6*a6-a6)+args[3];
+	} else {
+		pairForce->x = 0.0;
+		pairForce->y = 0.0;
+		pairForce->z = 0.0;
+		return 0.0;
+	}
+}
+	
+	
 #endif
 

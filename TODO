@@ -10,6 +10,7 @@ Still no speedup using openmp is it because of this http://stackoverflow.com/que
 Need to make sure chunks in omp are logical values....!!! i.e. chunksize shouldn't be 100 when dealing wiht celllists if there are only 27. 12/14/13
 Need to figure out HOW TO GET SYSTEM COMPONENTS INTO SHARED LIST IN OPENMP.. i.e. how to get system or atoms into shared lists so can actually speed up.
 
+shifted lennard-jones potential check form of equations .. blowing up 
 
 Figure out if brute force rebuilding of cell lists is better than linked list maintenance
 benchmark OMP (reductions?)  (fixed 12/14/13)

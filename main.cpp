@@ -2,7 +2,6 @@
 #include "potential.h"
 #include "integrator.h"
 #include "nvt.h"
-#include "potential.h"
 #include <iostream>
 #include "utils.h"
 #include <omp.h>
@@ -32,14 +31,15 @@ int main (int argc, char* argv[]) {
     a.setMass(1.0);
     a.setRskin(1.0);
     a.setRcut(1.0);
-    a.initThermal(5000, 1.01*Temp, rngSeed);
+    a.initThermal(50, 1.01*Temp, rngSeed, 1.2);
 
-    pointFunction_t pp = pairUF;
+    //pointFunction_t pp = pairUF;
+    pointFunction_t pp = slj;
     a.setPotential(pp);
     nvt_NH integrate (1.0);
     integrate.setTimestep(timestep);
 
-    const int nSteps = 300;
+    const int nSteps = 3000;
     const int report = 10; //nSteps/1000;
 #pragma omp parallel 
     {

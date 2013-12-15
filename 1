@@ -99,10 +99,9 @@ void systemDefinition::initThermal (const int N, const float Tset, const int rng
     float rannum = 0.0;
     float tmpT = 0.0;
 	int index = 0;
-	const int xs = floor(box_.x/dx);
-	const int ys = floor(box_.y/dx);
-	const int zs = floor(box_.z/dx);
-	// initialize particles on a lattice
+	const int xs = floor(sys.box.x/dx);
+	const int ys = floor(sys.box.y/dx);
+	const int zs = floor(sys.box.z/dx);
 	for (unsigned int x = 0; x < xs; ++x) {
 		for (unsigned int y = 0; y < ys; ++y) {
 			for (unsigned int z = 0; z < zs; ++z) {
@@ -111,7 +110,6 @@ void systemDefinition::initThermal (const int N, const float Tset, const int rng
 					atoms[index].pos.y = y*dx;
 					atoms[index].pos.z = z*dx;
 				}
-				std::cout << atoms[index].pos.x << " " << atoms[index].pos.y << " " << atoms[index].pos.z << std::endl;
 				index++;
 			}
 		}
