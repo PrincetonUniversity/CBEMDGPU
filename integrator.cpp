@@ -39,7 +39,7 @@ void integrator::calcForce (systemDefinition &sys) {
 	chunk = ceil(cl_.nCells.x*cl_.nCells.y*cl_.nCells.z/nthreads);
 	//std::cout << chunk << std::endl;
 	}
-#pragma omp parallel shared(acc) 
+#pragma omp parallel shared(sys,acc) 
       {
 	const float3 box = sys.box();
 	const float invMass = 1.0/sys.mass();
@@ -83,6 +83,7 @@ void integrator::calcForce (systemDefinition &sys) {
 				atom1 = cl_.list(atom1);
 			}
 		}
+	std::cout << Up << std::endl;
 }
 	/*// apply thermal friction
      #pragma omp parallel
