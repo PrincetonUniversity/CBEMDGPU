@@ -53,7 +53,7 @@ void nvt_NH::step (systemDefinition &sys) {
 	float tmp = 0.0, Uk = 0.0;
 #pragma omp parallel
 	{
-//#pragma omp reduction(+:Uk) schedule(dynamic, OMP_CHUNK) 
+#pragma omp parallel for reduction(+:Uk)
 	    for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
 		Uk += (sys.atoms[i].vel.x*sys.atoms[i].vel.x)+(sys.atoms[i].vel.y*sys.atoms[i].vel.y)+(sys.atoms[i].vel.z*sys.atoms[i].vel.z);
 	    }
@@ -96,7 +96,7 @@ void nvt_NH::step (systemDefinition &sys) {
     float v2 = 0.0;
 #pragma omp parallel
     {
-//#pragma omp reduction(+:v2) schedule(dynamic, OMP_CHUNK) 
+#pragma omp parallel for reduction(+:v2)
 	for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
 	    v2 += (sys.atoms[i].vel.x*sys.atoms[i].vel.x)+(sys.atoms[i].vel.y*sys.atoms[i].vel.y)+(sys.atoms[i].vel.z*sys.atoms[i].vel.z);
 	}
@@ -123,7 +123,7 @@ void nvt_NH::step (systemDefinition &sys) {
     float tmp = 0.0, Uk = 0.0;
 #pragma omp parallel
     {
-//#pragma omp reduction(+:Uk) schedule(dynamic, OMP_CHUNK) 
+#pragma omp parallel for reduction(+:Uk)
 	for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
 	    Uk += (sys.atoms[i].vel.x*sys.atoms[i].vel.x)+(sys.atoms[i].vel.y*sys.atoms[i].vel.y)+(sys.atoms[i].vel.z*sys.atoms[i].vel.z);
 	}
@@ -157,10 +157,8 @@ void nvt_NH::step2 (systemDefinition &sys) {
 	// get initial temperature
 	calcForce(sys);
 	float tmp=0.0, Uk = 0.0;
-	unsigned int i = 0;
-//#pragma omp parallel reduction(+:Uk) 
-
-	for (i = 0; i < sys.numAtoms(); ++i) {
+#pragma omp parallel for reduction(+:Uk)
+	for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
 	    Uk += (sys.atoms[i].vel.x*sys.atoms[i].vel.x)+(sys.atoms[i].vel.y*sys.atoms[i].vel.y)+(sys.atoms[i].vel.z*sys.atoms[i].vel.z);
 	}
 	Uk *= sys.mass();
@@ -212,7 +210,7 @@ void nvt_NH::step2 (systemDefinition &sys) {
     }
     float Uk = 0.0;
     float tmp = 0.0;
-//#pragma omp parallel reduction(+:Uk) 
+#pragma omp parallel for reduction(+:Uk)
     // get temperature and kinetic energy
     for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
 	Uk += (sys.atoms[i].vel.x*sys.atoms[i].vel.x)+(sys.atoms[i].vel.y*sys.atoms[i].vel.y)+(sys.atoms[i].vel.z*sys.atoms[i].vel.z);

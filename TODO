@@ -12,8 +12,8 @@ Need to figure out HOW TO GET SYSTEM COMPONENTS INTO SHARED LIST IN OPENMP.. i.e
 
 
 Figure out if brute force rebuilding of cell lists is better than linked list maintenance
-benchmark OMP (reductions?)
-	don't really see a speed up for some reason
+benchmark OMP (reductions?)  (fixed 12/14/13)
+	don't really see a speed up for some reason (fixed 12/14/13) openmp had some serious bugs that were resolved and reductions were added
 	PROFILE (-gp)
 
 test if rebuld is actually faster (rs = 0)
