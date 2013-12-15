@@ -5,14 +5,18 @@
  */ 
 
 #include "cellList.h"
-#include "dataTypes.h"
+#include "dataTypes.h"	// even in GPU implementation, not compiling with NVCC so these data types are required
 #include "common.h"
 #include <math.h>
 #include "system.h"
 #include "utils.h"
 #include <stdlib.h>
-#include <omp.h>
 
+// if using cuda, "cell lists" are actually neighbor lists instead
+#ifdef NVCC
+
+// if not using GPUs (CUDA) maintain cell lists
+#else
 /*!
  * Initialize a cell list
  *
@@ -189,3 +193,4 @@ void cellList_cpu::checkUpdate (const systemDefinition &sys) {
 
 	return;
 }
+#endif

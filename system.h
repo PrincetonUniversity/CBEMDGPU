@@ -41,9 +41,9 @@ class systemDefinition {
 		int numAtoms() const {return atoms.size();}
 		void setPotentialArgs (const std::vector <float> args) {potentialArgs_ = args;}
 		std::vector <float> potentialArgs () const {return potentialArgs_;}
-#ifdef NVCC
-		__device__ pointFunction_t dev_potential;
-#endif
+//#ifdef NVCC
+//		__device__ pointFunction_t dev_potential;
+//#endif
 		pointFunction_t potential;
 		void setPotential (pointFunction_t pp);
 
