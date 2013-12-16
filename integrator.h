@@ -21,6 +21,7 @@ class integrator {
 		cellList_cpu cl_;
 		std::vector <float3> lastAccelerations_;
 		float dt_;
+		int start_;
 };
 
 

@@ -16,19 +16,19 @@ integrator.o : integrator.cu
 	$(CXXCUDA) -DNVCC $(CFLAGS) -c integrator.cu
 
 main.o : main.cpp
-	$(CXX) $(OMPFLAGS) $(CFLAGS) -c main.cpp
+	$(CXX) -DNVCC $(OMPFLAGS) $(CFLAGS) -c main.cpp
 	
 nvt.o : nvt.cpp
-	$(CXX) $(OMPFLAGS) $(CFLAGS) -c nvt.cpp
+	$(CXX) -DNVCC $(OMPFLAGS) $(CFLAGS) -c nvt.cpp
 	
 potential.o : potential.cpp
-	$(CXX) $(OMPFLAGS) $(CFLAGS) -c potential.cpp
+	$(CXX) -DNVCC $(OMPFLAGS) $(CFLAGS) -c potential.cpp
 	
 system.o : system.cpp
-	$(CXX) $(OMPFLAGS) $(CFLAGS) -c system.cpp
+	$(CXX) -DNVCC $(OMPFLAGS) $(CFLAGS) -c system.cpp
 
 utils.o : utils.cpp
-	$(CXX) $(OMPFLAGS) $(CFLAGS) -c utils.cpp
+	$(CXX) -DNVCC $(OMPFLAGS) $(CFLAGS) -c utils.cpp
 
 MD: $(OMP)
 	$(CXX) -lcudart $(OMPFLAGS) -o md $(CFLAGS) $(OMP) 

@@ -12,7 +12,7 @@
 
 class nve : public integrator {
 public:
-    nve () {}
+    nve () {start_ = 1;}
     ~nve () {}
     void step (systemDefinition &sys);
 };

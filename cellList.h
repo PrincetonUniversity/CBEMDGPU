@@ -21,14 +21,13 @@ class cellList_cpu {
                 cellList_cpu (const float3 &box, const float rc, const float rs);
                 ~cellList_cpu () {}
                 void checkUpdate (const systemDefinition &sys);
-		std::vector < int > neighborList (const int atomIndex) {return neighbors_[atomIndex];}
-        private:
+		std::vector < int > nlist_index, nlist;
+	private:
 		int start_;
                 float rc_, rs_;
                 float3 box_;
                 float drMax1_, drMax2_;
                 std::vector <float3> posAtLastBuild_;
-		std::vector < std::vector < int > > neighbors_;
 };
 #else
 /*!

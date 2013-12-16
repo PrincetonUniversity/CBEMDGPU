@@ -18,12 +18,12 @@
  * pass the fiunction to the device if using CUDA, else just sets the "host" function.
  */ 
 void systemDefinition::setPotential (pointFunction_t pp) {
-#ifdef NVCC
+/*#ifdef NVCC
 	dev_potential = pp;
 	cudaMemcpyFromSymbol(&potential, dev_potential, sizeof(pointFunction_t));
-#else
+#else*/
 	potential = pp;
-#endif
+//#endif
 }
 
 /*!

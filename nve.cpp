@@ -21,8 +21,7 @@
  * \param [in, out] sys System definition
  */  
 void nve::step (systemDefinition &sys) {
-	static int start = 1;
-	if (start) {
+	if (start_) {
 		try {
 			lastAccelerations_.resize(sys.numAtoms());
 		} catch (std::exception &e) {
@@ -58,7 +57,7 @@ void nve::step (systemDefinition &sys) {
 		tmp /= (3.0*(sys.numAtoms()-1.0));
 		sys.updateInstantTemp(tmp);
 		sys.setKinE(Uk);
-		start = 0;
+		start_ = 0;
 	}
 	
 	// update positions based on current positions

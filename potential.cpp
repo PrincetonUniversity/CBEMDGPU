@@ -10,14 +10,15 @@
 #include "common.h"
 #include <math.h>
 
-#ifdef NVCC
+
+/*#ifdef NVCC
 __device__ float pairUF (const float3 *p1, const float3 *p2, float3 *pairForce, const float3 *box, const float *args, const float *rcut) {
 	return 0.0;
 }
 __device__ float slj (const float3 *p1, const float3 *p2, float3 *pairForce, const float3 *box, const float *args, const float *rcut) {
 	return 0.0
 }
-#else
+#else*/
 
 /*!
  * Pairwise interaction between 2 atoms (DPD)
@@ -90,5 +91,5 @@ float slj (const float3 *p1, const float3 *p2, float3 *pairForce, const float3 *
 }
 	
 	
-#endif
+//#endif
 

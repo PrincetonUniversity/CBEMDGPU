@@ -10,7 +10,6 @@
 #include <iostream>
 #include <stdio.h>
 #include <vector>
-
 #include "dataTypes.h"
 #include "potential.h"
 
@@ -44,6 +43,10 @@ class systemDefinition {
 //#ifdef NVCC
 //		__device__ pointFunction_t dev_potential;
 //#endif
+		#ifdef NVCC
+		int cudaBlocks, cudaThreads;
+		#endif
+
 		pointFunction_t potential;
 		void setPotential (pointFunction_t pp);
 

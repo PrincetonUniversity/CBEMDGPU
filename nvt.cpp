@@ -20,7 +20,8 @@
  */ 
 nvt_NH::nvt_NH (const float Q) {
     Q_ = Q; 
-    gamma_ = 0.0; 
+    gamma_ = 0.0;
+	start_ = 1; 
 }
 
 /*!
@@ -31,8 +32,7 @@ nvt_NH::nvt_NH (const float Q) {
  */  
 void nvt_NH::step (systemDefinition &sys) {
     // section 2.2.2 reversible velocity verlet algorithm from thermostats document
-    static int start = 1;
-    if (start) {
+    if (start_) {
 	try {
 	    cellList_cpu tmpCL (sys.box(), sys.rcut(), sys.rskin());
 	    cl_ = tmpCL;
@@ -64,7 +64,7 @@ void nvt_NH::step (systemDefinition &sys) {
 	tmp /= (3.0*(sys.numAtoms()-1.0));
 	sys.updateInstantTemp(tmp);
 	sys.setKinE(Uk);
-	start = 0;
+	start_ = 0;
     }
 
     // update positions based on current positions
@@ -137,16 +137,16 @@ void nvt_NH::step (systemDefinition &sys) {
 }
 
 void nvt_NH::step2 (systemDefinition &sys) {
-    static int start = 1;
     int chunk = OMP_CHUNK;
-    if (start) {
+    if (start_) {
 	try {
-	    cellList_cpu tmpCL (sys.box(), sys.rcut(), sys.rskin());
-	    cl_ = tmpCL;
+		cellList_cpu tmpCL (sys.box(), sys.rcut(), sys.rskin());
+		cl_ = tmpCL;
 	} catch (std::exception &e) {
 	    std::cerr << e.what() << std:: endl;
 	    throw customException("Failed to integrate on first step");
 	}
+
 	gamma_ = 0.0;
 	for (unsigned int i = 0; i < sys.numAtoms(); ++i)  {
 	    gamma_ += (sys.atoms[i].vel.x*sys.atoms[i].vel.x)+(sys.atoms[i].vel.y*sys.atoms[i].vel.y)+(sys.atoms[i].vel.z*sys.atoms[i].vel.z);
@@ -167,7 +167,7 @@ void nvt_NH::step2 (systemDefinition &sys) {
 	tmp /= (3.0*(sys.numAtoms()-1.0));
 	sys.updateInstantTemp(tmp);
 	sys.setKinE(Uk);
-	start = 0;
+	start_ = 0;
 	gammadot_ = 0.0;
 	gammadd_ = 0.0;
 

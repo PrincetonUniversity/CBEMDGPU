@@ -43,12 +43,11 @@ cellList_cpu::cellList_cpu (const float3 &box, const float rc, const float rs) {
  * \param [in] sys System definition
  */
 void cellList_cpu::checkUpdate (const systemDefinition &sys) {
-	std::cout << "started first build" << std::endl;
 	int build = 0;
 	if (start_) {
 		// resize the neighborlists, and initially set to empty
 		try {
-			neighbors_.resize(sys.numAtoms());
+			nlist_index.resize(sys.numAtoms());
 		} catch (std::exception& e) {
 			std::cerr << e.what() << std::endl;
 			throw customException ("Unable to allocate memory for neighbor list");
@@ -62,9 +61,8 @@ void cellList_cpu::checkUpdate (const systemDefinition &sys) {
                         return;
                 }
 
-		std::vector < int > empty (1, -1);
-		for (unsigned int i = 0; i < neighbors_.size(); ++i) {
-			neighbors_[i] = empty;
+		for (unsigned int i = 0; i < nlist_index.size(); ++i) {
+			nlist_index[i] = -1;
 		}
 
 		// must build when initialized
@@ -91,36 +89,58 @@ void cellList_cpu::checkUpdate (const systemDefinition &sys) {
 
 	// check to rebuild the neighbor list
 	if (build) {
+		std::vector < std::vector < int > > dummyNeighbors (sys.numAtoms());
+		std::vector < int > empty (1, -1);
+                for (unsigned int i = 0; i < dummyNeighbors.size(); ++i) {
+                        dummyNeighbors[i] = empty;
+                }
 		const int N = sys.numAtoms();
 		std::vector < int > nn(N, 0);
 		const float cut2 = (rs_+rc_)*(rs_+rc_);
 		float3 dummy, box = sys.box();
+		int totalNeighbors = 0;
 		for (unsigned int i = 0; i < N; ++i) {
 			for (unsigned int j = i+i; j < N; ++j) {
 				float dist2 = pbcDist2(sys.atoms[i].pos, sys.atoms[j].pos, dummy, box);
 				if (dist2 < cut2) {
 					nn[i]++;
 					nn[j]++;
+					totalNeighbors += 2;
 
 					// double the size to reduce the number of times this has to happen
-					if (neighbors_[i].size() < nn[i]) {
-						neighbors_[i].resize(2*neighbors_[i].size());
+					if (dummyNeighbors[i].size() < nn[i]) {
+						dummyNeighbors[i].resize(2*dummyNeighbors[i].size());
 					}
-					if (neighbors_[j].size() < nn[j]) {
-                                                neighbors_[j].resize(2*neighbors_[j].size());
+					if (dummyNeighbors[j].size() < nn[j]) {
+                                                dummyNeighbors[j].resize(2*dummyNeighbors[j].size());
                                         }
-					neighbors_[i][nn[i]-1] = j;
-					neighbors_[j][nn[j]-1] = i;
+					dummyNeighbors[i][nn[i]-1] = j;
+					dummyNeighbors[j][nn[j]-1] = i;
 				}
 			}
 		}
 		
-		// resize the lists to trim the excess
-		for (unsigned int i = 0; i < N; ++i) {
-			neighbors_[i].resize(nn[i]);
-			posAtLastBuild_[i] = sys.atoms[i].pos;
+		// make the list "linear"
+		try {
+			nlist.resize(totalNeighbors + N);
+		} catch (std::exception &e) {
+			std::cerr << e.what() << std::endl;
+			return;
 		}
-	std::cout << "finished first build" << std::endl;
+		
+		int counter = 0;
+		for (unsigned int i = 0; i < N; ++i) {
+                        //dummyNeighbors[i].resize(nn[i]); // free as much memory as possible
+                        posAtLastBuild_[i] = sys.atoms[i].pos;
+			nlist[counter] = nn[i];
+			nlist_index[i] = counter;
+			counter++;
+			for (unsigned int j = 0; j < nn[i]; ++j) {
+				nlist[counter] = dummyNeighbors[i][j];	
+				counter++;	
+			}
+			dummyNeighbors[i].resize(0); // free as much memory as possible
+                }
 	}
 }	
 

@@ -6,7 +6,7 @@
 
 #include "dataTypes.h"
 #include <math.h>
-
+/*
 #ifdef NVCC
 __device__ float dev_pbcDist2 (const float3 *p1, const float3 *p2, float3 *dr, const float3 *box) {
 	float d = 0.0;
@@ -40,7 +40,7 @@ __device__ float dev_pbcDist2 (const float3 *p1, const float3 *p2, float3 *dr, c
 	
 	return d;
 }
-#endif
+#endif*/
 
 float3 pbc (const float3 &p1, const float3 &box) {
 	float3 ans = p1;
