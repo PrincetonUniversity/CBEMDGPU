@@ -110,8 +110,12 @@ void systemDefinition::initThermal (const int N, const float Tset, const int rng
 					atoms[index].pos.x = x*dx;
 					atoms[index].pos.y = y*dx;
 					atoms[index].pos.z = z*dx;
+				} else {
+					x = xs;
+					y = ys;
+					z = zs;
+					break;
 				}
-				std::cout << atoms[index].pos.x << " " << atoms[index].pos.y << " " << atoms[index].pos.z << std::endl;
 				index++;
 			}
 		}
