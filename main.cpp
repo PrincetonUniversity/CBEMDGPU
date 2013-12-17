@@ -6,7 +6,8 @@
 #include "utils.h"
 #include <omp.h>
 #include <stdlib.h>
-
+#include "cudaHelper.h"
+#include <math.h>
 
 /*!
  * Invoke the program as 
@@ -23,13 +24,14 @@ int main (int argc, char* argv[]) {
     	const int rngSeed = 3145;
     	float Temp = 0.5; // this should be input to main
     	float timestep = 0.005; // this should be input to main
+	const int nAtoms = 50;
     	systemDefinition a;
     	a.setBox(12, 12, 12);
 	a.setTemp(Temp);
     	a.setMass(1.0); 
 	a.setRskin(1.0);
     	a.setRcut(2.5);	// if slj needs to incorporate "delta" shift already so cell list is properly created
-   	a.initThermal(50, 1.01*Temp, rngSeed, 1.2);
+   	a.initThermal(nAtoms, 1.01*Temp, rngSeed, 1.2);
 
     	/*pointFunction_t pp = pairUF;
  	std::vector <float> args(1);
@@ -39,6 +41,21 @@ int main (int argc, char* argv[]) {
 	pointFunction_t pp = dev_slj;
 	#else
 	pointFunction_t pp = slj;
+	#endif
+
+	#ifdef NVCC
+	systemProps cudaProps;
+	cudaProps.displayAllProps();
+	if (cudaProps.numDevices() > 0) {
+		const int cudaDevID = 0;
+		a.cudaThreads = cudaProps.maxThreadsPerBlock(cudaDevID);
+		if (a.cudaThreads > 512) {
+			a.cudaThreads = 512;
+		}
+		a.cudaBlocks = (int) ceil(a.numAtoms()/a.cudaThreads);
+	} else {
+		return -1;
+	}
 	#endif
 
 	a.setPotential(pp);
