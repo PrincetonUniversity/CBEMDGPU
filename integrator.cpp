@@ -13,6 +13,7 @@
 #include <omp.h>
 #include <vector>
 
+#ifndef NVCC
 /*!
  * Calculate the pairwise forces in a system.  This also calculates the potential energy of a system.
  * The kinetic energy is calculated during the verlet integration.
@@ -64,3 +65,5 @@ void integrator::calcForce (systemDefinition &sys) {
 	// set Up
 	sys.setPotE(Up);
 }
+
+#endif

@@ -35,7 +35,12 @@ int main (int argc, char* argv[]) {
  	std::vector <float> args(1);
 	args[0] = 1.0; // epsilon
 	*/
+	#ifdef NVCC
+	pointFunction_t pp = dev_slj;
+	#else
 	pointFunction_t pp = slj;
+	#endif
+
 	a.setPotential(pp);
 	std::vector <float> args(5);
 	args[0] = 1.0; // epsilon

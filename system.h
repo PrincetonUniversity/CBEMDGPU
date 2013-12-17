@@ -39,10 +39,8 @@ class systemDefinition {
 		void writeSnapshot ();
 		int numAtoms() const {return atoms.size();}
 		void setPotentialArgs (const std::vector <float> args) {potentialArgs_ = args;}
-		std::vector <float> potentialArgs () const {return potentialArgs_;}
-//#ifdef NVCC
-//		__device__ pointFunction_t dev_potential;
-//#endif
+		std::vector <float> potentialArgs () {return potentialArgs_;}
+		
 		#ifdef NVCC
 		int cudaBlocks, cudaThreads;
 		#endif

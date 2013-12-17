@@ -4,28 +4,28 @@ PATHTOBOOST = /home/gkhoury/boost_1_52_0/
 CFLAGS = -O2 -I $(PATHTOBOOST) 
 OMPFLAGS = -openmp 
 Default: MD
-OMP = cellList.o integrator.o main.o nvt.o potential.o system.o utils.o
+OMP = cellList.o main.o nvt.o integrator.o system.o utils.o
 
 %.o : %.c
 	$(CXX) $(CFLAGS) -c $<
 
+#potential.o : potential.cu
+#	$(CXXCUDA) -DNVCC -gencode arch=compute_20,code=sm_20 $(CFLAGS) -c potential.cu
+
 cellList.o : cellList.cpp
 	$(CXX) -DNVCC $(OMPFLAGS) $(CFLAGS) -c cellList.cpp
 	
-integrator.o : integrator.cu
-	$(CXXCUDA) -DNVCC $(CFLAGS) -c integrator.cu
-
 main.o : main.cpp
 	$(CXX) -DNVCC $(OMPFLAGS) $(CFLAGS) -c main.cpp
 	
 nvt.o : nvt.cpp
 	$(CXX) -DNVCC $(OMPFLAGS) $(CFLAGS) -c nvt.cpp
 	
-potential.o : potential.cpp
-	$(CXX) -DNVCC $(OMPFLAGS) $(CFLAGS) -c potential.cpp
+integrator.o : integrator.cu
+	$(CXXCUDA) -DNVCC -gencode arch=compute_20,code=sm_20 $(CFLAGS) -c integrator.cu
 	
 system.o : system.cpp
-	$(CXX) -DNVCC $(OMPFLAGS) $(CFLAGS) -c system.cpp
+	$(CXX) -DNVCC $(CFLAGS) $(OMPFLAGS) -c system.cpp
 
 utils.o : utils.cpp
 	$(CXX) -DNVCC $(OMPFLAGS) $(CFLAGS) -c utils.cpp
