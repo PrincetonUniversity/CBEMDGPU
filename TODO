@@ -8,27 +8,36 @@ specifically, when use more than one thread the thermostat doesn't properly work
 (fixed, we weren't compiling each function's cpp file with the link to fopenmp which meant compiling that was totally ignoring the pragma statements!
 Still no speedup using openmp is it because of this http://stackoverflow.com/questions/7558965/openmp-wont-utilize-all-cores  12/14/13
 Need to make sure chunks in omp are logical values....!!! i.e. chunksize shouldn't be 100 when dealing wiht celllists if there are only 27. 12/14/13
-Need to figure out HOW TO GET SYSTEM COMPONENTS INTO SHARED LIST IN OPENMP.. i.e. how to get system or atoms into shared lists so can actually speed up.
+Need to figure out HOW TO GET SYSTEM COMPONENTS INTO SHARED LIST IN OPENMP.. i.e. how to get system or atoms into shared lists so can actually speed up. (fixed 12/17/13 use intel compiler :))
 
-shifted lennard-jones potential check form of equations .. blowing up 
+shifted lennard-jones potential check form of equations .. blowing up (initializing on grid... but, there is a BUG**Carmeline!**)
 
-Figure out if brute force rebuilding of cell lists is better than linked list maintenance
-benchmark OMP (reductions?)  (fixed 12/14/13)
+Figure out if brute force rebuilding of cell lists is better than linked list maintenance (**George**)
+
+benchmark OMP (reductions?)  (fixed 12/14/13)  (after variable chunksizes george will do this**)
 	don't really see a speed up for some reason (fixed 12/14/13) openmp had some serious bugs that were resolved and reductions were added
-	PROFILE (-gp)
+	PROFILE (-gp)   (**George will do this after OMP**)
 
-test if rebuld is actually faster (rs = 0)
-maintain "real" positions for MSD calc (gr done automatically with vmd through snapshots)
-add googletests
-Add LJ potential
 
-integrator verletStep is for NVE only now, add a class for this
+test if rebuild is actually faster (rs = 0)  Scaling as a function of Skinsize-> plots (**Carmeline**)
+maintain "real" positions for MSD calc (gr done automatically with vmd through snapshots) (**later**)
+compare MSD for some LJ fluid with something in literature
+add googletests (**Carmeline**) 
+Add LJ potential (we did this already-- we started with some dpd potential)
+
+integrator verletStep is for NVE only now, add a class for this (we did this)
 change “start” to be local in each class for integrators
+
+Change main so it actually takes inputs (**George**)  T, numprocs, numparticles
+
+Carmeline really long intro about why LJ particles are important 
+
+LaTeX report. Separate directory for this (All of us Carmeline will take lead on this)
 
 GPU
 1. offload integration
 2. then try offloading force calc (can use CPU cell list to build verlet lists for GPU)
 
 Notes:
-pbcDist2 much faster than pbcDist
-cell lists much better than brute force for > 1000 atoms
+pbcDist2 much faster than pbcDist (quantify this)
+cell lists much better than brute force for > 1000 atoms  (**quantify**)
