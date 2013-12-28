@@ -1,0 +1,67 @@
+\documentclass[12pt]{article}
+
+\title{Parallelized Molecular Dynamics using Graphical Processing Units}
+%\subtitle{APC 523}
+
+\author{Nathan Mahynski \and George Khoury \and Carmeline Dsilva}
+
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+Due to the dramatic increase in computing power over the last thirty years, computational chemistry simulations have become a remarkably fruitful tool for sciencetific discovery and engineering exploration.
+%
+Molecular simulations allow us to screen potential drug compounds \cite{...}, explore protein folding dynamics \cite{...}, and develop new catalysts \cite{...}.
+%
+However, most simulations that are physically relevant are on time and length scales that still require some degree of parallelization to be computationally tractible.
+
+Our project focuses on implementing a parallel molecular dynamics simulation for Lennard-Jones particles.
+%
+Many of the standard force fields today are built on Lennard-Jones interactions.
+%
+For example, the TIP3P water model \cite{...} contains Lennard-Jones interactions and an additional electorstatic term to account for water's polariazibiliy.
+%
+In addition, Lennard-Jones particles serve as a very good model for monotomic gases such as Argon \cite{...}, crystals such as Iron \cite{...}, and condensed amporphous phases such as glasses \cite{...}.
+%
+We therefore chose to implement our software for only Lennard-Jones particles.
+%
+However, the code is sufficiently modular that other pair potentials can easily be incorporated in future versions.
+
+Parallelization has also become essential for simulating molecular systems of interest. 
+%
+We have implemented our code to utilize GPUs or CPUs.
+
+
+\section{Implementation Details}
+
+\subsection{Neighbor lists}
+
+\subsection{Thermostats}
+We have implemented our software using a Nove-Hoover thermostat.
+%
+
+
+\subsection{Pair potentials}
+We have implemented a Lennard-Jones pair potential.
+
+
+\subsection{Parallellization}
+
+We have implemented our code so that it can be parallelized using CPUs or GPUs.
+
+\subsection{Testing}
+
+\section{Results}
+
+\subsection{Scaling studies}
+
+\subsection{Benchmarking}
+
+\subsection{Validation against literature values}
+
+\section{Conclusions and Future Work}
+
+\end{document}
