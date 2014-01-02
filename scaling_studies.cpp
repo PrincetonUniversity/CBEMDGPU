@@ -11,7 +11,7 @@
 
 /*!
  * Invoke the program as 
- * $ ./md numThreads nAtoms rs nsteps > log 2> err
+ * $ ./scaling numThreads nAtoms rs nsteps > log 2> err
  */ 
 int main (int argc, char* argv[]) {
 
