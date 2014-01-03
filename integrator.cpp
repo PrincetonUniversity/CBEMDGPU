@@ -62,6 +62,14 @@ void integrator::calcForce (systemDefinition &sys) {
 		}
 	}
 	
+	// save acceleration in array of atoms in system
+	#pragma omp parallel for
+	for (int i = 0; i < sys.numAtoms(); ++i) {
+		sys.atoms[i].acc.x = -acc[i].x;
+		sys.atoms[i].acc.y = -acc[i].y;
+		sys.atoms[i].acc.z = -acc[i].z;
+	}
+	
 	// set Up
 	sys.setPotE(Up);
 }
