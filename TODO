@@ -40,6 +40,7 @@ GPU
 3. We really need to mention how ridiculously busy TIGER is on the GPU queue. Testing takes forever since 
 can't run it interactively and so if you submit a job in the morning it takes almost 24 hours to run, and that's until you 
 find the next bug..!
+4. We need to explain how to compile this-- when the cuda header is trying to be compiled, it breaks and we need to explain this
 Notes:
 pbcDist2 much faster than pbcDist (quantify this)
 cell lists much better than brute force for > 1000 atoms  (**quantify**)

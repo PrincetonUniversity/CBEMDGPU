@@ -11,7 +11,7 @@ OMP_TESTS= unittests.o $(MD_DEPEND) gtest.a
 OMP_TIMING = scaling_studies.o $(MD_DEPEND)
 OMP_LMP = compare_lammps.o $(MD_DEPEND)
 
-GTEST_DIR = /home/cdsilva/gtest-1.7.0
+GTEST_DIR = /home/gkhoury/gtest-1.7.0
 CPPFLAGS += -isystem $(GTEST_DIR)/include
 GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h $(GTEST_DIR)/include/gtest/internal/*.h
 GTEST_SRCS_ = $(GTEST_DIR)/src/*.cc $(GTEST_DIR)/src/*.h $(GTEST_HEADERS)
@@ -29,7 +29,7 @@ gtest_main.a : gtest-all.o gtest_main.o
 	$(AR) $(ARFLAGS) $@ $^
 
 unittests.o : unittests.cpp $(GTEST_HEADERS)
-	$(CXX) $(OMPFLAGS) $(CPPFLAGS) $(CXXFLAGS) -c $<
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $<
 
 %.o : %.c
 	$(CXX) $(CFLAGS) -c $<
