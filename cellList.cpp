@@ -67,6 +67,7 @@ void cellList_cpu::checkUpdate (const systemDefinition &sys) {
 
 		// must build when initialized
 		build = 1;
+		start_ = 0;
 	} else {
 		float drMax1_ = 0.0;
                 float drMax2_ = 0.0;
@@ -89,6 +90,9 @@ void cellList_cpu::checkUpdate (const systemDefinition &sys) {
 
 	// check to rebuild the neighbor list
 	if (build) {
+
+		std::cout << "CELL LIST BUILT" << std::endl;
+
 		std::vector < std::vector < int > > dummyNeighbors (sys.numAtoms());
 		std::vector < int > empty (1, -1);
                 for (unsigned int i = 0; i < dummyNeighbors.size(); ++i) {
@@ -100,14 +104,14 @@ void cellList_cpu::checkUpdate (const systemDefinition &sys) {
 		float3 dummy, box = sys.box();
 		int totalNeighbors = 0;
 		for (unsigned int i = 0; i < N; ++i) {
-			for (unsigned int j = i+i; j < N; ++j) {
+			for (unsigned int j = i+1; j < N; ++j) {
 				float dist2 = pbcDist2(sys.atoms[i].pos, sys.atoms[j].pos, dummy, box);
 				if (dist2 < cut2) {
 					nn[i]++;
 					nn[j]++;
 					totalNeighbors += 2;
-
-					// double the size to reduce the number of times this has to happen
+					
+					// double the size as necessary to reduce the number of overall memory operations (resize)
 					if (dummyNeighbors[i].size() < nn[i]) {
 						dummyNeighbors[i].resize(2*dummyNeighbors[i].size());
 					}
@@ -119,7 +123,7 @@ void cellList_cpu::checkUpdate (const systemDefinition &sys) {
 				}
 			}
 		}
-		
+
 		// make the list "linear"
 		try {
 			nlist.resize(totalNeighbors + N);
@@ -130,7 +134,6 @@ void cellList_cpu::checkUpdate (const systemDefinition &sys) {
 		
 		int counter = 0;
 		for (unsigned int i = 0; i < N; ++i) {
-                        //dummyNeighbors[i].resize(nn[i]); // free as much memory as possible
                         posAtLastBuild_[i] = sys.atoms[i].pos;
 			nlist[counter] = nn[i];
 			nlist_index[i] = counter;
@@ -142,6 +145,16 @@ void cellList_cpu::checkUpdate (const systemDefinition &sys) {
 			dummyNeighbors[i].resize(0); // free as much memory as possible
                 }
 	}
+
+	// tmp
+	/*for (int i = 0; i < sys.numAtoms(); ++i) {
+		std::cout << "pk " << i << " has " << nlist[nlist_index[i]] << " neighbors: " << std::endl;
+		int start = nlist_index[i];
+		for (int j = 0; j < nlist[nlist_index[i]]; ++j) {	
+			std::cout << nlist[start+j+1] << std::endl;
+		}
+	}
+	exit(-1);*/
 }	
 
 // if not using GPUs (CUDA) maintain cell lists

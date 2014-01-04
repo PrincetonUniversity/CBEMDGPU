@@ -1,0 +1,68 @@
+*** glibc detected *** ./timing: free(): invalid next size (normal): 0x000000000107a070 ***
+======= Backtrace: =========
+/lib64/libc.so.6(+0x76166)[0x2ab6c3d89166]
+/lib64/libc.so.6(+0x78c93)[0x2ab6c3d8bc93]
+./timing[0x402840]
+/lib64/libc.so.6(__libc_start_main+0xfd)[0x2ab6c3d31d1d]
+./timing[0x4022b9]
+======= Memory map: ========
+00400000-00420000 r-xp 00000000 00:13 113132902                          /home/gkhoury/APC523/project/CBEMDGPU/timing
+0061f000-00622000 rw-p 0001f000 00:13 113132902                          /home/gkhoury/APC523/project/CBEMDGPU/timing
+01057000-01099000 rw-p 00000000 00:00 0                                  [heap]
+2ab6c2e31000-2ab6c2e51000 r-xp 00000000 08:01 1703960                    /lib64/ld-2.12.so
+2ab6c2e51000-2ab6c2e52000 rw-p 00000000 00:00 0 
+2ab6c2e5f000-2ab6c2e60000 rw-p 00000000 00:00 0 
+2ab6c3050000-2ab6c3051000 r--p 0001f000 08:01 1703960                    /lib64/ld-2.12.so
+2ab6c3051000-2ab6c3052000 rw-p 00020000 08:01 1703960                    /lib64/ld-2.12.so
+2ab6c3052000-2ab6c3053000 rw-p 00000000 00:00 0 
+2ab6c3053000-2ab6c30d6000 r-xp 00000000 08:01 1704024                    /lib64/libm-2.12.so
+2ab6c30d6000-2ab6c32d5000 ---p 00083000 08:01 1704024                    /lib64/libm-2.12.so
+2ab6c32d5000-2ab6c32d6000 r--p 00082000 08:01 1704024                    /lib64/libm-2.12.so
+2ab6c32d6000-2ab6c32d7000 rw-p 00083000 08:01 1704024                    /lib64/libm-2.12.so
+2ab6c32d7000-2ab6c33ad000 r-xp 00000000 08:01 2755459                    /opt/intel/composer_xe_2013.1.117/compiler/lib/intel64/libiomp5.so
+2ab6c33ad000-2ab6c35ad000 ---p 000d6000 08:01 2755459                    /opt/intel/composer_xe_2013.1.117/compiler/lib/intel64/libiomp5.so
+2ab6c35ad000-2ab6c35b7000 rw-p 000d6000 08:01 2755459                    /opt/intel/composer_xe_2013.1.117/compiler/lib/intel64/libiomp5.so
+2ab6c35b7000-2ab6c35d9000 rw-p 00000000 00:00 0 
+2ab6c35d9000-2ab6c36c1000 r-xp 00000000 08:01 1835774                    /usr/lib64/libstdc++.so.6.0.13
+2ab6c36c1000-2ab6c38c1000 ---p 000e8000 08:01 1835774                    /usr/lib64/libstdc++.so.6.0.13
+2ab6c38c1000-2ab6c38c8000 r--p 000e8000 08:01 1835774                    /usr/lib64/libstdc++.so.6.0.13
+2ab6c38c8000-2ab6c38ca000 rw-p 000ef000 08:01 1835774                    /usr/lib64/libstdc++.so.6.0.13
+2ab6c38ca000-2ab6c38e0000 rw-p 00000000 00:00 0 
+2ab6c38e0000-2ab6c38f6000 r-xp 00000000 08:01 1703939                    /lib64/libgcc_s-4.4.7-20120601.so.1
+2ab6c38f6000-2ab6c3af5000 ---p 00016000 08:01 1703939                    /lib64/libgcc_s-4.4.7-20120601.so.1
+2ab6c3af5000-2ab6c3af6000 rw-p 00015000 08:01 1703939                    /lib64/libgcc_s-4.4.7-20120601.so.1
+2ab6c3af6000-2ab6c3b0d000 r-xp 00000000 08:01 1704006                    /lib64/libpthread-2.12.so
+2ab6c3b0d000-2ab6c3d0d000 ---p 00017000 08:01 1704006                    /lib64/libpthread-2.12.so
+2ab6c3d0d000-2ab6c3d0e000 r--p 00017000 08:01 1704006                    /lib64/libpthread-2.12.so
+2ab6c3d0e000-2ab6c3d0f000 rw-p 00018000 08:01 1704006                    /lib64/libpthread-2.12.so
+2ab6c3d0f000-2ab6c3d13000 rw-p 00000000 00:00 0 
+2ab6c3d13000-2ab6c3e9e000 r-xp 00000000 08:01 1703945                    /lib64/libc-2.12.so
+2ab6c3e9e000-2ab6c409d000 ---p 0018b000 08:01 1703945                    /lib64/libc-2.12.so
+2ab6c409d000-2ab6c40a1000 r--p 0018a000 08:01 1703945                    /lib64/libc-2.12.so
+2ab6c40a1000-2ab6c40a2000 rw-p 0018e000 08:01 1703945                    /lib64/libc-2.12.so
+2ab6c40a2000-2ab6c40a8000 rw-p 00000000 00:00 0 
+2ab6c40a8000-2ab6c40aa000 r-xp 00000000 08:01 1703971                    /lib64/libdl-2.12.so
+2ab6c40aa000-2ab6c42aa000 ---p 00002000 08:01 1703971                    /lib64/libdl-2.12.so
+2ab6c42aa000-2ab6c42ab000 r--p 00002000 08:01 1703971                    /lib64/libdl-2.12.so
+2ab6c42ab000-2ab6c42ac000 rw-p 00003000 08:01 1703971                    /lib64/libdl-2.12.so
+2ab6c42ac000-2ab6c44d0000 rw-p 00000000 00:00 0 
+2ab6c44d0000-2ab6c44d1000 ---p 00000000 00:00 0 
+2ab6c44d1000-2ab6c44e1000 rw-p 00000000 00:00 0 
+2ab6c44e1000-2ab6c44e2000 ---p 00000000 00:00 0 
+2ab6c44e2000-2ab6c48e2000 rw-p 00000000 00:00 0 
+2ab6c48e2000-2ab6c48e3000 ---p 00000000 00:00 0 
+2ab6c48e3000-2ab6c4ce3000 rw-p 00000000 00:00 0 
+2ab6c8000000-2ab6c8021000 rw-p 00000000 00:00 0 
+2ab6c8021000-2ab6cc000000 ---p 00000000 00:00 0 
+2ab6cc000000-2ab6cc021000 rw-p 00000000 00:00 0 
+2ab6cc021000-2ab6d0000000 ---p 00000000 00:00 0 
+2ab6d0000000-2ab6d0021000 rw-p 00000000 00:00 0 
+2ab6d0021000-2ab6d4000000 ---p 00000000 00:00 0 
+2ab6d4000000-2ab6d4001000 ---p 00000000 00:00 0 
+2ab6d4001000-2ab6d440a000 rw-p 00000000 00:00 0 
+2ab6d8000000-2ab6d8021000 rw-p 00000000 00:00 0 
+2ab6d8021000-2ab6dc000000 ---p 00000000 00:00 0 
+7fffcef0d000-7fffcef24000 rw-p 00000000 00:00 0                          [stack]
+7fffcefff000-7fffcf000000 r-xp 00000000 00:00 0                          [vdso]
+ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]
+/var/lib/torque/mom_priv/jobs/660283.tiger-pbs.SC: line 13: 18718 Aborted                 ./timing $i $j $k 10000 >> timing_results.txt.tiger
