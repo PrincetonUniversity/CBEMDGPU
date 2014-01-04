@@ -7,16 +7,15 @@
 #include <omp.h>
 #include <stdlib.h>
 #include <math.h>
-#include <time.h>
 
 /*!
  * Invoke the program as 
- * $ ./scaling numThreads nAtoms rs nsteps > log 2> err
+ * $ ./timing numThreads nAtoms rs nsteps 
  */ 
 int main (int argc, char* argv[]) {
 
-	clock_t t1, t2;
-	t1 = clock();
+	double t1, t2;
+	t1 = omp_get_wtime();
 
     	if (argc !=5){
 		// catch incorrect number of arguments
@@ -29,7 +28,7 @@ int main (int argc, char* argv[]) {
 	const double rs = atof(argv[3]);
     	const int nSteps = atoi(argv[4]);
 
-	const double L = pow(3.0*nAtoms, 1.0/3.0);
+	const double L = pow(2.0*nAtoms, 1.0/3.0);
 	const double rCut = 2.5;
 
 	omp_set_num_threads(nthreads);
@@ -86,8 +85,8 @@ int main (int argc, char* argv[]) {
 		integrate.step2(a);
 	}
 	
-	t2 = clock();
-	float time_diff = ((float)t2 - (float)t1) / CLOCKS_PER_SEC;
+	t2 = omp_get_wtime();
+	double time_diff = t2 - t1;
 
 	std::cout << nthreads << " " << nAtoms << " " << rs << " " << nSteps << " " << time_diff << std::endl;
 
