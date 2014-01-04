@@ -5,7 +5,6 @@
  */
 
 #include "system.h"
-//#include <exception>
 #include <math.h>
 #include "common.h"
 #include "integrator.h"
@@ -17,6 +16,15 @@
 #include "potential.h"
 
 // Cuda Potential must be compiled together with the integrator so they are here, not in their own file
+
+/*!
+ * Compute the minimum image distance between two atoms on the GPU.
+ *
+ * \param [in] p1 Coordinates of atom 1
+ * \param [in] p2 Coordinates of atom 2
+ * \param [out] dr Vector pointing from atom1 to atom2
+ * \param [in] box Coordinates of box
+ */
 __device__ float dev_pbcDist2 (const float3 *p1, const float3 *p2, float3 *dr, const float3 *box) {
 	double d = 0.0;
 
@@ -68,7 +76,7 @@ __device__ float dev_pairUF (const float3 *p1, const float3 *p2, float3 *pairFor
  * \param [in] rcut Cutoff distance; NOTE: this MUST already incorporate the delta shift, ie. if r < ((rc' + delta) = rc), then force is computed
 */
 __device__ float dev_slj (const float3 *p1, const float3 *p2, float3 *pairForce, const float3 *box, const float *args, const float *rcut) {
-        float3 dr;
+    float3 dr;
 	float r2 = dev_pbcDist2(p1, p2, &dr, box);
 
 	// check that r > delta and throw/catch
@@ -79,7 +87,7 @@ __device__ float dev_slj (const float3 *p1, const float3 *p2, float3 *pairForce,
 	
 	if (r2 < (*rcut)*(*rcut)) {
 		float r = sqrt(r2);
-        	float x = r - args[2];
+        float x = r - args[2];
 		float b = 1.0/x, a = args[1]*b, a2 = a*a, a6 = a2*a2*a2, factor;
 		factor = 24.0*args[0]*a6*(2.0*a6-1.0)*b/r;
 		pairForce->x = -factor*dr.x;
@@ -140,7 +148,6 @@ __global__ void loopOverNeighbors (atom* dev_atoms, int* nlist, int* nlist_index
 			myforce.z += dummyForce.z;	
 		}
 
-		// carmeline suggested a sign change
 		force[tid].x = -myforce.x;
 		force[tid].y = -myforce.y;
 		force[tid].z = -myforce.z;

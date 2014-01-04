@@ -82,7 +82,7 @@ int main (int argc, char* argv[]) {
 
 
 	for (unsigned int long step = 0; step < nSteps; ++step) {
-		integrate.step2(a);
+		integrate.step(a);
 	}
 	
 	t2 = omp_get_wtime();
