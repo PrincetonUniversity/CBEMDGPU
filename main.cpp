@@ -6,7 +6,11 @@
 #include "utils.h"
 #include <omp.h>
 #include <stdlib.h>
+
+#ifdef NOGPU
 #include "cudaHelper.h"
+#endif
+
 #include <math.h>
 
 /*!
