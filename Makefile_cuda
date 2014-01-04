@@ -5,12 +5,13 @@ CFLAGS = -O2 -I $(PATHTOBOOST)
 OMPFLAGS = -openmp 
 Default: MD
 OMP = cudaHelper.o cellList.o main.o nvt.o integrator.o system.o utils.o
+NVFLAGS = -gencode arch=compute_35,code=sm_35 -gencode arch=compute_20,code=sm_20
 
 %.o : %.c
 	$(CXX) $(CFLAGS) -c $<
 
 cudaHelper.o : cudaHelper.cu
-	$(CXXCUDA) -DNVCC -gencode arch=compute_20,code=sm_20 $(CFLAGS) -c cudaHelper.cu
+	$(CXXCUDA) -DNVCC $(NVFLAGS) $(CFLAGS) -c cudaHelper.cu
 
 cellList.o : cellList.cpp
 	$(CXX) -DNVCC $(OMPFLAGS) $(CFLAGS) -c cellList.cpp
@@ -22,7 +23,7 @@ nvt.o : nvt.cpp
 	$(CXX) -DNVCC $(OMPFLAGS) $(CFLAGS) -c nvt.cpp
 	
 integrator.o : integrator.cu
-	$(CXXCUDA) -DNVCC -gencode arch=compute_20,code=sm_20 $(CFLAGS) -c integrator.cu
+	$(CXXCUDA) -DNVCC $(NVFLAGS) $(CFLAGS) -c integrator.cu
 	
 system.o : system.cpp
 	$(CXX) -DNVCC $(CFLAGS) $(OMPFLAGS) -c system.cpp

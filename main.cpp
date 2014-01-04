@@ -26,13 +26,13 @@ int main (int argc, char* argv[]) {
     	float timestep = 0.005; // this should be input to main
 	const int nAtoms = 50;
     	systemDefinition a;
-    	a.setBox(12, 12, 12);
+	a.setBox(12, 12, 12);
 	a.setTemp(Temp);
     	a.setMass(1.0); 
 	a.setRskin(1.0);
     	a.setRcut(2.5);	// if slj needs to incorporate "delta" shift already so cell list is properly created
-   	a.initThermal(nAtoms, 1.01*Temp, rngSeed, 1.2);
-
+	a.initThermal(nAtoms, 1.01*Temp, rngSeed, 1.2);
+	
     	/*pointFunction_t pp = pairUF;
  	std::vector <float> args(1);
 	args[0] = 1.0; // epsilon
@@ -52,7 +52,8 @@ int main (int argc, char* argv[]) {
 		if (a.cudaThreads > 512) {
 			a.cudaThreads = 512;
 		}
-		a.cudaBlocks = (int) ceil(a.numAtoms()/a.cudaThreads);
+		a.cudaBlocks = (int) ceil(a.numAtoms()/(1.0*a.cudaThreads));
+		if (a.cudaBlocks < 1) a.cudaBlocks = 1;
 	} else {
 		return -1;
 	}
@@ -70,7 +71,7 @@ int main (int argc, char* argv[]) {
     	integrate.setTimestep(timestep);
 
     	const int nSteps = 3000;
-    	const int report = 10; //nSteps/1000;
+    	const int report = 1; //nSteps/1000;
 
 	for (unsigned int long step = 0; step < nSteps; ++step) {
 		integrate.step2(a);
