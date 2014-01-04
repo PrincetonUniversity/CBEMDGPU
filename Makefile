@@ -35,10 +35,10 @@ unittests.o : unittests.cpp $(GTEST_HEADERS)
 	$(CXX) $(CFLAGS) -c $<
 
 %.o : %.cpp
-	$(CXX) $(OMPFLAGS) $(CFLAGS) -c $<
+	$(CXX) -DNOGPU $(OMPFLAGS) $(CFLAGS) -c $<
 
 MD: $(OMP)
-	$(CXX) -DNOGPU $(OMPFLAGS) -o md $(CFLAGS) $^ 
+	$(CXX) $(OMPFLAGS) -o md $(CFLAGS) $^ 
 
 TESTS: $(OMP_TESTS)
 	$(CXX) $(OMPFLAGS) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o tests
