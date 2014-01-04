@@ -1,0 +1,356 @@
+\hypertarget{classsystem_definition}{\section{system\-Definition Class Reference}
+\label{classsystem_definition}\index{system\-Definition@{system\-Definition}}
+}
+
+
+Contains all information pertaining to a system being simulated.  
+
+
+
+
+{\ttfamily \#include $<$system.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classsystem_definition_ae9db403f9fe40c07afe541187c2e61b5}{init\-Random} (const int N, const int rng\-Seed)
+\item 
+void \hyperlink{classsystem_definition_aaabd070a1531ab464a752dacc7854542}{init\-Thermal} (const int N, const float Tset, const int rng\-Seed, const float dx)
+\item 
+\hypertarget{classsystem_definition_a285e6cd1de35ed125eecb20f0f774ab3}{void \hyperlink{classsystem_definition_a285e6cd1de35ed125eecb20f0f774ab3}{update\-Instant\-Temp} (const float T)}\label{classsystem_definition_a285e6cd1de35ed125eecb20f0f774ab3}
+
+\begin{DoxyCompactList}\small\item\em Manually set the instantaneous temperature. \end{DoxyCompactList}\item 
+\hypertarget{classsystem_definition_a14a9ee5c342fcfaa9d5682bf5bac7bb9}{void \hyperlink{classsystem_definition_a14a9ee5c342fcfaa9d5682bf5bac7bb9}{set\-Temp} (const float T)}\label{classsystem_definition_a14a9ee5c342fcfaa9d5682bf5bac7bb9}
+
+\begin{DoxyCompactList}\small\item\em Assign the target temperature for N\-V\-T simulations. \end{DoxyCompactList}\item 
+\hypertarget{classsystem_definition_a34648bc27c7bbdf03220ad10da4d2987}{void \hyperlink{classsystem_definition_a34648bc27c7bbdf03220ad10da4d2987}{set\-Mass} (const float m)}\label{classsystem_definition_a34648bc27c7bbdf03220ad10da4d2987}
+
+\begin{DoxyCompactList}\small\item\em Assign the mass of each particle. \end{DoxyCompactList}\item 
+\hypertarget{classsystem_definition_aae59925e7b9019a6d67b2324b60051ec}{void \hyperlink{classsystem_definition_aae59925e7b9019a6d67b2324b60051ec}{set\-Rcut} (const float rc)}\label{classsystem_definition_aae59925e7b9019a6d67b2324b60051ec}
+
+\begin{DoxyCompactList}\small\item\em Assign the cutoff radius of the pair potential. \end{DoxyCompactList}\item 
+\hypertarget{classsystem_definition_a14d765f5f918d35662d69fb84c61ce86}{void \hyperlink{classsystem_definition_a14d765f5f918d35662d69fb84c61ce86}{set\-Rskin} (const float rs)}\label{classsystem_definition_a14d765f5f918d35662d69fb84c61ce86}
+
+\begin{DoxyCompactList}\small\item\em Assign the skin radius as a buffer for the neighbor/cell lists. \end{DoxyCompactList}\item 
+\hypertarget{classsystem_definition_a3d26cd585817637da7544ce82ae48f66}{void \hyperlink{classsystem_definition_a3d26cd585817637da7544ce82ae48f66}{set\-Box} (const float x, const float y, const float z)}\label{classsystem_definition_a3d26cd585817637da7544ce82ae48f66}
+
+\begin{DoxyCompactList}\small\item\em Assign the simulation box size. \end{DoxyCompactList}\item 
+\hypertarget{classsystem_definition_a33258dffa795227ab6022b1c1d50fc81}{void \hyperlink{classsystem_definition_a33258dffa795227ab6022b1c1d50fc81}{print\-Box} ()}\label{classsystem_definition_a33258dffa795227ab6022b1c1d50fc81}
+
+\begin{DoxyCompactList}\small\item\em Print the box dimesions to stdout. \end{DoxyCompactList}\item 
+\hypertarget{classsystem_definition_a85b80dee3609ddb68e370cee3fa959ea}{\hyperlink{structfloat3}{float3} \hyperlink{classsystem_definition_a85b80dee3609ddb68e370cee3fa959ea}{box} () const }\label{classsystem_definition_a85b80dee3609ddb68e370cee3fa959ea}
+
+\begin{DoxyCompactList}\small\item\em Report the box dimensions. \end{DoxyCompactList}\item 
+\hypertarget{classsystem_definition_af7b322cfc8abe7042fdbeb0af8e7aa7e}{float \hyperlink{classsystem_definition_af7b322cfc8abe7042fdbeb0af8e7aa7e}{instant\-T} () const }\label{classsystem_definition_af7b322cfc8abe7042fdbeb0af8e7aa7e}
+
+\begin{DoxyCompactList}\small\item\em Report the instantaneous temperature. \end{DoxyCompactList}\item 
+\hypertarget{classsystem_definition_a3c958df2ab99c0cb75c740346a5a4b6f}{float \hyperlink{classsystem_definition_a3c958df2ab99c0cb75c740346a5a4b6f}{target\-T} () const }\label{classsystem_definition_a3c958df2ab99c0cb75c740346a5a4b6f}
+
+\begin{DoxyCompactList}\small\item\em Report the target temperature for N\-V\-T simulations. \end{DoxyCompactList}\item 
+\hypertarget{classsystem_definition_acb6dd3df121e3e5bc0eb41c32bd937bd}{float \hyperlink{classsystem_definition_acb6dd3df121e3e5bc0eb41c32bd937bd}{mass} () const }\label{classsystem_definition_acb6dd3df121e3e5bc0eb41c32bd937bd}
+
+\begin{DoxyCompactList}\small\item\em Report the particle's mass. \end{DoxyCompactList}\item 
+\hypertarget{classsystem_definition_a0b2c9729ed74a21dc91cab199e0fd99c}{float \hyperlink{classsystem_definition_a0b2c9729ed74a21dc91cab199e0fd99c}{Pot\-E} () const }\label{classsystem_definition_a0b2c9729ed74a21dc91cab199e0fd99c}
+
+\begin{DoxyCompactList}\small\item\em Report the instantaneous potential energy of the system. \end{DoxyCompactList}\item 
+\hypertarget{classsystem_definition_a92a7d6457bd3f7ce71088e4df8e9ff4b}{void \hyperlink{classsystem_definition_a92a7d6457bd3f7ce71088e4df8e9ff4b}{set\-Pot\-E} (const float Up)}\label{classsystem_definition_a92a7d6457bd3f7ce71088e4df8e9ff4b}
+
+\begin{DoxyCompactList}\small\item\em Assign the potential energy. \end{DoxyCompactList}\item 
+\hypertarget{classsystem_definition_a2b2c236698886bd1d106be802b987b61}{void \hyperlink{classsystem_definition_a2b2c236698886bd1d106be802b987b61}{set\-Kin\-E} (const float Uk)}\label{classsystem_definition_a2b2c236698886bd1d106be802b987b61}
+
+\begin{DoxyCompactList}\small\item\em Assign the kinetic energy. \end{DoxyCompactList}\item 
+\hypertarget{classsystem_definition_a6ef7fed76c5774d85f3c78943df2ed90}{float \hyperlink{classsystem_definition_a6ef7fed76c5774d85f3c78943df2ed90}{Kin\-E} () const }\label{classsystem_definition_a6ef7fed76c5774d85f3c78943df2ed90}
+
+\begin{DoxyCompactList}\small\item\em Report the instantaneous kinetic energy of the system. \end{DoxyCompactList}\item 
+\hypertarget{classsystem_definition_a343c8b17c052215a32412ec3df4f1d9a}{float \hyperlink{classsystem_definition_a343c8b17c052215a32412ec3df4f1d9a}{rskin} () const }\label{classsystem_definition_a343c8b17c052215a32412ec3df4f1d9a}
+
+\begin{DoxyCompactList}\small\item\em Report the skin radius for the neighbor/cell lists. \end{DoxyCompactList}\item 
+\hypertarget{classsystem_definition_acacd88aac7d451bdcf9779ae8c5a95c7}{float \hyperlink{classsystem_definition_acacd88aac7d451bdcf9779ae8c5a95c7}{rcut} () const }\label{classsystem_definition_acacd88aac7d451bdcf9779ae8c5a95c7}
+
+\begin{DoxyCompactList}\small\item\em Report the pair potential function cutoff radius. \end{DoxyCompactList}\item 
+void \hyperlink{classsystem_definition_ae7be021831635d359872d046f58b337a}{write\-Snapshot} ()
+\begin{DoxyCompactList}\small\item\em Print a snapshot of the system. \end{DoxyCompactList}\item 
+\hypertarget{classsystem_definition_ae8d3c2df2d56241cee03fcc4e2026ae0}{int \hyperlink{classsystem_definition_ae8d3c2df2d56241cee03fcc4e2026ae0}{num\-Atoms} () const }\label{classsystem_definition_ae8d3c2df2d56241cee03fcc4e2026ae0}
+
+\begin{DoxyCompactList}\small\item\em Report the pair potential function cutoff radius. \end{DoxyCompactList}\item 
+\hypertarget{classsystem_definition_af0309b6a6b9e68a5e014ed3c74fcc13f}{void \hyperlink{classsystem_definition_af0309b6a6b9e68a5e014ed3c74fcc13f}{set\-Potential\-Args} (const std\-::vector$<$ float $>$ args)}\label{classsystem_definition_af0309b6a6b9e68a5e014ed3c74fcc13f}
+
+\begin{DoxyCompactList}\small\item\em Assign additional arguments to the pair potential function. \end{DoxyCompactList}\item 
+\hypertarget{classsystem_definition_ab20c0c30e84fccdf15f54c155d25420f}{std\-::vector$<$ float $>$ \hyperlink{classsystem_definition_ab20c0c30e84fccdf15f54c155d25420f}{potential\-Args} ()}\label{classsystem_definition_ab20c0c30e84fccdf15f54c155d25420f}
+
+\begin{DoxyCompactList}\small\item\em Report additional arguments to the pair potential function. \end{DoxyCompactList}\item 
+void \hyperlink{classsystem_definition_a375afbe9e4ffc76793db1b222bc1f941}{set\-Potential} (point\-Function\-\_\-t pp)
+\begin{DoxyCompactList}\small\item\em Assign pair potential function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classsystem_definition_a4861989c8ca1ddef7ec521499453df3f}{point\-Function\-\_\-t \hyperlink{classsystem_definition_a4861989c8ca1ddef7ec521499453df3f}{potential}}\label{classsystem_definition_a4861989c8ca1ddef7ec521499453df3f}
+
+\begin{DoxyCompactList}\small\item\em Pointer to pair potential function. \end{DoxyCompactList}\item 
+\hypertarget{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{std\-::vector$<$ \hyperlink{structatom}{atom} $>$ \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}}\label{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}
+
+\begin{DoxyCompactList}\small\item\em Vector of atoms in the system. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Contains all information pertaining to a system being simulated. 
+
+System definition \begin{DoxyAuthor}{Author}
+Nathan A. Mahynski 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+11/17/13 
+\end{DoxyDate}
+
+
+Definition at line 17 of file system.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classsystem_definition_ae9db403f9fe40c07afe541187c2e61b5}{\index{system\-Definition@{system\-Definition}!init\-Random@{init\-Random}}
+\index{init\-Random@{init\-Random}!systemDefinition@{system\-Definition}}
+\subsubsection[{init\-Random}]{\setlength{\rightskip}{0pt plus 5cm}void system\-Definition\-::init\-Random (
+\begin{DoxyParamCaption}
+\item[{const int}]{N, }
+\item[{const int}]{rng\-Seed}
+\end{DoxyParamCaption}
+)}}\label{classsystem_definition_ae9db403f9fe40c07afe541187c2e61b5}
+Initialize a system of N atoms with random velocities and positions on a lattice. Net momeentum is automatically initialized to zero.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em N} & Number of atoms to create \\
+\hline
+\mbox{\tt in}  & {\em rng\-Seed} & Random number generator seed \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 32 of file system.\-cpp.
+
+
+
+References atoms.
+
+
+\begin{DoxyCode}
+                                                                 \{
+    \hyperlink{structfloat3}{float3} totMomentum;
+    totMomentum.x = 0; totMomentum.y = 0; totMomentum.z = 0;
+
+    \textcolor{keywordflow}{if} (N < 1) \{
+        \textcolor{keywordflow}{throw} \hyperlink{classcustom_exception}{customException} (\textcolor{stringliteral}{"N must be > 0"});
+        \textcolor{keywordflow}{return};
+    \}
+
+    srand(rngSeed);
+    \textcolor{keywordtype}{int} chunk = OMP\_CHUNK;
+    \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i;
+    \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}.resize(N);
+\textcolor{preprocessor}{    #pragma omp parallel private(i)}
+\textcolor{preprocessor}{}    \{
+\textcolor{preprocessor}{    #pragma omp for schedule(dynamic, chunk)}
+\textcolor{preprocessor}{}    \textcolor{keywordflow}{for} (i = 0; i < N; ++i) \{
+        \textcolor{keywordflow}{if} (i < N-1) \{
+            \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x = (RNG-0.5);
+            \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.y = (RNG-0.5);
+            \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.z = (RNG-0.5);
+            totMomentum.x += \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x;
+            totMomentum.y += \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.y;
+            totMomentum.z += \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.z;
+        \} \textcolor{keywordflow}{else} \{
+            \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x = -totMomentum.x;
+            \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.y = -totMomentum.y;
+            \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.z = -totMomentum.z;
+        \}
+        \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].pos.x = (RNG)*box\_.x;
+        \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].pos.y = (RNG)*box\_.y;
+        \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].pos.z = (RNG)*box\_.z;
+        \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].acc.x = 0;
+        \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].acc.y = 0;
+        \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].acc.z = 0;
+    \}
+    \}
+\}
+\end{DoxyCode}
+\hypertarget{classsystem_definition_aaabd070a1531ab464a752dacc7854542}{\index{system\-Definition@{system\-Definition}!init\-Thermal@{init\-Thermal}}
+\index{init\-Thermal@{init\-Thermal}!systemDefinition@{system\-Definition}}
+\subsubsection[{init\-Thermal}]{\setlength{\rightskip}{0pt plus 5cm}void system\-Definition\-::init\-Thermal (
+\begin{DoxyParamCaption}
+\item[{const int}]{N, }
+\item[{const float}]{Tset, }
+\item[{const int}]{rng\-Seed, }
+\item[{const float}]{dx}
+\end{DoxyParamCaption}
+)}}\label{classsystem_definition_aaabd070a1531ab464a752dacc7854542}
+Initialize a system of N atoms with random velocities to meet a desired temperature and positions on a lattice. Net momentum is automatically initialized to zero.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em N} & Number of atoms to create \\
+\hline
+\mbox{\tt in}  & {\em rng\-Seed} & Random number generator seed \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 78 of file system.\-cpp.
+
+
+
+References atoms.
+
+
+\begin{DoxyCode}
+                                                                               
+                           \{
+    \hyperlink{structfloat3}{float3} totMomentum;
+    totMomentum.x = 0; totMomentum.y = 0; totMomentum.z = 0;
+
+    \textcolor{keywordflow}{if} (N < 1) \{
+        \textcolor{keywordflow}{throw} \hyperlink{classcustom_exception}{customException} (\textcolor{stringliteral}{"N must be > 0"});
+        \textcolor{keywordflow}{return};
+    \}
+
+    srand(rngSeed);
+    \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}.resize(N);
+
+    \textcolor{comment}{// maxwell boltzmann distribution has mean 0 stdev kT/m in each dimension}
+    \textcolor{keyword}{typedef} std::tr1::linear\_congruential<int, 16807, 0, (int)((1U << 31) -1 ) 
+      > Myceng;
+    Myceng eng;
+    \textcolor{keywordtype}{float} sig = sqrt(Tset/mass\_);
+    std::tr1::normal\_distribution<float> distribution(0.0,sig);
+    \textcolor{keywordtype}{float} rannum = 0.0;
+    \textcolor{keywordtype}{float} tmpT = 0.0;
+    \textcolor{keywordtype}{int} index = 0;
+    \textcolor{keyword}{const} \textcolor{keywordtype}{int} xs = floor(box\_.x/dx);
+    \textcolor{keyword}{const} \textcolor{keywordtype}{int} ys = floor(box\_.y/dx);
+    \textcolor{keyword}{const} \textcolor{keywordtype}{int} zs = floor(box\_.z/dx);
+    
+    \textcolor{comment}{// initialize particle positions on a simple cubic lattice}
+    \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} x = 0; x < xs; ++x) \{
+        \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} y = 0; y < ys; ++y) \{
+            \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} z = 0; z < zs; ++z) \{
+                \textcolor{keywordflow}{if} (index < N) \{
+                    \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[index].pos.x = x*dx;
+                    \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[index].pos.y = y*dx;
+                    \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[index].pos.z = z*dx;
+                \} \textcolor{keywordflow}{else} \{
+                    x = xs;
+                    y = ys;
+                    z = zs;
+                    \textcolor{keywordflow}{break};
+                \}
+                index++;
+            \}
+        \}
+    \}
+    
+    \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i = 0; i < N; ++i) \{
+        \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].acc.x = 0;
+        \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].acc.y = 0;
+        \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].acc.z = 0;
+        \textcolor{keywordflow}{if} (i < N-1) \{
+            \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x = distribution(eng);
+            \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.y = distribution(eng);
+            \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.z = distribution(eng);
+            totMomentum.x += \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x;
+            totMomentum.y += \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.y;
+            totMomentum.z += \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.z;
+        \} \textcolor{keywordflow}{else} \{
+            \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x = -totMomentum.x;
+            \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.y = -totMomentum.y;
+            \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.z = -totMomentum.z;
+        \}
+        tmpT += (\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x*\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x + \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.y*
+      \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.y + \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.z*\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.z);
+    \}
+
+    \textcolor{comment}{// do velocity rescaling to get exactly the right T}
+    tmpT *= mass\_/(3.0*(N-1));
+    tmpT /= Tset;
+    tmpT = 1.0/tmpT;
+    \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i = 0; i < N; i ++ ) \{
+        \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x = \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x*sqrt(tmpT);
+        \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.y = \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.y*sqrt(tmpT);
+        \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.z = \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.z*sqrt(tmpT);
+    \}
+\}
+\end{DoxyCode}
+\hypertarget{classsystem_definition_a375afbe9e4ffc76793db1b222bc1f941}{\index{system\-Definition@{system\-Definition}!set\-Potential@{set\-Potential}}
+\index{set\-Potential@{set\-Potential}!systemDefinition@{system\-Definition}}
+\subsubsection[{set\-Potential}]{\setlength{\rightskip}{0pt plus 5cm}void system\-Definition\-::set\-Potential (
+\begin{DoxyParamCaption}
+\item[{point\-Function\-\_\-t}]{pp}
+\end{DoxyParamCaption}
+)}}\label{classsystem_definition_a375afbe9e4ffc76793db1b222bc1f941}
+
+
+Assign pair potential function. 
+
+Sets the \char`\"{}host\char`\"{} pair potential function which also sets the G\-P\-U equivalent in integrator.\-cu if using C\-U\-D\-A.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em pp} & Pointer to pair potential function \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 21 of file system.\-cpp.
+
+
+
+References potential.
+
+
+\begin{DoxyCode}
+                                                       \{
+    \hyperlink{classsystem_definition_a4861989c8ca1ddef7ec521499453df3f}{potential} = pp;
+\}
+\end{DoxyCode}
+\hypertarget{classsystem_definition_ae7be021831635d359872d046f58b337a}{\index{system\-Definition@{system\-Definition}!write\-Snapshot@{write\-Snapshot}}
+\index{write\-Snapshot@{write\-Snapshot}!systemDefinition@{system\-Definition}}
+\subsubsection[{write\-Snapshot}]{\setlength{\rightskip}{0pt plus 5cm}void system\-Definition\-::write\-Snapshot (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classsystem_definition_ae7be021831635d359872d046f58b337a}
+
+
+Print a snapshot of the system. 
+
+Write instantaneous snapshot of the system to a file called \char`\"{}trajectory.\-xyz\char`\"{} This file is appended not overwritten consecutively. 
+
+Definition at line 155 of file system.\-cpp.
+
+
+
+References atoms.
+
+
+\begin{DoxyCode}
+                                      \{
+    \textcolor{keyword}{static} \textcolor{keywordtype}{int} snapNum = 0;
+    \textcolor{keywordflow}{if} (snapFile\_ == NULL) \{
+        snapFile\_ = fopen(\textcolor{stringliteral}{"trajectory.xyz"}, \textcolor{stringliteral}{"w"});
+    \}
+    
+    fprintf(snapFile\_, \textcolor{stringliteral}{"%d\(\backslash\)nSnapshot #%d\(\backslash\)n"}, \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}.size(), snapNum);
+
+    \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i = 0; i < \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}.size(); ++i) \{
+        fprintf(snapFile\_, \textcolor{stringliteral}{"%s\(\backslash\)t%g\(\backslash\)t%g\(\backslash\)t%g\(\backslash\)n"}, \textcolor{stringliteral}{"A"}, \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].pos.x, \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}
+      [i].pos.y, \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].pos.z);
+    \}
+
+    snapNum++;
+\}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+/\-Users/nathanmahynski/\-Desktop/\-C\-B\-E\-M\-D\-G\-P\-U/system.\-h\item 
+/\-Users/nathanmahynski/\-Desktop/\-C\-B\-E\-M\-D\-G\-P\-U/system.\-cpp\end{DoxyCompactItemize}
