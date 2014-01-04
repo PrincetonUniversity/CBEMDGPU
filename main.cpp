@@ -74,7 +74,7 @@ int main (int argc, char* argv[]) {
     const int report = nSteps/1000;
 
 	for (unsigned int long step = 0; step < nSteps; ++step) {
-		integrate.step2(a);
+		integrate.step(a);
 		if (step%report == 0) {
 			std::cout << step << "\t" << a.KinE() << "\t" << a.PotE() << "\t" << a.instantT() << "\t" << a.KinE() + a.PotE() << std::endl;
 			a.writeSnapshot();
