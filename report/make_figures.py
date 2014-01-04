@@ -3,7 +3,7 @@ import pylab
 
 # simulation parameters
 nsteps = 100
-natoms = 4000
+N = 4000
 
 # read in thermo information from lammps log
 f = open('../data_files/log.lammps','r')
@@ -64,6 +64,34 @@ for line in f.readlines():
 
 f.close()
 
+# read in timing results
+f = open('../data_files/timing_results.txt')
+nprocs_tmp = []
+natoms_tmp = []
+rs_tmp = []
+runtime_tmp = []
+
+for line in f.readlines():
+    nprocs_tmp.append(int(line.split()[0]))
+    natoms_tmp.append(int(line.split()[1]))
+    rs_tmp.append(float(line.split()[2]))
+    runtime_tmp.append(float(line.split()[4]))
+
+
+nprocs = sorted(list(set(nprocs_tmp)))
+natoms = sorted(list(set(natoms_tmp)))
+rs = sorted(list(set(rs_tmp)))
+runtime = np.zeros((len(nprocs), len(natoms), len(rs)))
+
+
+for (i, j, k, l) in zip(nprocs_tmp, natoms_tmp, rs_tmp, runtime_tmp):
+    i1 = nprocs.index(i)
+    j1 = natoms.index(j)
+    k1 = rs.index(k)
+    runtime[i1][j1][k1] = l
+
+f.close()
+
 # idx is the first index over which to start plottting, averaging, etc. (discard first few timesteps for equilibration purposes)
 idx = 20
 label1 = 'CBEMD'
@@ -73,10 +101,10 @@ label2 = 'LAMMPS'
 print 'Average CBEMD temperature: %2.4f' % np.average(T_cbemd[idx:])
 print 'Average LAMMPS temperature: %2.4f' % np.average(T_lmp[idx:])
 
-print 'Average CBEMD potential energy/atom: %2.4f' % np.average(PE_cbemd[idx:]/natoms)
+print 'Average CBEMD potential energy/atom: %2.4f' % np.average(PE_cbemd[idx:]/N)
 print 'Average LAMMPS potential energy/atom: %2.4f' % np.average(PE_lmp[idx:])
 
-print 'Average CBEMD total energy/atom: %2.4f' % np.average(E_cbemd[idx:]/natoms)
+print 'Average CBEMD total energy/atom: %2.4f' % np.average(E_cbemd[idx:]/N)
 print 'Average LAMMPS total energy/atom: %2.4f' % np.average(E_lmp[idx:])
 
 # make plots
@@ -88,27 +116,35 @@ pylab.legend()
 pylab.savefig('T_compare.eps')
 pylab.clf()
 
-pylab.plot(time_cbemd[idx:], PE_cbemd[idx:]/natoms, label=label1)
+pylab.plot(time_cbemd[idx:], PE_cbemd[idx:]/N, label=label1)
 pylab.plot(time_lmp[idx:], PE_lmp[idx:], label=label2)
 pylab.xlabel('timestep')
-pylab.ylabel('potential energy/atom')
+pylab.ylabel('potential energy/atom (reduced units)')
 pylab.legend()
 pylab.savefig('PE_compare.eps')
 pylab.clf()
 
-pylab.plot(time_cbemd[idx:], E_cbemd[idx:]/natoms, label=label1)
+pylab.plot(time_cbemd[idx:], E_cbemd[idx:]/N, label=label1)
 pylab.plot(time_lmp[idx:], E_lmp[idx:], label=label2)
 pylab.xlabel('timestep')
-pylab.ylabel('total energy/atom')
+pylab.ylabel('total energy/atom (reduced units)')
 pylab.legend()
 pylab.savefig('E_compare.eps')
 pylab.clf()
 
 pylab.plot(r_cbemd, gr_cbemd, label=label1)
 pylab.plot(r_lmp, gr_lmp, label=label2)
-pylab.xlabel('r')
+pylab.xlabel('r (reduced units)')
 pylab.ylabel('g(r)')
 pylab.legend()
 pylab.savefig('gr_compare.eps')
 pylab.clf()
 
+for j in range(len(rs)):
+    for i in range(len(natoms)):
+        pylab.plot(nprocs, runtime[:,i, j], label = str(natoms[i]))
+    pylab.legend()
+    pylab.xlabel('number of processors')
+    pylab.ylabel('runtime (seconds)')
+    pylab.savefig('scaling_rs_%2.2f.eps' % rs[j])
+    pylab.clf()
