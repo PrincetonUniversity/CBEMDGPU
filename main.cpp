@@ -26,9 +26,11 @@ int main (int argc, char* argv[]) {
     static int nthreads = atoi(argv[1]);
     omp_set_num_threads(nthreads);
     const int rngSeed = 3145;
-    float Temp = 0.5; // this should be input to main
-    float timestep = 0.005; // this should be input to main
+    
+    float Temp = 0.5;
+    float timestep = 0.005;
 	const int nAtoms = 50;
+    
     systemDefinition a;
 	a.setBox(12, 12, 12);
 	a.setTemp(Temp);
@@ -37,6 +39,7 @@ int main (int argc, char* argv[]) {
     a.setRcut(2.5);	// if slj needs to incorporate "delta" shift already so cell list is properly created
 	a.initThermal(nAtoms, 1.01*Temp, rngSeed, 1.2);
 	
+    // select shifted lennard jones potential function
 	#ifdef NVCC
 	pointFunction_t pp = dev_slj;
 	#else
@@ -67,7 +70,7 @@ int main (int argc, char* argv[]) {
 	args[3] = 0.0; // ushift
 	a.setPotentialArgs(args);
 
-    nvt_NH integrate (1.0);
+    nvt_NH integrate (1.0);     // damping constant for thermostat = 1.0
     integrate.setTimestep(timestep);
 
     const int nSteps = 3000;

@@ -10,15 +10,15 @@
 #include "common.h"
 #include <math.h>
 
-
-#ifndef NVCC
+#ifndef NVCC    // Only provide potentials for CPU implementations, GPU must be compiled elsewhere (see integrator.cu)
 #include "dataTypes.h"
+
 /*!
- * Pairwise interaction between 2 atoms (DPD)
+ * Pairwise interaction between 2 atoms (DPD, akin to that presented in the homework)
  *
  * \param [in] p1 Pointer to atom 1's position
  * \param [in] p2 Pointer to atom 2's position
- * \param [in, out] pairForce Force atom 2 experiences due to atom 1
+ * \param [in, out] pairForce Force atom 1 experiences due to atom 2
  * \param [in] box Pointer to box dimensions
  * \param [in] args Additional arguments, in this case epsilon
  * \param [in] rcut Cutoff distance
@@ -43,13 +43,12 @@ float pairUF (const float3 *p1, const float3 *p2, float3 *pairForce, const float
 	}
 }
 
-
 /*!
  * Pairwise interaction between 2 atoms (shifted lennard-jones)
  *
  * \param [in] p1 Pointer to atom 1's position
  * \param [in] p2 Pointer to atom 2's position
- * \param [in, out] pairForce Force atom 2 experiences due to atom 1
+ * \param [in, out] pairForce Force atom 1 experiences due to atom 2
  * \param [in] box Pointer to box dimensions
  * \param [in] args Additional arguments, in this case {epsilon, sigma, delta, ushift}
  * \param [in] rcut Cutoff distance; NOTE: this MUST already incorporate the delta shift, ie. if r < ((rc' + delta) = rc), then force is computed
@@ -82,7 +81,6 @@ float slj (const float3 *p1, const float3 *p2, float3 *pairForce, const float3 *
 		return 0.0;
 	}
 }
-	
-	
+
 #endif
 
