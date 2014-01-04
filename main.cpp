@@ -19,9 +19,9 @@
  */ 
 int main (int argc, char* argv[]) {
     if (argc !=2){
-		// catch incorrect number of arguments
-		printf("USAGE: %s <nthreads> \n",argv[0]);
-		exit(1);
+        // catch incorrect number of arguments
+        printf("USAGE: %s <nthreads> \n",argv[0]);
+        exit(1);
     }
     static int nthreads = atoi(argv[1]);
     omp_set_num_threads(nthreads);
@@ -30,13 +30,13 @@ int main (int argc, char* argv[]) {
     float timestep = 0.005; // this should be input to main
 	const int nAtoms = 50;
     systemDefinition a;
-    a.setBox(12, 12, 12);
-    a.setTemp(Temp);
+	a.setBox(12, 12, 12);
+	a.setTemp(Temp);
     a.setMass(1.0);
 	a.setRskin(1.0);
     a.setRcut(2.5);	// if slj needs to incorporate "delta" shift already so cell list is properly created
-   	a.initThermal(nAtoms, 1.01*Temp, rngSeed, 1.2);
-
+	a.initThermal(nAtoms, 1.01*Temp, rngSeed, 1.2);
+	
 	#ifdef NVCC
 	pointFunction_t pp = dev_slj;
 	#else
@@ -52,7 +52,8 @@ int main (int argc, char* argv[]) {
 		if (a.cudaThreads > 512) {
 			a.cudaThreads = 512;
 		}
-		a.cudaBlocks = (int) ceil(a.numAtoms()/a.cudaThreads);
+		a.cudaBlocks = (int) ceil(a.numAtoms()/(1.0*a.cudaThreads));
+		if (a.cudaBlocks < 1) a.cudaBlocks = 1;
 	} else {
 		return -1;
 	}
@@ -73,7 +74,7 @@ int main (int argc, char* argv[]) {
     const int report = nSteps/1000;
 
 	for (unsigned int long step = 0; step < nSteps; ++step) {
-		integrate.step(a);
+		integrate.step2(a);
 		if (step%report == 0) {
 			std::cout << step << "\t" << a.KinE() << "\t" << a.PotE() << "\t" << a.instantT() << "\t" << a.KinE() + a.PotE() << std::endl;
 			a.writeSnapshot();
