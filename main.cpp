@@ -7,7 +7,7 @@
 #include <omp.h>
 #include <stdlib.h>
 
-#ifdef NOGPU
+#ifndef NOGPU
 #include "cudaHelper.h"
 #endif
 
