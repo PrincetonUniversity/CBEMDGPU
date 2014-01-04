@@ -38,7 +38,7 @@ unittests.o : unittests.cpp $(GTEST_HEADERS)
 	$(CXX) $(OMPFLAGS) $(CFLAGS) -c $<
 
 MD: $(OMP)
-	$(CXX) $(OMPFLAGS) -o md $(CFLAGS) $^ 
+	$(CXX) -DNOGPU $(OMPFLAGS) -o md $(CFLAGS) $^ 
 
 TESTS: $(OMP_TESTS)
 	$(CXX) $(OMPFLAGS) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o tests
