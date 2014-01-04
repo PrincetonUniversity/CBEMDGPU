@@ -73,7 +73,7 @@ void systemDefinition::initRandom (const int N, const int rngSeed) {
 }
 
 /*!
-* Initialize a system of N atoms with random velocities on a lattice (simple cubic)
+* Initialize a system of N atoms with random velocities and positions.
 * Net momeentum is automatically initialized to zero.
 * 
 * \param [in] N Number of atoms to create

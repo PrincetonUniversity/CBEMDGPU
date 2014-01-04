@@ -37,9 +37,9 @@ LaTeX report. Separate directory for this (All of us Carmeline will take lead on
 GPU
 1. offload integration
 2. then try offloading force calc (can use CPU cell list to build verlet lists for GPU)
-
+3. We really need to mention how ridiculously busy TIGER is on the GPU queue. Testing takes forever since 
+can't run it interactively and so if you submit a job in the morning it takes almost 24 hours to run, and that's until you 
+find the next bug..!
 Notes:
 pbcDist2 much faster than pbcDist (quantify this)
 cell lists much better than brute force for > 1000 atoms  (**quantify**)
-
-cuda 5.5 must be compiled and loaded in the submission script to run properly
