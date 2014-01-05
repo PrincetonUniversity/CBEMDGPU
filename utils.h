@@ -1,5 +1,6 @@
 /*!
  * Utility functions
+ * \author Nathan A. Mahynski
  * \date 11/19/13
  */ 
 
