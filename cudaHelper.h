@@ -1,6 +1,5 @@
 /*!
  * Functions to assist in using CUDA and/or GPUs
- * \author Nathan A. Mahynski
  * \date 11/21/13
  */
 
