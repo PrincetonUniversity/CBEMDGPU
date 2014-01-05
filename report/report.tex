@@ -1,5 +1,9 @@
 \documentclass[12pt]{article}
 
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{float}
+
 \title{Parallelized Molecular Dynamics using Graphical Processing Units}
 %\subtitle{APC 523}
 
@@ -153,7 +157,15 @@ On GPUs, we parallelized our code using CUDA.
 \subsection{Testing}
 
 We implemented Google Tests within our software.
-
+%
+We implemented the following tests:
+	\begin{itemize}
+	\item[\texttt{NumAtoms}] verifies that the system class stores the correct number of atoms
+	\item[\texttt{KineticEnergy}] calculates the kinetic energy for a two-atom system, and verifies that it is correctly returned by the KinE() function
+	\item[\texttt{PotentialEnergy}] calculates the potential energy for a two-atom system, and verifies that it is correctly returned by the PotE() function
+	\item[\texttt{ChangeBox}] changes the length of the simulation box and verifies that the box is correctly changed in the system definition
+	\item[\texttt{PBC}] computes the distance between two particles using the minimum image convention and verifies that it is correctly computed for different scenarios (out of box, inside box, etc.)
+	\end{itemize}
 \section{Code Structure}
 
 The software is implemented in C++.
@@ -185,9 +197,12 @@ This class can be expanded to include other potential energy functions.
 
 \item[\texttt{main.cpp}]
 
-\item[\texttt{unittests.cpp}]
+\item[\texttt{unittests.cpp}] This file implements Google Tests for our software. 
+%
+We used a test fixture to initialize the same system construct for multiple tests.
 
 \end{description}
+
 \section{Results}
 
 \subsection{Scaling studies}
@@ -196,6 +211,57 @@ This class can be expanded to include other potential energy functions.
 
 \subsection{Validation against literature values}
 
+We validated our code against LAMMPS \cite{plimpton1995fast} (http://lammps.sandia.gov), an existing commercial molecular dynamics software.
+%
+We simulated a system of 4000 Lennard-Jones particles at a reduced temperature $T=0.71$. 
+%
+We used a cubic box with edge length $L=16.796$, so that the reduced density of the system $\rho = 0.8442$. 
+%
+We used a timestep $\Delta t=0.005$, and simulated for $10,000$ timesteps.
+
+
+We compared the temperature, potential energy, total energy, and radial distribution function for the two simulations. 
+%
+The results are shown in Figure \ref{fig:lmp_compare}. 
+% 
+There is excellent agreement between our software (CBEMD) and the LAMMPS results. 
+
+\begin{table}
+	\begin{tabular}{| r | c | c |}
+		\hline
+		 & CBEMD & LAMMPS \\
+		 \hline
+		 T & 0.7104 & 0.7112 \\
+		 \hline
+		 Potential energy / atom & -5.6532 & -5.6594 \\
+		 \hline
+		 Total energy / atom & -4.5879 & -4.5929 \\
+		 \hline
+	\end{tabular}
+	\caption{Comparison of average thermodynamic quantities for CBEMD and LAMMPS simulations.}
+	\label{table:lmp_compare}
+\end{table}
+		 
+\begin{figure}[H]
+	\begin{subfigure}{0.5\textwidth}
+	\includegraphics[width=\textwidth]{T_compare}
+	\caption{}
+	\end{subfigure}
+	\begin{subfigure}{0.5\textwidth}
+	\includegraphics[width=\textwidth]{PE_compare}
+	\caption{}
+	\end{subfigure}
+	\begin{subfigure}{0.5\textwidth}
+	\includegraphics[width=\textwidth]{E_compare}
+	\caption{}
+	\end{subfigure}
+	\begin{subfigure}{0.5\textwidth}
+	\includegraphics[width=\textwidth]{gr_compare}
+	\caption{}
+	\end{subfigure}
+	\caption{Comparison between CBEMD simulation and LAMMPS simulation for 4000 Lennard Jones particles at $T=0.71$ and $\rho=0.8442$. (a) Comparison of temperature over time. (b) Comparison of potential energy/atom over time. (c) Comparison of total energy/atom over time. (d) Comparison of radial distribution functions. }
+	\label{fig:lmp_compare}
+\end{figure}
 \section{Conclusions and Future Work}
 
 \end{document}
