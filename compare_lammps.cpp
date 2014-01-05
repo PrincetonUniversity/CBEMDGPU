@@ -53,7 +53,7 @@ int main (int argc, char* argv[]) {
     	const int report = 100; 
 
 	for (unsigned int long step = 0; step < nSteps; ++step) {
-		integrate.step2(a);
+		integrate.step(a);
 		if (step%report == 0) {
 			//std::cout << a.numAtoms() << "\t" << step << "\t" << a.KinE() << "\t" << a.PotE() << "\t" << a.instantT() << "\t" << a.KinE() + a.PotE() << std::endl;
 			printf("%u \t %2.2f \t %2.2f \t %2.4f \t %2.2f \n", step, a.KinE(), a.PotE(), a.instantT(), a.KinE()+a.PotE());

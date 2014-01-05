@@ -1,11 +1,9 @@
 /*!
  * Integration
- * \author Nathan A. Mahynski
  * \date 11/19/13
  */
 
 #include "system.h"
-#include <exception>
 #include <math.h>
 #include "common.h"
 #include "integrator.h"
@@ -13,9 +11,19 @@
 #include <thrust/host_vector.h>
 #include <thrust/device_vector.h>
 #include <thrust/copy.h>
+#include <thrust/system_error.h>
 #include "potential.h"
 
 // Cuda Potential must be compiled together with the integrator so they are here, not in their own file
+
+/*!
+ * Compute the minimum image distance between two atoms on the GPU.
+ *
+ * \param [in] p1 Coordinates of atom 1
+ * \param [in] p2 Coordinates of atom 2
+ * \param [out] dr Vector pointing from atom1 to atom2
+ * \param [in] box Coordinates of box
+ */
 __device__ float dev_pbcDist2 (const float3 *p1, const float3 *p2, float3 *dr, const float3 *box) {
 	double d = 0.0;
 
@@ -49,24 +57,36 @@ __device__ float dev_pbcDist2 (const float3 *p1, const float3 *p2, float3 *dr, c
 	return d;
 }
 
+/*!
+ * An arbitrary potential that could be changed to meet the user's needs in the future.
+ */
 __device__ float dev_pairUF (const float3 *p1, const float3 *p2, float3 *pairForce, const float3 *box, const float *args, const float *rcut) {
         return 0.0;
 }
+
+/*!
+ * Pairwise interaction between 2 atoms (shifted lennard-jones)
+ *
+ * \param [in] p1 Pointer to atom 1's position
+ * \param [in] p2 Pointer to atom 2's position
+ * \param [in, out] pairForce Force atom 2 experiences due to atom 1
+ * \param [in] box Pointer to box dimensions
+ * \param [in] args Additional arguments, in this case {epsilon, sigma, delta, ushift}
+ * \param [in] rcut Cutoff distance; NOTE: this MUST already incorporate the delta shift, ie. if r < ((rc' + delta) = rc), then force is computed
+*/
 __device__ float dev_slj (const float3 *p1, const float3 *p2, float3 *pairForce, const float3 *box, const float *args, const float *rcut) {
-        float3 dr;
+    float3 dr;
 	float r2 = dev_pbcDist2(p1, p2, &dr, box);
+
 	// check that r > delta and throw/catch
-	if (r2 < args[2]*args[2]) {
-		//throw customException("dr < delta");
-		pairForce->x = 0.0;
-		pairForce->y = 0.0;
-		pairForce->z = 0.0;
-		return 0.0;
+	if (r2 <= args[2]*args[2]) {
+		// shift to just past the singularity and allow to run
+		r2 = 1.0001*args[2]*args[2];
 	}
-	// If (r-delta)^2 < rcut^2 compute
+	
 	if (r2 < (*rcut)*(*rcut)) {
 		float r = sqrt(r2);
-        	float x = r - args[2];
+        float x = r - args[2];
 		float b = 1.0/x, a = args[1]*b, a2 = a*a, a6 = a2*a2*a2, factor;
 		factor = 24.0*args[0]*a6*(2.0*a6-1.0)*b/r;
 		pairForce->x = -factor*dr.x;
@@ -97,17 +117,23 @@ __device__ float dev_slj (const float3 *p1, const float3 *p2, float3 *pairForce,
  */
 __global__ void loopOverNeighbors (atom* dev_atoms, int* nlist, int* nlist_index, float3* force, float3* box, float* Up_each, int* natoms, float* args, float* rcut, int* pFlag) {
 	const int tid = threadIdx.x + blockIdx.x*blockDim.x;
+	
 	if (tid < *natoms) {
 		float Up = 0.0;
 		const int nn = nlist_index[tid]; // number of neighbors
 		
 		// choose the potential function
 		pointFunction_t pFunc;
-		if (pFlag == 0) {
+		if (*pFlag == 0) {
 			pFunc = dev_slj;
 		} else {
 			pFunc = dev_pairUF;
 		}
+
+		float3 myforce;
+		myforce.x = 0;
+		myforce.y = 0;
+		myforce.z = 0;
 
 		// loop over this atom's neighbors
 		for (unsigned int i = nlist_index[tid]+1; i < nlist_index[tid]+1+nn; ++i) {
@@ -116,10 +142,14 @@ __global__ void loopOverNeighbors (atom* dev_atoms, int* nlist, int* nlist_index
 			Up += pFunc (&dev_atoms[nlist[i]].pos, &dev_atoms[tid].pos, &dummyForce, box, args, rcut);
 
 			// sign convention is to add the returned force on particle 2
-			force[tid].x += dummyForce.x;
-			force[tid].y += dummyForce.y;
-			force[tid].z += dummyForce.z;	
+			myforce.x += dummyForce.x;
+			myforce.y += dummyForce.y;
+			myforce.z += dummyForce.z;	
 		}
+
+		force[tid].x = -myforce.x;
+		force[tid].y = -myforce.y;
+		force[tid].z = -myforce.z;
 		Up_each[tid] = Up;
 	}	
 }
@@ -142,7 +172,6 @@ void integrator::calcForce (systemDefinition &sys) {
 		pFlag[0] = 1;
 	} else {
 		throw customException ("Cannot understand which potential function to use");
-                //return;
 	}
 	thrust::device_vector < int > dev_pFlag (pFlag.begin(), pFlag.end());
 	int* dev_pFlag_ptr = thrust::raw_pointer_cast(&dev_pFlag[0]);
@@ -154,22 +183,32 @@ void integrator::calcForce (systemDefinition &sys) {
 
 	// check update for neighborlist
 	cl_.checkUpdate(sys);
+	
+	std::cout << "cp00" << std::endl;
 
 	// number of atoms
 	thrust::device_vector < int > dev_natoms(1, sys.numAtoms());
 	int* dev_natoms_ptr = thrust::raw_pointer_cast(&dev_natoms[0]);
 
+	std::cout << "cp01" << std::endl;
+
 	// copy sys.atoms to GPU
 	thrust::device_vector < atom > dev_atoms (sys.atoms.begin(), sys.atoms.end());
 	atom* dev_atoms_ptr = thrust::raw_pointer_cast(&dev_atoms[0]);
 
+	std::cout << "cp02" << std::endl;
+	
 	// copy neighborlists to GPU
 	thrust::device_vector < int > dev_neighbor_list (cl_.nlist.begin(), cl_.nlist.end());
 	int* dev_neighbor_list_ptr = thrust::raw_pointer_cast(&dev_neighbor_list[0]);
 
+	std::cout << "cp03" << std::endl;
+
 	// copy location of where the neighbors for each atoms starts
 	thrust::device_vector < int > dev_neighbor_index (cl_.nlist_index.begin(), cl_.nlist_index.end());
 	int* dev_neighbor_index_ptr = thrust::raw_pointer_cast(&dev_neighbor_index[0]);
+	
+	std::cout << "cp04" << std::endl;
 	
 	// create acc and Up to store results in
 	thrust::device_vector < float3 > dev_force (sys.numAtoms());
@@ -177,6 +216,8 @@ void integrator::calcForce (systemDefinition &sys) {
 	thrust::device_vector < float > dev_Up_each_atom (sys.numAtoms());
 	float* dev_Up_each_atom_ptr = thrust::raw_pointer_cast(&dev_Up_each_atom[0]);
 	
+	std::cout << "cp05" << std::endl;
+
 	// potential arguments
 	std::vector < float > potArgs = sys.potentialArgs();
 	std::vector < float > rcut (1, sys.rcut());
@@ -185,21 +226,42 @@ void integrator::calcForce (systemDefinition &sys) {
 	thrust::device_vector < float > dev_rcut (rcut.begin(), rcut.end());
 	float* dev_rcut_ptr = thrust::raw_pointer_cast(&dev_rcut[0]);
 
+	std::cout << "cp06" << std::endl;
+
 	// invoke kernel to compute
 	loopOverNeighbors <<< sys.cudaBlocks, sys.cudaThreads >>> (dev_atoms_ptr, dev_neighbor_list_ptr, dev_neighbor_index_ptr, dev_force_ptr, dev_sysbox_ptr, dev_Up_each_atom_ptr, dev_natoms_ptr, dev_args_ptr, dev_rcut_ptr, dev_pFlag_ptr);
 
+	std::cout << "cp07" << std::endl;
+
 	// call a reduction to collect Up then divide by 2 since double counted
-	Up = thrust::reduce(dev_Up_each_atom.begin(), dev_Up_each_atom.end(), (float) 0.0, thrust::plus<float>());
+	/*Up = thrust::reduce(dev_Up_each_atom.begin(), dev_Up_each_atom.end(), (float) 0.0, thrust::plus<float>());
 	Up /= 2.0;	// pairs are double counted
+	*/
+
+	//tmp
+	std::vector < float > tmpUP (sys.numAtoms());
+	thrust::copy(dev_Up_each_atom.begin(), dev_Up_each_atom.end(), tmpUP.begin());
+	float sum = 0.0;
+	for (int i = 0; i < sys.numAtoms(); ++i) {
+		sum += tmpUP[i];
+	}
+	Up = sum/2.0;
+	
+	std::cout << "cp08" << std::endl;
 
 	// store accelerations on atoms	
 	std::vector < float3 > netForces (sys.numAtoms());
 	thrust::copy(dev_force.begin(), dev_force.end(), netForces.begin());
+
+	std::cout << "cp09" << std::endl;
+
 	for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
 		sys.atoms[i].acc.x = netForces[i].x*invMass;
 		sys.atoms[i].acc.y = netForces[i].y*invMass;
 		sys.atoms[i].acc.z = netForces[i].z*invMass;
 	}	
+
+	std::cout << "cp10" << std::endl;
 
 	// set Up
 	sys.setPotE(Up);

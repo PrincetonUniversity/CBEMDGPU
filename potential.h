@@ -1,6 +1,5 @@
 /*!
  * Pair Potentials
- * \author Nathan A. Mahynski
  * \date 11/18/13
  */
 
@@ -17,6 +16,7 @@ float pairUF (const float3 *p1, const float3 *p2, float3 *pairForce, const float
 float slj (const float3 *p1, const float3 *p2, float3 *pairForce, const float3 *box, const float *args, const float *rcut);
 #endif
 
+//!< Function pointer that all force calculation (pair potentials) must follow
 typedef float(*pointFunction_t)(const float3 *p1, const float3 *p2, float3 *pairForce, const float3 *box, const float *args, const float *rcut);
 
 #endif

@@ -1,0 +1,332 @@
+\hypertarget{classnvt___n_h}{\section{nvt\-\_\-\-N\-H Class Reference}
+\label{classnvt___n_h}\index{nvt\-\_\-\-N\-H@{nvt\-\_\-\-N\-H}}
+}
+
+
+Uses Nose-\/\-Hover integration method to thermostat a system (constant T rather than E)  
+
+
+
+
+{\ttfamily \#include $<$nvt.\-h$>$}
+
+Inheritance diagram for nvt\-\_\-\-N\-H\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classnvt___n_h}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classnvt___n_h_a2de57e4e2a370bbfc8c0026963352ef1}{nvt\-\_\-\-N\-H} (const float Q)
+\item 
+void \hyperlink{classnvt___n_h_aa5b74d6b986c65e4436fed6ea6c14b20}{step} (\hyperlink{classsystem_definition}{system\-Definition} \&sys)
+\item 
+\hypertarget{classintegrator_a493bed6cf5d45fe41a9a6430bd063106}{void \hyperlink{classintegrator_a493bed6cf5d45fe41a9a6430bd063106}{set\-Timestep} (const float dt)}\label{classintegrator_a493bed6cf5d45fe41a9a6430bd063106}
+
+\begin{DoxyCompactList}\small\item\em Set the integrator timestep. \end{DoxyCompactList}\item 
+void \hyperlink{classintegrator_ad630bf7c9b7339fa34f36fe43b0d9e3c}{calc\-Force} (\hyperlink{classsystem_definition}{system\-Definition} \&sys)
+\begin{DoxyCompactList}\small\item\em Calculate the forces on each atom. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classintegrator_ad1f7813c9cf3c31898aa7d78fc22232a}{\hyperlink{classcell_list__cpu}{cell\-List\-\_\-cpu} \hyperlink{classintegrator_ad1f7813c9cf3c31898aa7d78fc22232a}{cl\-\_\-}}\label{classintegrator_ad1f7813c9cf3c31898aa7d78fc22232a}
+
+\begin{DoxyCompactList}\small\item\em Cell or neighbor list. \end{DoxyCompactList}\item 
+\hypertarget{classintegrator_a3e183a65eb6a777479dca47e7f9a2676}{std\-::vector$<$ \hyperlink{structfloat3}{float3} $>$ \hyperlink{classintegrator_a3e183a65eb6a777479dca47e7f9a2676}{last\-Accelerations\-\_\-}}\label{classintegrator_a3e183a65eb6a777479dca47e7f9a2676}
+
+\begin{DoxyCompactList}\small\item\em Acceleration of particles on previous timestep (useful for N\-V\-E integrator) \end{DoxyCompactList}\item 
+\hypertarget{classintegrator_a6e4712b8597e3c40124316d2e9dd5051}{float \hyperlink{classintegrator_a6e4712b8597e3c40124316d2e9dd5051}{dt\-\_\-}}\label{classintegrator_a6e4712b8597e3c40124316d2e9dd5051}
+
+\begin{DoxyCompactList}\small\item\em Timestep size. \end{DoxyCompactList}\item 
+\hypertarget{classintegrator_a5b3546a765d8a83b6db8a6d890ace480}{int \hyperlink{classintegrator_a5b3546a765d8a83b6db8a6d890ace480}{start\-\_\-}}\label{classintegrator_a5b3546a765d8a83b6db8a6d890ace480}
+
+\begin{DoxyCompactList}\small\item\em Flag for whether this object has been initialized or not. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Uses Nose-\/\-Hover integration method to thermostat a system (constant T rather than E) 
+
+N\-V\-T integration with Nose-\/\-Hoover thermostat. \begin{DoxyDate}{Date}
+11/18/13 
+\end{DoxyDate}
+
+
+Definition at line 13 of file nvt.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classnvt___n_h_a2de57e4e2a370bbfc8c0026963352ef1}{\index{nvt\-\_\-\-N\-H@{nvt\-\_\-\-N\-H}!nvt\-\_\-\-N\-H@{nvt\-\_\-\-N\-H}}
+\index{nvt\-\_\-\-N\-H@{nvt\-\_\-\-N\-H}!nvt_NH@{nvt\-\_\-\-N\-H}}
+\subsubsection[{nvt\-\_\-\-N\-H}]{\setlength{\rightskip}{0pt plus 5cm}nvt\-\_\-\-N\-H\-::nvt\-\_\-\-N\-H (
+\begin{DoxyParamCaption}
+\item[{const float}]{Q}
+\end{DoxyParamCaption}
+)}}\label{classnvt___n_h_a2de57e4e2a370bbfc8c0026963352ef1}
+Do N\-V\-T integration with Nose-\/\-Hoover thermostat. \begin{DoxyDate}{Date}
+11/18/13
+\end{DoxyDate}
+Initialize integrator
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em Q} & Thermal mass for thermostat \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 20 of file nvt.\-cpp.
+
+
+
+References integrator\-::start\-\_\-.
+
+
+\begin{DoxyCode}
+                             \{
+    Q\_ = Q; 
+    gamma\_ = 0.0;
+    \hyperlink{classintegrator_a5b3546a765d8a83b6db8a6d890ace480}{start\_} = 1; 
+\}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classintegrator_ad630bf7c9b7339fa34f36fe43b0d9e3c}{\index{nvt\-\_\-\-N\-H@{nvt\-\_\-\-N\-H}!calc\-Force@{calc\-Force}}
+\index{calc\-Force@{calc\-Force}!nvt_NH@{nvt\-\_\-\-N\-H}}
+\subsubsection[{calc\-Force}]{\setlength{\rightskip}{0pt plus 5cm}void integrator\-::calc\-Force (
+\begin{DoxyParamCaption}
+\item[{{\bf system\-Definition} \&}]{sys}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inherited]}}}\label{classintegrator_ad630bf7c9b7339fa34f36fe43b0d9e3c}
+
+
+Calculate the forces on each atom. 
+
+Integration \begin{DoxyDate}{Date}
+11/19/13
+\end{DoxyDate}
+Calculate the pairwise forces in a system. This also calculates the potential energy of a system. The kinetic energy is calculated during the verlet integration.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in,out}  & {\em sys} & System definition \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 22 of file integrator.\-cpp.
+
+
+
+References system\-Definition\-::atoms, system\-Definition\-::box(), cell\-List\-\_\-cpu\-::check\-Update(), integrator\-::cl\-\_\-, cell\-List\-\_\-cpu\-::head(), cell\-List\-\_\-cpu\-::list(), system\-Definition\-::mass(), cell\-List\-\_\-cpu\-::n\-Cells, cell\-List\-\_\-cpu\-::neighbors(), system\-Definition\-::num\-Atoms(), system\-Definition\-::potential, system\-Definition\-::potential\-Args(), system\-Definition\-::rcut(), and system\-Definition\-::set\-Pot\-E().
+
+
+
+Referenced by nve\-::step(), and step().
+
+
+\begin{DoxyCode}
+                                                 \{
+    \textcolor{comment}{// For cache coeherency allocate new space for calculations}
+    \hyperlink{structfloat3}{float3} empty;
+    empty.x = 0; empty.y = 0; empty.z = 0;
+    std::vector <float3> acc (sys.\hyperlink{classsystem_definition_ae8d3c2df2d56241cee03fcc4e2026ae0}{numAtoms}(), empty);
+    \textcolor{keyword}{const} \textcolor{keywordtype}{float} rc = sys.\hyperlink{classsystem_definition_acacd88aac7d451bdcf9779ae8c5a95c7}{rcut}();
+
+    \textcolor{comment}{// every time, check if the cell list needs to be updated first}
+    \hyperlink{classintegrator_ad1f7813c9cf3c31898aa7d78fc22232a}{cl\_}.\hyperlink{classcell_list__cpu_a70568e6a2012eb8592f2798b3260c550}{checkUpdate}(sys);
+
+    \textcolor{keywordtype}{float} Up = 0.0;
+    \textcolor{keyword}{const} \hyperlink{structfloat3}{float3} box = sys.\hyperlink{classsystem_definition_a85b80dee3609ddb68e370cee3fa959ea}{box}();
+    \textcolor{keyword}{const} \textcolor{keywordtype}{float} invMass = 1.0/sys.\hyperlink{classsystem_definition_acb6dd3df121e3e5bc0eb41c32bd937bd}{mass}();
+    
+    \textcolor{comment}{// traverse cell list and calculate total system potential energy }
+    std::vector <float> args = sys.\hyperlink{classsystem_definition_ab20c0c30e84fccdf15f54c155d25420f}{potentialArgs}();
+\textcolor{preprocessor}{    #pragma omp parallel for reduction(+:Up) schedule(dynamic, 1)}
+\textcolor{preprocessor}{}    \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} cellID = 0; cellID < \hyperlink{classintegrator_ad1f7813c9cf3c31898aa7d78fc22232a}{cl\_}.\hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.x*\hyperlink{classintegrator_ad1f7813c9cf3c31898aa7d78fc22232a}{cl\_}.\hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}
+      .y*\hyperlink{classintegrator_ad1f7813c9cf3c31898aa7d78fc22232a}{cl\_}.\hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.z; ++cellID) \{
+        \textcolor{keywordtype}{int} atom1 = \hyperlink{classintegrator_ad1f7813c9cf3c31898aa7d78fc22232a}{cl\_}.\hyperlink{classcell_list__cpu_a0769d2a8a9c6964a8c6894bab9841e71}{head}(cellID);
+        \textcolor{keywordflow}{while} (atom1 >= 0) \{
+            std::vector < int > neighbors = \hyperlink{classintegrator_ad1f7813c9cf3c31898aa7d78fc22232a}{cl\_}.\hyperlink{classcell_list__cpu_aeaf165c887b13bfa7f7c1a8b70102aff}{neighbors}(cellID);
+            \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} index = 0; index < neighbors.size(); ++index) \{
+                \textcolor{keyword}{const} \textcolor{keywordtype}{int} cellID2 = neighbors[index];
+                \textcolor{keywordtype}{int} atom2 = \hyperlink{classintegrator_ad1f7813c9cf3c31898aa7d78fc22232a}{cl\_}.\hyperlink{classcell_list__cpu_a0769d2a8a9c6964a8c6894bab9841e71}{head}(cellID2);
+                \textcolor{keywordflow}{while} (atom2 >= 0) \{
+                    \textcolor{keywordflow}{if} (atom1 > atom2) \{
+                        \hyperlink{structfloat3}{float3} pf;
+                        Up += sys.\hyperlink{classsystem_definition_a4861989c8ca1ddef7ec521499453df3f}{potential} (&sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[atom1].
+      pos, &sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[atom2].pos, &pf, &box, &args[0], &rc);
+                        acc[atom1].x -= pf.x*invMass; 
+                        acc[atom1].y -= pf.y*invMass;
+                        acc[atom1].z -= pf.z*invMass;
+                        acc[atom2].x += pf.x*invMass;
+                        acc[atom2].y += pf.y*invMass;
+                        acc[atom2].z += pf.z*invMass;
+                    \}
+                    atom2 = \hyperlink{classintegrator_ad1f7813c9cf3c31898aa7d78fc22232a}{cl\_}.\hyperlink{classcell_list__cpu_ac274503e6cc75811e9cb9c07120fb96e}{list}(atom2);
+                \}
+            \}
+            atom1 = \hyperlink{classintegrator_ad1f7813c9cf3c31898aa7d78fc22232a}{cl\_}.\hyperlink{classcell_list__cpu_ac274503e6cc75811e9cb9c07120fb96e}{list}(atom1);
+        \}
+    \}
+    
+    \textcolor{comment}{// save acceleration in array of atoms in system}
+\textcolor{preprocessor}{    #pragma omp parallel for}
+\textcolor{preprocessor}{}    \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < sys.\hyperlink{classsystem_definition_ae8d3c2df2d56241cee03fcc4e2026ae0}{numAtoms}(); ++i) \{
+        sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].acc.x = -acc[i].x;
+        sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].acc.y = -acc[i].y;
+        sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].acc.z = -acc[i].z;
+    \}
+    
+    \textcolor{comment}{// set Up}
+    sys.\hyperlink{classsystem_definition_a92a7d6457bd3f7ce71088e4df8e9ff4b}{setPotE}(Up);
+\}
+\end{DoxyCode}
+\hypertarget{classnvt___n_h_aa5b74d6b986c65e4436fed6ea6c14b20}{\index{nvt\-\_\-\-N\-H@{nvt\-\_\-\-N\-H}!step@{step}}
+\index{step@{step}!nvt_NH@{nvt\-\_\-\-N\-H}}
+\subsubsection[{step}]{\setlength{\rightskip}{0pt plus 5cm}void nvt\-\_\-\-N\-H\-::step (
+\begin{DoxyParamCaption}
+\item[{{\bf system\-Definition} \&}]{sys}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classnvt___n_h_aa5b74d6b986c65e4436fed6ea6c14b20}
+Integrate a single timestep forward using Velocity-\/\-Verlet integration scheme. This is N\-O\-T identical since some intermediate bookkeeping needs to be handled for thermostat. Creates a cell list the first time it is called. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in,out}  & {\em sys} & System definition \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classintegrator_a6f7170652474f15c99b94a9b9c7f4df6}{integrator}.
+
+
+
+Definition at line 32 of file nvt.\-cpp.
+
+
+
+References system\-Definition\-::atoms, system\-Definition\-::box(), integrator\-::calc\-Force(), integrator\-::cl\-\_\-, integrator\-::dt\-\_\-, system\-Definition\-::instant\-T(), system\-Definition\-::mass(), system\-Definition\-::num\-Atoms(), system\-Definition\-::rcut(), system\-Definition\-::rskin(), system\-Definition\-::set\-Kin\-E(), integrator\-::start\-\_\-, system\-Definition\-::target\-T(), and system\-Definition\-::update\-Instant\-Temp().
+
+
+\begin{DoxyCode}
+                                        \{
+    \textcolor{keywordtype}{int} chunk = OMP\_CHUNK;
+    \textcolor{keywordflow}{if} (\hyperlink{classintegrator_a5b3546a765d8a83b6db8a6d890ace480}{start\_}) \{
+        \textcolor{keywordflow}{try} \{
+            \hyperlink{classcell_list__cpu}{cellList\_cpu} tmpCL (sys.\hyperlink{classsystem_definition_a85b80dee3609ddb68e370cee3fa959ea}{box}(), sys.\hyperlink{classsystem_definition_acacd88aac7d451bdcf9779ae8c5a95c7}{rcut}(), sys.
+      \hyperlink{classsystem_definition_a343c8b17c052215a32412ec3df4f1d9a}{rskin}());
+            \hyperlink{classintegrator_ad1f7813c9cf3c31898aa7d78fc22232a}{cl\_} = tmpCL;
+        \} \textcolor{keywordflow}{catch} (std::exception &e) \{
+            std::cerr << e.what() << std:: endl;
+            \textcolor{keywordflow}{throw} \hyperlink{classcustom_exception}{customException}(\textcolor{stringliteral}{"Failed to integrate on first
+       step"});
+        \}
+
+        gamma\_ = 0.0;
+        \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i = 0; i < sys.\hyperlink{classsystem_definition_ae8d3c2df2d56241cee03fcc4e2026ae0}{numAtoms}(); ++i)  \{
+            gamma\_ += (sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x*sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x)+(sys.
+      \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.y*sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.y)+(sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.z*sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}
+      [i].vel.z);
+        \}
+        gamma\_ -= (3.0*(sys.\hyperlink{classsystem_definition_ae8d3c2df2d56241cee03fcc4e2026ae0}{numAtoms}()-1.0))*sys.\hyperlink{classsystem_definition_af7b322cfc8abe7042fdbeb0af8e7aa7e}{instantT}();
+        gamma\_ /= Q\_;
+
+        \textcolor{comment}{// get initial temperature}
+        \hyperlink{classintegrator_ad630bf7c9b7339fa34f36fe43b0d9e3c}{calcForce}(sys);
+        \textcolor{keywordtype}{float} tmp=0.0, Uk = 0.0;
+\textcolor{preprocessor}{        #pragma omp parallel for reduction(+:Uk)}
+\textcolor{preprocessor}{}        \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i = 0; i < sys.\hyperlink{classsystem_definition_ae8d3c2df2d56241cee03fcc4e2026ae0}{numAtoms}(); ++i) \{
+            Uk += (sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x*sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x)+(sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}
+      [i].vel.y*sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.y)+(sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.z*sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].
+      vel.z);
+        \}
+        Uk *= sys.\hyperlink{classsystem_definition_acb6dd3df121e3e5bc0eb41c32bd937bd}{mass}();
+        tmp = Uk;
+        Uk *= 0.5;
+        tmp /= (3.0*(sys.\hyperlink{classsystem_definition_ae8d3c2df2d56241cee03fcc4e2026ae0}{numAtoms}()-1.0));
+        sys.\hyperlink{classsystem_definition_a285e6cd1de35ed125eecb20f0f774ab3}{updateInstantTemp}(tmp);
+        sys.\hyperlink{classsystem_definition_a2b2c236698886bd1d106be802b987b61}{setKinE}(Uk);
+        \hyperlink{classintegrator_a5b3546a765d8a83b6db8a6d890ace480}{start\_} = 0;
+        gammadot\_ = 0.0;
+        gammadd\_ = 0.0;
+    \}
+    
+    tau2\_ = Q\_/ ((3.0*(sys.\hyperlink{classsystem_definition_ae8d3c2df2d56241cee03fcc4e2026ae0}{numAtoms}()-1.0))*sys.\hyperlink{classsystem_definition_a3c958df2ab99c0cb75c740346a5a4b6f}{targetT}());
+    gammadd\_ = 1/tau2\_*(sys.\hyperlink{classsystem_definition_af7b322cfc8abe7042fdbeb0af8e7aa7e}{instantT}()/sys.\hyperlink{classsystem_definition_a3c958df2ab99c0cb75c740346a5a4b6f}{targetT}()-1);
+    
+    \textcolor{comment}{// (1) update thermostat velocity and thermostat position}
+    \textcolor{comment}{// velocity half-step}
+    gammadot\_ += \hyperlink{classintegrator_a6e4712b8597e3c40124316d2e9dd5051}{dt\_}*0.5*gammadd\_;
+    
+    \textcolor{comment}{// position step}
+    gamma\_ += gammadot\_*\hyperlink{classintegrator_a6e4712b8597e3c40124316d2e9dd5051}{dt\_};
+    
+    \textcolor{comment}{// (2) evolve particle velocities}
+\textcolor{preprocessor}{    #pragma omp parallel shared(sys)}
+\textcolor{preprocessor}{}    \{
+\textcolor{preprocessor}{        #pragma omp for schedule(dynamic,OMP\_CHUNK)}
+\textcolor{preprocessor}{}        \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i = 0; i < sys.\hyperlink{classsystem_definition_ae8d3c2df2d56241cee03fcc4e2026ae0}{numAtoms}(); ++i) \{
+            sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x = sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x*exp(-gammadot\_*
+      dt\_*0.5) + 0.5*dt\_*(sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].acc.x);
+            sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.y = sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.y*exp(-gammadot\_*
+      dt\_*0.5) + 0.5*dt\_*(sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].acc.y);
+            sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.z = sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.z*exp(-gammadot\_*
+      dt\_*0.5) + 0.5*dt\_*(sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].acc.z);
+        \}
+
+        \textcolor{comment}{// (3) evolve particle positions}
+\textcolor{preprocessor}{        #pragma omp for schedule(dynamic,OMP\_CHUNK)}
+\textcolor{preprocessor}{}        \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i = 0; i < sys.\hyperlink{classsystem_definition_ae8d3c2df2d56241cee03fcc4e2026ae0}{numAtoms}(); ++i) \{
+            sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].pos.x += sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x*\hyperlink{classintegrator_a6e4712b8597e3c40124316d2e9dd5051}{dt\_};
+            sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].pos.y += sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.y*\hyperlink{classintegrator_a6e4712b8597e3c40124316d2e9dd5051}{dt\_};
+            sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].pos.z += sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.z*\hyperlink{classintegrator_a6e4712b8597e3c40124316d2e9dd5051}{dt\_};
+        \}
+    \}
+    
+    \textcolor{comment}{// (4) calc force}
+    \hyperlink{classintegrator_ad630bf7c9b7339fa34f36fe43b0d9e3c}{calcForce}(sys);
+    
+    \textcolor{comment}{// (5) evolve particle velocities}
+\textcolor{preprocessor}{    #pragma omp parallel shared(sys)}
+\textcolor{preprocessor}{}    \{
+\textcolor{preprocessor}{    #pragma omp for schedule(dynamic,OMP\_CHUNK)}
+\textcolor{preprocessor}{}    \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i = 0; i < sys.\hyperlink{classsystem_definition_ae8d3c2df2d56241cee03fcc4e2026ae0}{numAtoms}(); ++i) \{
+        sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x = (sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x+sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].
+      acc.x*dt\_*0.5)*exp(-gammadot\_*dt\_*0.5);
+        sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.y = (sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.y+sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].
+      acc.y*dt\_*0.5)*exp(-gammadot\_*dt\_*0.5);
+        sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.z = (sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.z+sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].
+      acc.z*dt\_*0.5)*exp(-gammadot\_*dt\_*0.5);
+        \}
+    \}
+    \textcolor{keywordtype}{float} Uk = 0.0;
+    \textcolor{keywordtype}{float} tmp = 0.0;
+
+\textcolor{preprocessor}{    #pragma omp parallel for reduction(+:Uk)}
+\textcolor{preprocessor}{}    \textcolor{comment}{// get temperature and kinetic energy}
+    \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i = 0; i < sys.\hyperlink{classsystem_definition_ae8d3c2df2d56241cee03fcc4e2026ae0}{numAtoms}(); ++i) \{
+        Uk += (sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x*sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x)+(sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}
+      [i].vel.y*sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.y)+(sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.z*sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].
+      vel.z);
+    \}
+    
+    Uk *= sys.\hyperlink{classsystem_definition_acb6dd3df121e3e5bc0eb41c32bd937bd}{mass}();
+    tmp = Uk;
+    Uk *= 0.5;
+    tmp /= (3.0*(sys.\hyperlink{classsystem_definition_ae8d3c2df2d56241cee03fcc4e2026ae0}{numAtoms}()-1.0));
+    sys.\hyperlink{classsystem_definition_a285e6cd1de35ed125eecb20f0f774ab3}{updateInstantTemp}(tmp);
+    sys.\hyperlink{classsystem_definition_a2b2c236698886bd1d106be802b987b61}{setKinE}(Uk);
+
+    \textcolor{comment}{// (6) update thermostat velocity}
+    gammadd\_ = 1/tau2\_*(sys.\hyperlink{classsystem_definition_af7b322cfc8abe7042fdbeb0af8e7aa7e}{instantT}()/sys.\hyperlink{classsystem_definition_a3c958df2ab99c0cb75c740346a5a4b6f}{targetT}()-1);
+    gammadot\_ += dt\_*0.5*gammadd\_;
+\}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+/\-Users/nathanmahynski/\-Desktop/\-C\-B\-E\-M\-D\-G\-P\-U/nvt.\-h\item 
+/\-Users/nathanmahynski/\-Desktop/\-C\-B\-E\-M\-D\-G\-P\-U/nvt.\-cpp\end{DoxyCompactItemize}

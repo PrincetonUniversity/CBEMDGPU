@@ -1,6 +1,5 @@
 /*!
  * Functions to assist to identifying and characterizing CUDA devices available
- * \author Nathan A. Mahynski
  */
 
 #include "cudaHelper.h"

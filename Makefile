@@ -10,6 +10,7 @@ OMP = main.o $(MD_DEPEND)
 OMP_TESTS= unittests.o $(MD_DEPEND) gtest.a
 OMP_TIMING = scaling_studies.o $(MD_DEPEND)
 OMP_LMP = compare_lammps.o $(MD_DEPEND)
+OMP_NVE = test_nve.o cellList.o integrator.o nve.o potential.o system.o utils.o
 
 GTEST_DIR = /home/cdsilva/gtest-1.7.0
 CPPFLAGS += -isystem $(GTEST_DIR)/include
@@ -35,7 +36,7 @@ unittests.o : unittests.cpp $(GTEST_HEADERS)
 	$(CXX) $(CFLAGS) -c $<
 
 %.o : %.cpp
-	$(CXX) $(OMPFLAGS) $(CFLAGS) -c $<
+	$(CXX) -DNOGPU $(OMPFLAGS) $(CFLAGS) -c $<
 
 MD: $(OMP)
 	$(CXX) $(OMPFLAGS) -o md $(CFLAGS) $^ 
@@ -49,9 +50,13 @@ TIMING: $(OMP_TIMING)
 LMP_COMPARE: $(OMP_LMP)
 	$(CXX) $(OMPFLAGS) -o lmp_compare $(CFLAGS) $^
 
+TEST_NVE: $(OMP_NVE)
+	$(CXX) $(OMPFLAGS) -o test_nve $(CFLAGS) $^
+
 clean:
 	$(RM) md
 	$(RM) tests
 	$(RM) timing
 	$(RM) lmp_compare
+	$(RM) test_nve
 	$(RM) *.o
