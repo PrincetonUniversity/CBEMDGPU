@@ -5,7 +5,7 @@
  */
 
 #include "system.h"
-#include "nvt.h"
+#include "nve.h"
 #include "cellList.h"
 #include <exception>
 #include "common.h"
@@ -29,24 +29,32 @@ void nve::step (systemDefinition &sys) {
 			throw customException("Failed to initialize integrator due to memory constraints");
 			return;
 		}
+		try {
+			cellList_cpu tmpCL (sys.box(), sys.rcut(), sys.rskin());
+			cl_ = tmpCL;
+		} catch (std::exception &e) {
+			std::cerr << e.what() << std:: endl;
+			throw customException("Failed to integrate on first step");
+		}
+
 		// calculate the forces initially (sets Up)
 		calcForce (sys);
-		
+
 		// also get initial T
-        #pragma omp parallel
+		#pragma omp parallel
 		{
-            #pragma omp for shared(sys.atoms) schedule(dynamic, OMP_CHUNK) 
+#pragma omp for schedule(dynamic, OMP_CHUNK) 
 			for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
 				sys.atoms[i].vel.x += dt_*0.5*(lastAccelerations_[i].x+sys.atoms[i].acc.x);
 				sys.atoms[i].vel.y += dt_*0.5*(lastAccelerations_[i].y+sys.atoms[i].acc.y);
 				sys.atoms[i].vel.z += dt_*0.5*(lastAccelerations_[i].z+sys.atoms[i].acc.z);
 			}
-        }
-        
-        float tmp = 0.0, Uk = 0.0;
-        #pragma omp parallel
+		}
+		
+		float tmp = 0.0, Uk = 0.0;
+#pragma omp parallel
 		{
-            #pragma omp reduction(+:Uk) schedule(dynamic, OMP_CHUNK) 
+#pragma omp for reduction(+:Uk) schedule(dynamic, OMP_CHUNK) 
 			for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
 				Uk += (sys.atoms[i].vel.x*sys.atoms[i].vel.x)+(sys.atoms[i].vel.y*sys.atoms[i].vel.y)+(sys.atoms[i].vel.z*sys.atoms[i].vel.z);
 			}
@@ -60,10 +68,11 @@ void nve::step (systemDefinition &sys) {
 		start_ = 0;
 	}
 	
+	std::cout << "in nve" << std::endl;
 	// update positions based on current positions
-    #pragma omp parallel
+#pragma omp parallel
 	{
-        #pragma omp for shared(sys.atoms) schedule(dynamic, OMP_CHUNK) 
+#pragma omp for schedule(dynamic, OMP_CHUNK) 
 		for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
 			sys.atoms[i].pos.x += dt_*(sys.atoms[i].vel.x+0.5*dt_*sys.atoms[i].acc.x);
 			sys.atoms[i].pos.y += dt_*(sys.atoms[i].vel.y+0.5*dt_*sys.atoms[i].acc.y);
@@ -71,26 +80,26 @@ void nve::step (systemDefinition &sys) {
 			lastAccelerations_[i] = sys.atoms[i].acc;
 		}
 	}
-    
+	
 	// calculate new forces at new positions
 	calcForce (sys);
-    
+	
 	// update velocities and get Uk and kinetic temperature
-    #pragma omp parallel
+#pragma omp parallel
 	{
-        #pragma omp for shared(sys.atoms) schedule(dynamic, OMP_CHUNK) 
+#pragma omp for schedule(dynamic, OMP_CHUNK) 
 		for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
 			sys.atoms[i].vel.x += dt_*0.5*(lastAccelerations_[i].x+sys.atoms[i].acc.x);
 			sys.atoms[i].vel.y += dt_*0.5*(lastAccelerations_[i].y+sys.atoms[i].acc.y);
 			sys.atoms[i].vel.z += dt_*0.5*(lastAccelerations_[i].z+sys.atoms[i].acc.z);
 		}
-    }
+	}
     
-    // get temperature and kinetic energy
-    float tmp = 0.0, Uk = 0.0;
-    #pragma omp parallel
+	// get temperature and kinetic energy
+	float tmp = 0.0, Uk = 0.0;
+#pragma omp parallel
 	{
-        #pragma omp reduction(+:Uk) schedule(dynamic, OMP_CHUNK) 
+#pragma omp for reduction(+:Uk) schedule(dynamic, OMP_CHUNK) 
 		for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
 			Uk += (sys.atoms[i].vel.x*sys.atoms[i].vel.x)+(sys.atoms[i].vel.y*sys.atoms[i].vel.y)+(sys.atoms[i].vel.z*sys.atoms[i].vel.z);
 		}
