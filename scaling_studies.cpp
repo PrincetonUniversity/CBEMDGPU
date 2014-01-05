@@ -8,6 +8,10 @@
 #include <stdlib.h>
 #include <math.h>
 
+#ifndef NOGPU
+#include "cudaHelper.h"
+#endif
+
 /*!
  * Invoke the program as 
  * $ ./timing numThreads nAtoms rs nsteps 
@@ -44,10 +48,6 @@ int main (int argc, char* argv[]) {
     	a.setRcut(rCut);	// if slj needs to incorporate "delta" shift already so cell list is properly created
    	a.initThermal(nAtoms, Temp, rngSeed, 1.2);
 
-    	/*pointFunction_t pp = pairUF;
- 	std::vector <float> args(1);
-	args[0] = 1.0; // epsilon
-	*/
 	#ifdef NVCC
 	pointFunction_t pp = dev_slj;
 	#else
@@ -64,6 +64,7 @@ int main (int argc, char* argv[]) {
 			a.cudaThreads = 512;
 		}
 		a.cudaBlocks = (int) ceil(a.numAtoms()/a.cudaThreads);
+		if (a.cudaBlocks < 1) a.cudaBlocks = 1;
 	} else {
 		return -1;
 	}
@@ -82,7 +83,7 @@ int main (int argc, char* argv[]) {
 
 
 	for (unsigned int long step = 0; step < nSteps; ++step) {
-		integrate.step2(a);
+		integrate.step(a);
 	}
 	
 	t2 = omp_get_wtime();
