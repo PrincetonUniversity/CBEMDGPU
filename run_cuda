@@ -1,0 +1,19 @@
+#!/bin/bash
+#PBS -N apcTest
+#PBS -q gpu
+#PBS -l nodes=1:ppn=16:gpus=4,walltime=0:01:00
+#PBS -j oe
+#PBS -r n
+#PBS -V
+#PBS -S /bin/bash
+
+cd $PBS_O_WORKDIR
+export OMP_NUM_THREADS=4
+
+module load cudatoolkit/5.5.22
+
+date 
+( ./md 1 50 1 3000 > log 2> err) &
+wait
+date
+

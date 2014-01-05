@@ -1,0 +1,39 @@
+CXX = icpc
+CXXCUDA = nvcc
+PATHTOBOOST = /home/gkhoury/boost_1_52_0/
+CFLAGS = -O2 -I $(PATHTOBOOST) 
+OMPFLAGS = -openmp 
+Default: MD
+OMP = cudaHelper.o cellList.o main.o nvt.o integrator.o system.o utils.o
+NVFLAGS = -gencode arch=compute_35,code=sm_35 
+
+%.o : %.c
+	$(CXX) $(CFLAGS) -c $<
+
+cudaHelper.o : ../cudaHelper.cu
+	$(CXXCUDA) -DNVCC $(NVFLAGS) $(CFLAGS) -c ../cudaHelper.cu
+
+cellList.o : ../cellList.cpp
+	$(CXX) -DNVCC $(OMPFLAGS) $(CFLAGS) -c ../cellList.cpp
+	
+main.o : main.cpp
+	$(CXX) -DNVCC $(OMPFLAGS) $(CFLAGS) -c main.cpp
+	
+nvt.o : ../nvt.cpp
+	$(CXX) -DNVCC $(OMPFLAGS) $(CFLAGS) -c ../nvt.cpp
+	
+integrator.o : ../integrator.cu
+	$(CXXCUDA) -DNVCC $(NVFLAGS) $(CFLAGS) -c ../integrator.cu
+	
+system.o : ../system.cpp
+	$(CXX) -DNVCC $(CFLAGS) $(OMPFLAGS) -c ../system.cpp
+
+utils.o : ../utils.cpp
+	$(CXX) -DNVCC $(OMPFLAGS) $(CFLAGS) -c ../utils.cpp
+
+MD: $(OMP)
+	$(CXX) -lcudart $(OMPFLAGS) -o cuda_timing $(CFLAGS) $(OMP) 
+
+clean:
+	$(RM) cuda_timing
+	$(RM) *.o

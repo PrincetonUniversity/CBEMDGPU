@@ -29,13 +29,13 @@ In the Makefile, the PATHTOBOOST variable should point to the diretory where the
 
 In the GTEST_DIR variable should point to the directory where the Google Tests libraries are saved.
 
-Note that the Intel C++ compilers must be used; the GNU C++ compilers do not work with the OpenMP portion of our code (this is a known bug in the compiler).
+Note that the Intel C++ compilers must be used; the GNU C++ compilers do not work with the OpenMP portion of our code (this is a known bug in the compiler, see FYI section).
 
 
 Execution
 ====
-main.cpp expects 1 input, the number of threads to use with OMP.
-$ ./md numThreads > log 2> err
+main.cpp expects 4 input, the number of threads to use with OMP, the number of atoms, the skin radius for the cell/neighbor lists, and the number of steps to simulate.
+$ ./md <nthreads> <natoms> <rs> <nsteps>  > log 2> err
 
 This also produces a trajectory.xyz file which can be visualized with VMD (if you have it installed)
 $ vmd -xyz trajectory.xyz
@@ -44,18 +44,16 @@ Explanation of main.cpp
 ====
 > How to use, change, and make your own in 10 steps.
 
-1. main.cpp expects 1 input, the number of threads to use with OMP.
-$ ./md numThreads > log 2> err
+1. main.cpp expects 4 input, the number of threads to use with OMP, the number of atoms, the skin radius for the cell/neighbor lists, and the number of steps to simulate.
+$ ./md <nthreads> <natoms> <rs> <nsteps>  > log 2> err
 
 2. The random number generator seed is then set manually to ensure that results are reproducible.
 
-3. The user must then specify basic properties about the system.  A systemDefinition object should be instantiated and then temperature, box size, particle mass, skin radius, and pair potential cutoff should be specified 
+3. The user must then specify basic properties about the system.  A systemDefinition object should be instantiated and then temperature, box size, particle mass, and pair potential cutoff should be specified 
     
     $ systemDefinition a;
     
-    $ a.setTemp(1.0); 
-    
-    $ a.setRskin(1.0); ...
+    $ a.setTemp(1.0);... 
 
 4. The system can then be initialized with the command initThermal or initRandom (see doxygen documentation for more details).  For example, in the former:
 
