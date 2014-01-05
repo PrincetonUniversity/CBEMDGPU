@@ -48,7 +48,8 @@ void nvt_NH::step (systemDefinition &sys) {
         gamma_ /= Q_;
 
         // get initial temperature
-        calcForce(sys);
+	calcForce(sys);
+
         float tmp=0.0, Uk = 0.0;
         #pragma omp parallel for reduction(+:Uk)
         for (unsigned int i = 0; i < sys.numAtoms(); ++i) {

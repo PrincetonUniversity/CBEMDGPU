@@ -1,5 +1,10 @@
 /*!
+<<<<<<< HEAD
+ * Do NVE integration 
+ * \author Nathan A. Mahynski
+=======
  * Do NVE integration
+>>>>>>> 2d866d515b56d4bba7210b21aa3f47e14b99bd7f
  * \date 11/18/13
  */
 

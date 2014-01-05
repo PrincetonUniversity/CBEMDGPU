@@ -173,6 +173,7 @@ void integrator::calcForce (systemDefinition &sys) {
 	} else {
 		throw customException ("Cannot understand which potential function to use");
 	}
+
 	thrust::device_vector < int > dev_pFlag (pFlag.begin(), pFlag.end());
 	int* dev_pFlag_ptr = thrust::raw_pointer_cast(&dev_pFlag[0]);
 
@@ -184,31 +185,21 @@ void integrator::calcForce (systemDefinition &sys) {
 	// check update for neighborlist
 	cl_.checkUpdate(sys);
 	
-	std::cout << "cp00" << std::endl;
-
 	// number of atoms
 	thrust::device_vector < int > dev_natoms(1, sys.numAtoms());
 	int* dev_natoms_ptr = thrust::raw_pointer_cast(&dev_natoms[0]);
-
-	std::cout << "cp01" << std::endl;
 
 	// copy sys.atoms to GPU
 	thrust::device_vector < atom > dev_atoms (sys.atoms.begin(), sys.atoms.end());
 	atom* dev_atoms_ptr = thrust::raw_pointer_cast(&dev_atoms[0]);
 
-	std::cout << "cp02" << std::endl;
-	
 	// copy neighborlists to GPU
 	thrust::device_vector < int > dev_neighbor_list (cl_.nlist.begin(), cl_.nlist.end());
 	int* dev_neighbor_list_ptr = thrust::raw_pointer_cast(&dev_neighbor_list[0]);
 
-	std::cout << "cp03" << std::endl;
-
 	// copy location of where the neighbors for each atoms starts
 	thrust::device_vector < int > dev_neighbor_index (cl_.nlist_index.begin(), cl_.nlist_index.end());
 	int* dev_neighbor_index_ptr = thrust::raw_pointer_cast(&dev_neighbor_index[0]);
-	
-	std::cout << "cp04" << std::endl;
 	
 	// create acc and Up to store results in
 	thrust::device_vector < float3 > dev_force (sys.numAtoms());
@@ -216,8 +207,6 @@ void integrator::calcForce (systemDefinition &sys) {
 	thrust::device_vector < float > dev_Up_each_atom (sys.numAtoms());
 	float* dev_Up_each_atom_ptr = thrust::raw_pointer_cast(&dev_Up_each_atom[0]);
 	
-	std::cout << "cp05" << std::endl;
-
 	// potential arguments
 	std::vector < float > potArgs = sys.potentialArgs();
 	std::vector < float > rcut (1, sys.rcut());
@@ -226,34 +215,16 @@ void integrator::calcForce (systemDefinition &sys) {
 	thrust::device_vector < float > dev_rcut (rcut.begin(), rcut.end());
 	float* dev_rcut_ptr = thrust::raw_pointer_cast(&dev_rcut[0]);
 
-	std::cout << "cp06" << std::endl;
-
 	// invoke kernel to compute
-	loopOverNeighbors <<< sys.cudaBlocks, sys.cudaThreads >>> (dev_atoms_ptr, dev_neighbor_list_ptr, dev_neighbor_index_ptr, dev_force_ptr, dev_sysbox_ptr, dev_Up_each_atom_ptr, dev_natoms_ptr, dev_args_ptr, dev_rcut_ptr, dev_pFlag_ptr);
-
-	std::cout << "cp07" << std::endl;
-
-	// call a reduction to collect Up then divide by 2 since double counted
-	/*Up = thrust::reduce(dev_Up_each_atom.begin(), dev_Up_each_atom.end(), (float) 0.0, thrust::plus<float>());
-	Up /= 2.0;	// pairs are double counted
-	*/
-
-	//tmp
-	std::vector < float > tmpUP (sys.numAtoms());
-	thrust::copy(dev_Up_each_atom.begin(), dev_Up_each_atom.end(), tmpUP.begin());
-	float sum = 0.0;
-	for (int i = 0; i < sys.numAtoms(); ++i) {
-		sum += tmpUP[i];
-	}
-	Up = sum/2.0;
+	/*loopOverNeighbors <<< sys.cudaBlocks, sys.cudaThreads >>> (dev_atoms_ptr, dev_neighbor_list_ptr, dev_neighbor_index_ptr, dev_force_ptr, dev_sysbox_ptr, dev_Up_each_atom_ptr, dev_natoms_ptr, dev_args_ptr, dev_rcut_ptr, dev_pFlag_ptr);
 	
-	std::cout << "cp08" << std::endl;
-
+	// call a reduction to collect Up then divide by 2 since double counted
+	Up = thrust::reduce(dev_Up_each_atom.begin(), dev_Up_each_atom.end(), (float) 0.0, thrust::plus<float>());
+	Up /= 2.0;	// pairs are double counted
+	
 	// store accelerations on atoms	
 	std::vector < float3 > netForces (sys.numAtoms());
 	thrust::copy(dev_force.begin(), dev_force.end(), netForces.begin());
-
-	std::cout << "cp09" << std::endl;
 
 	for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
 		sys.atoms[i].acc.x = netForces[i].x*invMass;
@@ -261,7 +232,7 @@ void integrator::calcForce (systemDefinition &sys) {
 		sys.atoms[i].acc.z = netForces[i].z*invMass;
 	}	
 
-	std::cout << "cp10" << std::endl;
+*/
 
 	// set Up
 	sys.setPotE(Up);

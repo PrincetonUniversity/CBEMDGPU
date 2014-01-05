@@ -14,7 +14,7 @@
  */
 
 // this function runs 400 atoms at T=0.71. 
-// we use these results verify that total energy is conserved with NVE
+// we use these results to compare with LAMMPS 
 int main (int argc, char* argv[]) {
     	if (argc !=2){
 		// catch incorrect number of arguments
@@ -25,7 +25,7 @@ int main (int argc, char* argv[]) {
     	omp_set_num_threads(nthreads);
     	const int rngSeed = 3145;
     	float Temp = 0.71; 
-    	float timestep = 0.005; 
+    	float timestep = 0.002; 
 	const int nAtoms = 400;
 	const double L = 16.796;
     	systemDefinition a;
@@ -50,7 +50,7 @@ int main (int argc, char* argv[]) {
 	integrate.setTimestep(timestep);
 
     	const int nSteps = 10000;
-    	const int report = 1; 
+    	const int report = 10; 
 
 	for (unsigned int long step = 0; step < nSteps; ++step) {
 		integrate.step(a);

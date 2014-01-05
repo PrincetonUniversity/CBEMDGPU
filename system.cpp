@@ -1,5 +1,6 @@
 /*!
  * System methods
+ * \author Nathan A. Mahynski
  * \date 11/17/13
  */
 
@@ -13,16 +14,20 @@
 #define RNG (1.0*rand())/RAND_MAX
 
 /*!
- * Sets the "host" pair potential function which also sets the GPU equivalent in integrator.cu if using CUDA.
- *
- * \param [in] pp Pointer to pair potential function
+ * Takes a __device__ potential function and sets the host equivalent so that the host kernal can
+ * pass the fiunction to the device if using CUDA, else just sets the "host" function.
  */ 
 void systemDefinition::setPotential (pointFunction_t pp) {
+/*#ifdef NVCC
+	dev_potential = pp;
+	cudaMemcpyFromSymbol(&potential, dev_potential, sizeof(pointFunction_t));
+#else*/
 	potential = pp;
+//#endif
 }
 
 /*!
- * Initialize a system of N atoms with random velocities and positions on a lattice.
+ * Initialize a system of N atoms with random velocities and positions.
  * Net momeentum is automatically initialized to zero.
  *
  * \param [in] N Number of atoms to create
@@ -41,9 +46,9 @@ void systemDefinition::initRandom (const int N, const int rngSeed) {
 	int chunk = OMP_CHUNK;
 	unsigned int i;
 	atoms.resize(N);
-    #pragma omp parallel private(i)
+#pragma omp parallel private(i)
 	{
-    #pragma	omp for schedule(dynamic, chunk)
+#pragma	omp for schedule(dynamic, chunk)
 	for (i = 0; i < N; ++i) {
 		if (i < N-1) {
 			atoms[i].vel.x = (RNG-0.5);
@@ -68,8 +73,8 @@ void systemDefinition::initRandom (const int N, const int rngSeed) {
 }
 
 /*!
-* Initialize a system of N atoms with random velocities to meet a desired temperature and positions on a lattice.
-* Net momentum is automatically initialized to zero.
+* Initialize a system of N atoms with random velocities and positions.
+* Net momeentum is automatically initialized to zero.
 * 
 * \param [in] N Number of atoms to create
 * \param [in] rngSeed Random number generator seed
@@ -79,8 +84,8 @@ void systemDefinition::initThermal (const int N, const float Tset, const int rng
     totMomentum.x = 0; totMomentum.y = 0; totMomentum.z = 0;
 
     if (N < 1) {
-        throw customException ("N must be > 0");
-        return;
+	throw customException ("N must be > 0");
+	return;
     }
 
     srand(rngSeed);
@@ -97,8 +102,7 @@ void systemDefinition::initThermal (const int N, const float Tset, const int rng
 	const int xs = floor(box_.x/dx);
 	const int ys = floor(box_.y/dx);
 	const int zs = floor(box_.z/dx);
-    
-	// initialize particle positions on a simple cubic lattice
+	// initialize particles on a lattice
 	for (unsigned int x = 0; x < xs; ++x) {
 		for (unsigned int y = 0; y < ys; ++y) {
 			for (unsigned int z = 0; z < zs; ++z) {
@@ -116,24 +120,23 @@ void systemDefinition::initThermal (const int N, const float Tset, const int rng
 			}
 		}
 	}
-    
     for (unsigned int i = 0; i < N; ++i) {
-        atoms[i].acc.x = 0;
-        atoms[i].acc.y = 0;
-        atoms[i].acc.z = 0;
-        if (i < N-1) {
-            atoms[i].vel.x = distribution(eng);
-            atoms[i].vel.y = distribution(eng);
-            atoms[i].vel.z = distribution(eng);
-            totMomentum.x += atoms[i].vel.x;
-            totMomentum.y += atoms[i].vel.y;
-            totMomentum.z += atoms[i].vel.z;
-        } else {
-            atoms[i].vel.x = -totMomentum.x;
-            atoms[i].vel.y = -totMomentum.y;
-            atoms[i].vel.z = -totMomentum.z;
-        }
-        tmpT += (atoms[i].vel.x*atoms[i].vel.x + atoms[i].vel.y*atoms[i].vel.y + atoms[i].vel.z*atoms[i].vel.z);
+	atoms[i].acc.x = 0;
+	atoms[i].acc.y = 0;
+	atoms[i].acc.z = 0;
+	if (i < N-1) {
+	    atoms[i].vel.x = distribution(eng);
+	    atoms[i].vel.y = distribution(eng);
+	    atoms[i].vel.z = distribution(eng);
+	    totMomentum.x += atoms[i].vel.x;
+	    totMomentum.y += atoms[i].vel.y;
+	    totMomentum.z += atoms[i].vel.z;
+	} else {
+	    atoms[i].vel.x = -totMomentum.x;
+	    atoms[i].vel.y = -totMomentum.y;
+	    atoms[i].vel.z = -totMomentum.z;
+	}
+	tmpT += (atoms[i].vel.x*atoms[i].vel.x + atoms[i].vel.y*atoms[i].vel.y + atoms[i].vel.z*atoms[i].vel.z);
     }
 
     // do velocity rescaling to get exactly the right T
@@ -141,9 +144,9 @@ void systemDefinition::initThermal (const int N, const float Tset, const int rng
     tmpT /= Tset;
     tmpT = 1.0/tmpT;
     for (unsigned int i = 0; i < N; i ++ ) {
-        atoms[i].vel.x = atoms[i].vel.x*sqrt(tmpT);
-        atoms[i].vel.y = atoms[i].vel.y*sqrt(tmpT);
-        atoms[i].vel.z = atoms[i].vel.z*sqrt(tmpT);
+	atoms[i].vel.x = atoms[i].vel.x*sqrt(tmpT);
+	atoms[i].vel.y = atoms[i].vel.y*sqrt(tmpT);
+	atoms[i].vel.z = atoms[i].vel.z*sqrt(tmpT);
     }
 }
 

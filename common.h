@@ -1,5 +1,6 @@
 /*!
  * Common values, structures, etc.
+ * \author Nathan A. Mahynski
  * \date 11/17/13
  */
 
@@ -12,14 +13,13 @@
 //! Error reporting
 class customException : public std::exception {
 	public:
-		const char* what() const throw() {return msg_.c_str();} //!< Return a message pertaining to what went wrong
-		customException (std::string m="custom exception occurred"):msg_(m){}   //!< Instantiate the object with a user specified message
+		const char* what() const throw() {return msg_.c_str();}
+		customException (std::string m="custom exception occurred"):msg_(m){}
 		~customException () throw() {};
 	private:
-		std::string msg_;       //!< Message to report
+		std::string msg_;
 };
 
-//! Default OMP chunk size
 #define OMP_CHUNK 100
 
 #endif
