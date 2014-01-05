@@ -142,10 +142,9 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Uses Nose-Hover integration method to thermostat a system (constant T rather than E) </p>
 <p>NVT integration with Nose-Hoover thermostat. </p>
-<dl class="section author"><dt>Author</dt><dd>Nathan A. Mahynski </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>11/18/13 </dd></dl>
 
-<p>Definition at line <a class="el" href="nvt_8h_source.html#l00014">14</a> of file <a class="el" href="nvt_8h_source.html">nvt.h</a>.</p>
+<p>Definition at line <a class="el" href="nvt_8h_source.html#l00013">13</a> of file <a class="el" href="nvt_8h_source.html">nvt.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a2de57e4e2a370bbfc8c0026963352ef1"></a>
 <div class="memitem">
@@ -161,7 +160,6 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
       </table>
 </div><div class="memdoc">
 <p>Do NVT integration with Nose-Hoover thermostat. </p>
-<dl class="section author"><dt>Author</dt><dd>Nathan A. Mahynski </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>11/18/13</dd></dl>
 <p>Initialize integrator</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -171,9 +169,9 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="nvt_8cpp_source.html#l00021">21</a> of file <a class="el" href="nvt_8cpp_source.html">nvt.cpp</a>.</p>
+<p>Definition at line <a class="el" href="nvt_8cpp_source.html#l00020">20</a> of file <a class="el" href="nvt_8cpp_source.html">nvt.cpp</a>.</p>
 
-<p>References <a class="el" href="integrator_8h_source.html#l00025">integrator::start_</a>.</p>
+<p>References <a class="el" href="integrator_8h_source.html#l00024">integrator::start_</a>.</p>
 <div class="fragment"><div class="line">                             {</div>
 <div class="line">    Q_ = Q; </div>
 <div class="line">    gamma_ = 0.0;</div>
@@ -207,7 +205,6 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 
 <p>Calculate the forces on each atom. </p>
 <p>Integration </p>
-<dl class="section author"><dt>Author</dt><dd>Nathan A. Mahynski </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>11/19/13</dd></dl>
 <p>Calculate the pairwise forces in a system. This also calculates the potential energy of a system. The kinetic energy is calculated during the verlet integration.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -217,11 +214,11 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="integrator_8cpp_source.html#l00023">23</a> of file <a class="el" href="integrator_8cpp_source.html">integrator.cpp</a>.</p>
+<p>Definition at line <a class="el" href="integrator_8cpp_source.html#l00022">22</a> of file <a class="el" href="integrator_8cpp_source.html">integrator.cpp</a>.</p>
 
-<p>References <a class="el" href="system_8h_source.html#l00051">systemDefinition::atoms</a>, <a class="el" href="system_8h_source.html#l00030">systemDefinition::box()</a>, <a class="el" href="cell_list_8cpp_source.html#l00265">cellList_cpu::checkUpdate()</a>, <a class="el" href="integrator_8h_source.html#l00022">integrator::cl_</a>, <a class="el" href="cell_list_8h_source.html#l00046">cellList_cpu::head()</a>, <a class="el" href="cell_list_8h_source.html#l00047">cellList_cpu::list()</a>, <a class="el" href="system_8h_source.html#l00033">systemDefinition::mass()</a>, <a class="el" href="cell_list_8h_source.html#l00048">cellList_cpu::nCells</a>, <a class="el" href="cell_list_8h_source.html#l00049">cellList_cpu::neighbors()</a>, <a class="el" href="system_8h_source.html#l00041">systemDefinition::numAtoms()</a>, <a class="el" href="system_8h_source.html#l00049">systemDefinition::potential</a>, <a class="el" href="system_8h_source.html#l00043">systemDefinition::potentialArgs()</a>, <a class="el" href="system_8h_source.html#l00039">systemDefinition::rcut()</a>, and <a class="el" href="system_8h_source.html#l00035">systemDefinition::setPotE()</a>.</p>
+<p>References <a class="el" href="system_8h_source.html#l00050">systemDefinition::atoms</a>, <a class="el" href="system_8h_source.html#l00029">systemDefinition::box()</a>, <a class="el" href="cell_list_8cpp_source.html#l00264">cellList_cpu::checkUpdate()</a>, <a class="el" href="integrator_8h_source.html#l00021">integrator::cl_</a>, <a class="el" href="cell_list_8h_source.html#l00045">cellList_cpu::head()</a>, <a class="el" href="cell_list_8h_source.html#l00046">cellList_cpu::list()</a>, <a class="el" href="system_8h_source.html#l00032">systemDefinition::mass()</a>, <a class="el" href="cell_list_8h_source.html#l00047">cellList_cpu::nCells</a>, <a class="el" href="cell_list_8h_source.html#l00048">cellList_cpu::neighbors()</a>, <a class="el" href="system_8h_source.html#l00040">systemDefinition::numAtoms()</a>, <a class="el" href="system_8h_source.html#l00048">systemDefinition::potential</a>, <a class="el" href="system_8h_source.html#l00042">systemDefinition::potentialArgs()</a>, <a class="el" href="system_8h_source.html#l00038">systemDefinition::rcut()</a>, and <a class="el" href="system_8h_source.html#l00034">systemDefinition::setPotE()</a>.</p>
 
-<p>Referenced by <a class="el" href="nve_8cpp_source.html#l00023">nve::step()</a>, and <a class="el" href="nvt_8cpp_source.html#l00033">step()</a>.</p>
+<p>Referenced by <a class="el" href="nve_8cpp_source.html#l00022">nve::step()</a>, and <a class="el" href="nvt_8cpp_source.html#l00032">step()</a>.</p>
 <div class="fragment"><div class="line">                                                 {</div>
 <div class="line">    <span class="comment">// For cache coeherency allocate new space for calculations</span></div>
 <div class="line">    <a class="code" href="structfloat3.html" title="3 floating point numbers, same as defined for GPUs">float3</a> empty;</div>
@@ -309,9 +306,9 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 
 <p>Implements <a class="el" href="classintegrator.html#a6f7170652474f15c99b94a9b9c7f4df6">integrator</a>.</p>
 
-<p>Definition at line <a class="el" href="nvt_8cpp_source.html#l00033">33</a> of file <a class="el" href="nvt_8cpp_source.html">nvt.cpp</a>.</p>
+<p>Definition at line <a class="el" href="nvt_8cpp_source.html#l00032">32</a> of file <a class="el" href="nvt_8cpp_source.html">nvt.cpp</a>.</p>
 
-<p>References <a class="el" href="system_8h_source.html#l00051">systemDefinition::atoms</a>, <a class="el" href="system_8h_source.html#l00030">systemDefinition::box()</a>, <a class="el" href="integrator_8cpp_source.html#l00023">integrator::calcForce()</a>, <a class="el" href="integrator_8h_source.html#l00022">integrator::cl_</a>, <a class="el" href="integrator_8h_source.html#l00024">integrator::dt_</a>, <a class="el" href="system_8h_source.html#l00031">systemDefinition::instantT()</a>, <a class="el" href="system_8h_source.html#l00033">systemDefinition::mass()</a>, <a class="el" href="system_8h_source.html#l00041">systemDefinition::numAtoms()</a>, <a class="el" href="system_8h_source.html#l00039">systemDefinition::rcut()</a>, <a class="el" href="system_8h_source.html#l00038">systemDefinition::rskin()</a>, <a class="el" href="system_8h_source.html#l00036">systemDefinition::setKinE()</a>, <a class="el" href="integrator_8h_source.html#l00025">integrator::start_</a>, <a class="el" href="system_8h_source.html#l00032">systemDefinition::targetT()</a>, and <a class="el" href="system_8h_source.html#l00023">systemDefinition::updateInstantTemp()</a>.</p>
+<p>References <a class="el" href="system_8h_source.html#l00050">systemDefinition::atoms</a>, <a class="el" href="system_8h_source.html#l00029">systemDefinition::box()</a>, <a class="el" href="integrator_8cpp_source.html#l00022">integrator::calcForce()</a>, <a class="el" href="integrator_8h_source.html#l00021">integrator::cl_</a>, <a class="el" href="integrator_8h_source.html#l00023">integrator::dt_</a>, <a class="el" href="system_8h_source.html#l00030">systemDefinition::instantT()</a>, <a class="el" href="system_8h_source.html#l00032">systemDefinition::mass()</a>, <a class="el" href="system_8h_source.html#l00040">systemDefinition::numAtoms()</a>, <a class="el" href="system_8h_source.html#l00038">systemDefinition::rcut()</a>, <a class="el" href="system_8h_source.html#l00037">systemDefinition::rskin()</a>, <a class="el" href="system_8h_source.html#l00035">systemDefinition::setKinE()</a>, <a class="el" href="integrator_8h_source.html#l00024">integrator::start_</a>, <a class="el" href="system_8h_source.html#l00031">systemDefinition::targetT()</a>, and <a class="el" href="system_8h_source.html#l00022">systemDefinition::updateInstantTemp()</a>.</p>
 <div class="fragment"><div class="line">                                        {</div>
 <div class="line">    <span class="keywordtype">int</span> chunk = OMP_CHUNK;</div>
 <div class="line">    <span class="keywordflow">if</span> (<a class="code" href="classintegrator.html#a5b3546a765d8a83b6db8a6d890ace480" title="Flag for whether this object has been initialized or not.">start_</a>) {</div>
@@ -420,7 +417,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jan 4 2014 18:49:16 for Parallel Molecular Dynamics with a Time-Reversible Nose-Hoover Thermostat on CPUs and GPUs by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jan 4 2014 19:08:05 for Parallel Molecular Dynamics with a Time-Reversible Nose-Hoover Thermostat on CPUs and GPUs by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

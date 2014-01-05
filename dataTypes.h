@@ -1,6 +1,5 @@
 /*!
  * Requisite 'optimal' data types.
- * \author Nathan A. Mahynski
  * \date 11/21/13
  */
 

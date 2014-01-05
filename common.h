@@ -1,6 +1,5 @@
 /*!
  * Common values, structures, etc.
- * \author Nathan A. Mahynski
  * \date 11/17/13
  */
 

@@ -1,6 +1,5 @@
 /*!
  * Do NVT integration with Nose-Hoover thermostat.
- * \author Nathan A. Mahynski
  * \date 11/18/13
  */
 

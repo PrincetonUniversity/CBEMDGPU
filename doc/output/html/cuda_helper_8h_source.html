@@ -85,48 +85,48 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#ifndef __CUDAHELPER_H__</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define __CUDAHELPER_H__</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;cuda.h&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;fstream&gt;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;netdb.h&gt;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;sys/utsname.h&gt;</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#if defined(__STRICT_ANSI__) &amp;&amp; !defined(__alpha__)</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor"></span><span class="keyword">extern</span> <span class="keywordtype">int</span> gethostname __P ((<span class="keywordtype">char</span> *__name, <span class="keywordtype">size_t</span> __len));</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;unistd.h&gt;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00026"></a><span class="lineno"><a class="code" href="classsystem_props.html">   26</a></span>&#160;<span class="keyword">class </span><a class="code" href="classsystem_props.html" title="Holds all information about the CPU and GPU the simulation is being performed on.">systemProps</a> {</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <a class="code" href="classsystem_props.html" title="Holds all information about the CPU and GPU the simulation is being performed on.">systemProps</a> () {output_ = &amp;std::cout;}</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <a class="code" href="classsystem_props.html" title="Holds all information about the CPU and GPU the simulation is being performed on.">systemProps</a> (std::string fname);</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    ~<a class="code" href="classsystem_props.html" title="Holds all information about the CPU and GPU the simulation is being performed on.">systemProps</a> ();</div>
-<div class="line"><a name="l00031"></a><span class="lineno"><a class="code" href="classsystem_props.html#a5268e0f1a250cdf0810e9d899b85bea2">   31</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classsystem_props.html#a5268e0f1a250cdf0810e9d899b85bea2" title="Display cpu host and device (if using GPUs) properties.">displayAllProps</a> () {<a class="code" href="classsystem_props.html#aeec628e3f468a2b274f08a0777dea6f1" title="Display host name and other properties.">displayHost</a>(); <a class="code" href="classsystem_props.html#aec22f83e71043fd60cb61a45fcc25b02" title="Display the properties of the GPU being used.">displayCudaProps</a>();}    </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    __host__ <span class="keywordtype">void</span> <a class="code" href="classsystem_props.html#aec22f83e71043fd60cb61a45fcc25b02" title="Display the properties of the GPU being used.">displayCudaProps</a> ();                              </div>
-<div class="line"><a name="l00033"></a><span class="lineno"><a class="code" href="classsystem_props.html#aeec628e3f468a2b274f08a0777dea6f1">   33</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classsystem_props.html#aeec628e3f468a2b274f08a0777dea6f1" title="Display host name and other properties.">displayHost</a> () {checkHost_(); *output_ &lt;&lt; <span class="stringliteral">&quot;# &quot;</span> &lt;&lt; hostname_ &lt;&lt; std::endl;}     </div>
-<div class="line"><a name="l00034"></a><span class="lineno"><a class="code" href="classsystem_props.html#acfde8d62af2c239f6a52c02985099185">   34</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classsystem_props.html#acfde8d62af2c239f6a52c02985099185" title="Returns the maximum number of threads per block on the GPU.">maxThreadsPerBlock</a> (<span class="keyword">const</span> <span class="keywordtype">int</span> devID) {<span class="keywordflow">return</span> device_[devID].maxThreadsPerBlock;}    </div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="code" href="classsystem_props.html#a3327d282f881885ebcb8949d8ec6e3ec">   35</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classsystem_props.html#a3327d282f881885ebcb8949d8ec6e3ec" title="Returns the maximum number of blocks per grid on the GPU.">maxGridDimX</a> (<span class="keyword">const</span> <span class="keywordtype">int</span> devID) {<span class="keywordflow">return</span> device_[devID].maxGridSize[0];}               </div>
-<div class="line"><a name="l00036"></a><span class="lineno"><a class="code" href="classsystem_props.html#a1cb3107e255e38046372edc757ddc6b2">   36</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classsystem_props.html#a1cb3107e255e38046372edc757ddc6b2" title="Returns the number of GPUs found attached to the CPU.">numDevices</a> ()<span class="keyword"> const </span>{<span class="keywordflow">return</span> device_.size();}                                        </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    std::vector &lt; cudaDeviceProp &gt; device_;                         </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    std::string hostname_;                                          </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    std::ostream* output_;                                          </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    __host__ <span class="keywordtype">void</span> checkCudaDevices_ ();                             </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordtype">void</span> checkHost_ ();                                             </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;};</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef __CUDAHELPER_H__</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define __CUDAHELPER_H__</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;cuda.h&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;fstream&gt;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;netdb.h&gt;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;sys/utsname.h&gt;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#if defined(__STRICT_ANSI__) &amp;&amp; !defined(__alpha__)</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor"></span><span class="keyword">extern</span> <span class="keywordtype">int</span> gethostname __P ((<span class="keywordtype">char</span> *__name, <span class="keywordtype">size_t</span> __len));</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;unistd.h&gt;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="code" href="classsystem_props.html">   25</a></span>&#160;<span class="keyword">class </span><a class="code" href="classsystem_props.html" title="Holds all information about the CPU and GPU the simulation is being performed on.">systemProps</a> {</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <a class="code" href="classsystem_props.html" title="Holds all information about the CPU and GPU the simulation is being performed on.">systemProps</a> () {output_ = &amp;std::cout;}</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <a class="code" href="classsystem_props.html" title="Holds all information about the CPU and GPU the simulation is being performed on.">systemProps</a> (std::string fname);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    ~<a class="code" href="classsystem_props.html" title="Holds all information about the CPU and GPU the simulation is being performed on.">systemProps</a> ();</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="code" href="classsystem_props.html#a5268e0f1a250cdf0810e9d899b85bea2">   30</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classsystem_props.html#a5268e0f1a250cdf0810e9d899b85bea2" title="Display cpu host and device (if using GPUs) properties.">displayAllProps</a> () {<a class="code" href="classsystem_props.html#aeec628e3f468a2b274f08a0777dea6f1" title="Display host name and other properties.">displayHost</a>(); <a class="code" href="classsystem_props.html#aec22f83e71043fd60cb61a45fcc25b02" title="Display the properties of the GPU being used.">displayCudaProps</a>();}    </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    __host__ <span class="keywordtype">void</span> <a class="code" href="classsystem_props.html#aec22f83e71043fd60cb61a45fcc25b02" title="Display the properties of the GPU being used.">displayCudaProps</a> ();                              </div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="code" href="classsystem_props.html#aeec628e3f468a2b274f08a0777dea6f1">   32</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classsystem_props.html#aeec628e3f468a2b274f08a0777dea6f1" title="Display host name and other properties.">displayHost</a> () {checkHost_(); *output_ &lt;&lt; <span class="stringliteral">&quot;# &quot;</span> &lt;&lt; hostname_ &lt;&lt; std::endl;}     </div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="code" href="classsystem_props.html#acfde8d62af2c239f6a52c02985099185">   33</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classsystem_props.html#acfde8d62af2c239f6a52c02985099185" title="Returns the maximum number of threads per block on the GPU.">maxThreadsPerBlock</a> (<span class="keyword">const</span> <span class="keywordtype">int</span> devID) {<span class="keywordflow">return</span> device_[devID].maxThreadsPerBlock;}    </div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="code" href="classsystem_props.html#a3327d282f881885ebcb8949d8ec6e3ec">   34</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classsystem_props.html#a3327d282f881885ebcb8949d8ec6e3ec" title="Returns the maximum number of blocks per grid on the GPU.">maxGridDimX</a> (<span class="keyword">const</span> <span class="keywordtype">int</span> devID) {<span class="keywordflow">return</span> device_[devID].maxGridSize[0];}               </div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="code" href="classsystem_props.html#a1cb3107e255e38046372edc757ddc6b2">   35</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classsystem_props.html#a1cb3107e255e38046372edc757ddc6b2" title="Returns the number of GPUs found attached to the CPU.">numDevices</a> ()<span class="keyword"> const </span>{<span class="keywordflow">return</span> device_.size();}                                        </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    std::vector &lt; cudaDeviceProp &gt; device_;                         </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    std::string hostname_;                                          </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    std::ostream* output_;                                          </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    __host__ <span class="keywordtype">void</span> checkCudaDevices_ ();                             </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordtype">void</span> checkHost_ ();                                             </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;};</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jan 4 2014 18:49:16 for Parallel Molecular Dynamics with a Time-Reversible Nose-Hoover Thermostat on CPUs and GPUs by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jan 4 2014 19:08:04 for Parallel Molecular Dynamics with a Time-Reversible Nose-Hoover Thermostat on CPUs and GPUs by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

@@ -126,11 +126,10 @@ Public Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Cell Lists </p>
-<dl class="section author"><dt>Author</dt><dd>Nathan A. Mahynski </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>11/19/13</dd></dl>
 <p>Maintains a linked list to track cells on the CPU </p>
 
-<p>Definition at line <a class="el" href="cell_list_8h_source.html#l00039">39</a> of file <a class="el" href="cell_list_8h_source.html">cellList.h</a>.</p>
+<p>Definition at line <a class="el" href="cell_list_8h_source.html#l00038">38</a> of file <a class="el" href="cell_list_8h_source.html">cellList.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a2ac134374c8e561617433e03bb6b2d1e"></a>
 <div class="memitem">
@@ -162,7 +161,6 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Cell Lists </p>
-<dl class="section author"><dt>Author</dt><dd>Nathan A. Mahynski </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>11/19/13</dd></dl>
 <p>Initialize a cell list on the CPUs.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -174,9 +172,9 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="cell_list_8cpp_source.html#l00155">155</a> of file <a class="el" href="cell_list_8cpp_source.html">cellList.cpp</a>.</p>
+<p>Definition at line <a class="el" href="cell_list_8cpp_source.html#l00154">154</a> of file <a class="el" href="cell_list_8cpp_source.html">cellList.cpp</a>.</p>
 
-<p>References <a class="el" href="cell_list_8h_source.html#l00048">nCells</a>.</p>
+<p>References <a class="el" href="cell_list_8h_source.html#l00047">nCells</a>.</p>
 <div class="fragment"><div class="line">                                                                             {</div>
 <div class="line">    <span class="keywordflow">if</span> (rc &lt; 0.0) {</div>
 <div class="line">        <span class="keywordflow">throw</span> <a class="code" href="classcustom_exception.html" title="Error reporting.">customException</a>(<span class="stringliteral">&quot;Cutoff radius must be &gt; 0&quot;</span>);</div>
@@ -293,11 +291,11 @@ Public Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>cell </dd></dl>
 
-<p>Definition at line <a class="el" href="cell_list_8cpp_source.html#l00251">251</a> of file <a class="el" href="cell_list_8cpp_source.html">cellList.cpp</a>.</p>
+<p>Definition at line <a class="el" href="cell_list_8cpp_source.html#l00250">250</a> of file <a class="el" href="cell_list_8cpp_source.html">cellList.cpp</a>.</p>
 
-<p>References <a class="el" href="cell_list_8h_source.html#l00048">nCells</a>.</p>
+<p>References <a class="el" href="cell_list_8h_source.html#l00047">nCells</a>.</p>
 
-<p>Referenced by <a class="el" href="cell_list_8cpp_source.html#l00265">checkUpdate()</a>, and <a class="el" href="cell_list_8h_source.html#l00046">head()</a>.</p>
+<p>Referenced by <a class="el" href="cell_list_8cpp_source.html#l00264">checkUpdate()</a>, and <a class="el" href="cell_list_8h_source.html#l00045">head()</a>.</p>
 <div class="fragment"><div class="line">                                         {</div>
 <div class="line">    <a class="code" href="structfloat3.html" title="3 floating point numbers, same as defined for GPUs">float3</a> inBox = pbc(pos, box_);</div>
 <div class="line">    <span class="keyword">const</span> <span class="keywordtype">int</span> x = (int) floor(inBox.x/lcell_.x);</div>
@@ -331,11 +329,11 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="cell_list_8cpp_source.html#l00265">265</a> of file <a class="el" href="cell_list_8cpp_source.html">cellList.cpp</a>.</p>
+<p>Definition at line <a class="el" href="cell_list_8cpp_source.html#l00264">264</a> of file <a class="el" href="cell_list_8cpp_source.html">cellList.cpp</a>.</p>
 
-<p>References <a class="el" href="system_8h_source.html#l00051">systemDefinition::atoms</a>, <a class="el" href="system_8h_source.html#l00030">systemDefinition::box()</a>, <a class="el" href="cell_list_8cpp_source.html#l00251">cell()</a>, and <a class="el" href="system_8h_source.html#l00041">systemDefinition::numAtoms()</a>.</p>
+<p>References <a class="el" href="system_8h_source.html#l00050">systemDefinition::atoms</a>, <a class="el" href="system_8h_source.html#l00029">systemDefinition::box()</a>, <a class="el" href="cell_list_8cpp_source.html#l00250">cell()</a>, and <a class="el" href="system_8h_source.html#l00040">systemDefinition::numAtoms()</a>.</p>
 
-<p>Referenced by <a class="el" href="integrator_8cpp_source.html#l00023">integrator::calcForce()</a>.</p>
+<p>Referenced by <a class="el" href="integrator_8cpp_source.html#l00022">integrator::calcForce()</a>.</p>
 <div class="fragment"><div class="line">                                                           {</div>
 <div class="line">    <span class="keywordtype">int</span> build = 0;</div>
 <div class="line">    <span class="keywordflow">if</span> (start_) {</div>
@@ -405,7 +403,7 @@ Public Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jan 4 2014 18:49:16 for Parallel Molecular Dynamics with a Time-Reversible Nose-Hoover Thermostat on CPUs and GPUs by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jan 4 2014 19:08:04 for Parallel Molecular Dynamics with a Time-Reversible Nose-Hoover Thermostat on CPUs and GPUs by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>
