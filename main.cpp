@@ -74,7 +74,7 @@ int main (int argc, char* argv[]) {
     integrate.setTimestep(timestep);
 
     const int nSteps = 3000;
-    const int report = nSteps/1000;
+    const int report = 1; //nSteps/1000;
 
 	for (unsigned int long step = 0; step < nSteps; ++step) {
 		integrate.step(a);
