@@ -1,0 +1,149 @@
+\begin{thebibliography}{10}
+
+\bibitem{Karplus2002}
+Karplus M, McCammon JA. Molecular dynamics simulations of biomolecules Nature
+  Structural \& Molecular Biology 2002;\hspace{0pt}9(9):646--652.
+
+\bibitem{Levitt2001}
+Levitt M. The birth of computational structural biology Nature Structural \&
+  Molecular Biology 2001;\hspace{0pt}8(5):392--393.
+
+\bibitem{Jorgensen2004}
+Jorgensen WL. The many roles of computation in drug discovery. Science
+  2004;\hspace{0pt}303(5665):1813--1818.
+
+\bibitem{Duan1998}
+Duan Y, Kollman PA. Pathways to a protein folding intermediate observed in a
+  1-microsecond simulation in aqueous solution Science
+  1998;\hspace{0pt}282(5389):740--744.
+
+\bibitem{Shaw2010}
+Shaw DE, Maragakis P, Lindorff-Larsen K, Piana S, Dror RO, Eastwood MP, Bank
+  JA, Jumper JM, Salmon JK, Shan Y, Wriggers W. Atomic-level characterization
+  of the structural dynamics of proteins Science
+  2010;\hspace{0pt}330(6002):341--346.
+
+\bibitem{Piana2013}
+Piana S, Lindorff-Larsen K, Shaw DE. Atomic-level description of ubiquitin
+  folding Proceedings of the National Academy of Sciences 2013;\hspace{0pt}.
+
+\bibitem{Lindorff-Larsen2011}
+Lindorff-Larsen K, Piana S, Dror RO, Shaw DE. How fast-folding proteins fold.
+  Science 2011;\hspace{0pt}334(6055):517--520.
+
+\bibitem{Boero1998}
+Boero M, Parrinello M, Terakura K. First principles molecular dynamics study of
+  zieglerâˆ’natta heterogeneous catalysis Journal of the American Chemical
+  Society 1998;\hspace{0pt}120(12):2746--2752.
+
+\bibitem{Zipoli2010}
+Zipoli F, Car R, Cohen MH, Selloni A. Theoretical design by first principles
+  molecular dynamics of a bioinspired electrodeâˆ’catalyst system for
+  electrocatalytic hydrogen production from acidified water Journal of Chemical
+  Theory and Computation 2010;\hspace{0pt}6(11):3490--3502.
+
+\bibitem{Karplus1979}
+Karplus M, McCammon JA. Protein structural fluctuations during a period of 100
+  ps Nature 1979;\hspace{0pt}277(5697):578.
+
+\bibitem{Kohlhoff2014}
+Kohlhoff KJ, Shukla D, Lawrenz M, Bowman GR, Konerding DE, Belov D, Altman RB,
+  Pande VS. Cloud-based simulations on google exacycle reveal ligand modulation
+  of gpcr activation pathways. Nat Chem 2014;\hspace{0pt}6(1):15--21.
+
+\bibitem{Plimpton1995}
+Plimpton S. Fast parallel algorithms for short-range molecular dynamics 1995.
+
+\bibitem{Case2010}
+Case DA, Darden TA, Cheatham TE, Simmerling CL, Wang J, Duke RE, Luo R, Crowley
+  M, Walker RC, Zhang W, Merz KM, Wang B, Hayik S, Roitberg A, Seabra G,
+  Kolossv\'{a}ry I, Wong KF, Paesani F, Vanicek J, Wu X, Brozell SR,
+  Steinbrecher T, Gohlke H, Yang L, Tan C, Mongan J, Hornak V, Cui G, Mathews
+  DH, Seetin MG, Sagui C, Babin V, Kollman PA. {Amber 11} University of
+  California, San Francisco 2010.
+
+\bibitem{MacKerell1998}
+MacKerell AD, Bashford D, Bellott, Dunbrack RL, Evanseck JD, Field MJ, Fischer
+  S, Gao J, Guo H, Ha S, Joseph-McCarthy D, Kuchnir L, Kuczera K, Lau FTK,
+  Mattos C, Michnick S, Ngo T, Nguyen DT, Prodhom B, Reiher WE, Roux B,
+  Schlenkrich M, Smith JC, Stote R, Straub J, Watanabe M, Wiorkiewicz-Kuczera
+  J, Yin D, Karplus M. All-atom empirical potential for molecular modeling and
+  dynamics studies of proteins J Phys Chem B
+  1998;\hspace{0pt}102(18):3586--3616.
+
+\bibitem{Scott1999}
+Scott WRP, Hunenberger PH, Tironi IG, Mark AE, Billeter SR, Fennen J, Torda AE,
+  Huber T, Kruger P, van Gunsteren WF. The gromos biomolecular simulation
+  program package J Phys Chem A 1999;\hspace{0pt}103(19):3596--3607.
+
+\bibitem{Ponder2003}
+TINKER. version 5.0 St. Louis, MO: Washington University 2010.
+
+\bibitem{Brown2012}
+Brown WM, Kohlmeyer A, Plimpton SJ, Tharrington AN. Implementing molecular
+  dynamics on hybrid high performance computers--particle--particle
+  particle-mesh Computer Physics Communications
+  2012;\hspace{0pt}183(3):449--459.
+
+\bibitem{Brown2011}
+Brown WM, Wang P, Plimpton SJ, Tharrington AN. Implementing molecular dynamics
+  on hybrid high performance computers--short range forces Computer Physics
+  Communications 2011;\hspace{0pt}182(4):898--911.
+
+\bibitem{Gotz2012}
+Gotz AW, Williamson MJ, Xu D, Poole D, Le~Grand S, Walker RC. Routine
+  microsecond molecular dynamics simulations with amber on gpus. 1. generalized
+  born J Chem Theory Comput 2012;\hspace{0pt}8(5):1542--1555.
+
+\bibitem{Salomon-Ferrer2013}
+Salomon-Ferrer R, Gotz AW, Poole D, Le~Grand S, Walker RC. Routine microsecond
+  molecular dynamics simulations with amber on gpus. 2. explicit solvent
+  particle mesh ewald Journal of Chemical Theory and Computation
+  2013;\hspace{0pt}9(9):3878--3888.
+
+\bibitem{Anderson2008}
+Anderson JA, Lorenz CD, Travesset A. General purpose molecular dynamics
+  simulations fully implemented on graphics processing units Journal of
+  Computational Physics 2008;\hspace{0pt}227(10):5342--5359.
+
+\bibitem{Kaminski2001}
+Kaminski GA, Friesner RA, Tirado-Rives J, Jorgensen WL. Evaluation and
+  reparametrization of the opls-aa force field for proteins via comparison with
+  accurate quantum chemical calculations on peptides J Phys Chem B
+  2001;\hspace{0pt}105(28):6474--6487.
+
+\bibitem{Arnautova2006}
+Arnautova YA, Jagielska A, Scheraga HA. A new force field (ecepp-05) for
+  peptides, proteins, and organic molecules J Phys Chem B
+  2006;\hspace{0pt}110(10):5025--5044.
+
+\bibitem{Khoury2013}
+Khoury GA, Thompson JP, Smadbeck J, Kieslich CA, Floudas CA. Forcefield\_ptm:
+  Ab initio charge and amber forcefield parameters for frequently occurring
+  post-translational modifications J Chem Theory Comput
+  2013;\hspace{0pt}9(12):5653--5674.
+
+\bibitem{Jorgensen1983}
+Jorgensen WL, Chandrasekhar J, Madura JD, Impey RW, Klein ML. Comparison of
+  simple potential functions for simulating liquid water The Journal of
+  Chemical Physics 1983;\hspace{0pt}79(2):926--935.
+
+\bibitem{Rahman1964}
+Rahman A. Correlations in the motion of atoms in liquid argon Physical Review
+  1964;\hspace{0pt}136(2A):A405.
+
+\bibitem{Debenedetti2001}
+Debenedetti PG, Stillinger FH. Supercooled liquids and the glass transition
+  Nature 2001;\hspace{0pt}410(6825):259--267.
+
+\bibitem{Swope1982}
+Swope WC, Andersen HC, Berens PH, Wilson KR. A computer simulation method for
+  the calculation of equilibrium constants for the formation of physical
+  clusters of molecules: Application to small water clusters The Journal of
+  Chemical Physics 1982;\hspace{0pt}76:637.
+
+\bibitem{plimpton1995fast}
+Plimpton S. Fast parallel algorithms for short-range molecular dynamics Journal
+  of Computational Physics 1995;\hspace{0pt}117(1):1--19.
+
+\end{thebibliography}
