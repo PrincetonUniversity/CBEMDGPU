@@ -95,11 +95,22 @@ FYI
 There are a few known instances of bugs related to compiler options, etc.
 
 1. Using icpc instead of g++
+	Our code uses OMP to parallelize many calculations.  Specifically, the atoms member (vector) in the systemDefinition object must be shared often.  
+	However, because it is a member of a class g++ struggles to properly share this in memory.  
+	This is a known bug in the g++ compiler which the intel (icpc) version handles rigorously. 
+	As a result, our code will produce errors if compiled with the g++ compiler when more than 1 core is used.  
+	To use this on tiger the module openmpi/intel-12.1/1.4.5/64 should be loaded to make the icpc compiler accessible.
 
 2. Cuda toolkit 5.5
+	CUDA is a finicky tool.  Different GPUs require different toolkits and versions to work properly.  
+	In fact, compilation may succeed with a bad version but the run time behavior produces unexpected (incorrect) results.
+	For the K20 cards on tiger, the latest toolkit (v5.5) must be loaded.
+	To do so, load the module cudatoolkit/5.5.22 before attempting to compile the program.
+	The Makefile must include flags consistent with the GPUs version of CUDA (which on tiger in 3.5) so the Makefile_cuda contains a flag "NVFLAGS = -gencode arch=compute_35,code=sm_35"  for the .cu files. 
+	Furthermore, you will find that preprocessor flags NVCC and NOGPU are found throughout the code which act as switches to activate/deactivate GPU functionality throughout the compilation process.
 
-3. Tiger vs. Adroit
-> CPU
-
-> GPU
-
+3. Tiger GPUs
+	Unfortunately it appears that the queueing system on tiger is having problems reserving all or some of the GPUs exclusively for single jobs by users.
+	As a result, thrust (the GPU equivalent of the STL for C++) will have memory issues if one or more of the GPUs on a node are already in use.
+	Because of the unusually high load on tiger over the past month, we have been unable to obtain good results on this cluster since usually this situation is encountered.  
+	Our private GPU cluster was used to obtian our results instead, though our Makefile_cuda is set so this should compile properly on tiger if you want to check.
