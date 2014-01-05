@@ -85,3 +85,21 @@ $ ./md numThreads > log 2> err
 
 10. Finally the simulation is ready to iterate.  A simple loop can be set to do this. An example for the case of the NVE ensemble is also provided in test_nve.cpp which can be compiled with make TEST_NVE (see test_nve.cpp)
 
+
+FYI
+====
+
+> Known bugs, etc.
+
+
+There are a few known instances of bugs related to compiler options, etc.
+
+1. Using icpc instead of g++
+
+2. Cuda toolkit 5.5
+
+3. Tiger vs. Adroit
+> CPU
+
+> GPU
+
