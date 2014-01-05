@@ -6,7 +6,6 @@ OMPFLAGS = -openmp
 Default: MD
 OMP = cudaHelper.o cellList.o main.o nvt.o integrator.o system.o utils.o
 NVFLAGS = -gencode arch=compute_35,code=sm_35 
-#-gencode arch=compute_20,code=sm_20
 
 %.o : %.c
 	$(CXX) $(CFLAGS) -c $<
@@ -24,7 +23,7 @@ nvt.o : nvt.cpp
 	$(CXX) -DNVCC $(OMPFLAGS) $(CFLAGS) -c nvt.cpp
 	
 integrator.o : integrator.cu
-	$(CXXCUDA) -DTHRUST_DEBUG -DNVCC $(NVFLAGS) $(CFLAGS) -c integrator.cu
+	$(CXXCUDA) -DNVCC $(NVFLAGS) $(CFLAGS) -c integrator.cu
 	
 system.o : system.cpp
 	$(CXX) -DNVCC $(CFLAGS) $(OMPFLAGS) -c system.cpp
