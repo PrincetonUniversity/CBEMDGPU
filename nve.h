@@ -1,6 +1,5 @@
 /*!
  * NVE integration.
- * \author Nathan A. Mahynski
  * \date 11/18/13
  */
 
