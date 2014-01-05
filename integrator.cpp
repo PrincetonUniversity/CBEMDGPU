@@ -35,7 +35,7 @@ void integrator::calcForce (systemDefinition &sys) {
 	
 	// traverse cell list and calculate total system potential energy 
 	std::vector <float> args = sys.potentialArgs();
-    #pragma omp parallel for reduction(+:Up) schedule(dynamic, OMP_CHUNK)
+    #pragma omp parallel for reduction(+:Up) schedule(dynamic, 1)
 	for (unsigned int cellID = 0; cellID < cl_.nCells.x*cl_.nCells.y*cl_.nCells.z; ++cellID) {
 		int atom1 = cl_.head(cellID);
 		while (atom1 >= 0) {
