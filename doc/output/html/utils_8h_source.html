@@ -85,22 +85,22 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#ifndef __UTILS_H__</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define __UTILS_H__</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;dataTypes.h&quot;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#ifdef NVCC</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor"></span>__device__ <span class="keywordtype">float</span> dev_pbcDist2 (<span class="keyword">const</span> <a class="code" href="structfloat3.html" title="3 floating point numbers, same as defined for GPUs">float3</a> *p1, <span class="keyword">const</span> <a class="code" href="structfloat3.html" title="3 floating point numbers, same as defined for GPUs">float3</a> *p2, <a class="code" href="structfloat3.html" title="3 floating point numbers, same as defined for GPUs">float3</a> *dr, <span class="keyword">const</span> <a class="code" href="structfloat3.html" title="3 floating point numbers, same as defined for GPUs">float3</a> *box);</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor"></span><span class="keywordtype">float</span> pbcDist2 (<span class="keyword">const</span> <a class="code" href="structfloat3.html" title="3 floating point numbers, same as defined for GPUs">float3</a> &amp;p1, <span class="keyword">const</span> <a class="code" href="structfloat3.html" title="3 floating point numbers, same as defined for GPUs">float3</a> &amp;p2, <a class="code" href="structfloat3.html" title="3 floating point numbers, same as defined for GPUs">float3</a> &amp;dr, <span class="keyword">const</span> <a class="code" href="structfloat3.html" title="3 floating point numbers, same as defined for GPUs">float3</a> &amp;box);</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<a class="code" href="structfloat3.html" title="3 floating point numbers, same as defined for GPUs">float3</a> pbc (<span class="keyword">const</span> <a class="code" href="structfloat3.html" title="3 floating point numbers, same as defined for GPUs">float3</a> &amp;p1, <span class="keyword">const</span> <a class="code" href="structfloat3.html" title="3 floating point numbers, same as defined for GPUs">float3</a> &amp;box);</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef __UTILS_H__</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define __UTILS_H__</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;dataTypes.h&quot;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#ifdef NVCC</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor"></span>__device__ <span class="keywordtype">float</span> dev_pbcDist2 (<span class="keyword">const</span> <a class="code" href="structfloat3.html" title="3 floating point numbers, same as defined for GPUs">float3</a> *p1, <span class="keyword">const</span> <a class="code" href="structfloat3.html" title="3 floating point numbers, same as defined for GPUs">float3</a> *p2, <a class="code" href="structfloat3.html" title="3 floating point numbers, same as defined for GPUs">float3</a> *dr, <span class="keyword">const</span> <a class="code" href="structfloat3.html" title="3 floating point numbers, same as defined for GPUs">float3</a> *box);</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor"></span><span class="keywordtype">float</span> pbcDist2 (<span class="keyword">const</span> <a class="code" href="structfloat3.html" title="3 floating point numbers, same as defined for GPUs">float3</a> &amp;p1, <span class="keyword">const</span> <a class="code" href="structfloat3.html" title="3 floating point numbers, same as defined for GPUs">float3</a> &amp;p2, <a class="code" href="structfloat3.html" title="3 floating point numbers, same as defined for GPUs">float3</a> &amp;dr, <span class="keyword">const</span> <a class="code" href="structfloat3.html" title="3 floating point numbers, same as defined for GPUs">float3</a> &amp;box);</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<a class="code" href="structfloat3.html" title="3 floating point numbers, same as defined for GPUs">float3</a> pbc (<span class="keyword">const</span> <a class="code" href="structfloat3.html" title="3 floating point numbers, same as defined for GPUs">float3</a> &amp;p1, <span class="keyword">const</span> <a class="code" href="structfloat3.html" title="3 floating point numbers, same as defined for GPUs">float3</a> &amp;box);</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jan 4 2014 18:49:16 for Parallel Molecular Dynamics with a Time-Reversible Nose-Hoover Thermostat on CPUs and GPUs by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jan 4 2014 19:08:04 for Parallel Molecular Dynamics with a Time-Reversible Nose-Hoover Thermostat on CPUs and GPUs by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>
