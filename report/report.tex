@@ -1,6 +1,6 @@
 \documentclass[12pt]{article}
 
-\usepackage{graphicx}
+\usepackage{graphicx,booktabs}
 \usepackage{subcaption,epsfig,epstopdf}
 \usepackage{float}
 
@@ -171,8 +171,7 @@ where $\tau^{2} = \frac{Q}{(3N-1)*T_{target}}$ and $Q$, which is the thermal mas
 Because this algorithm is time-reversible, this algorithm is implemented in our software.
 % END OF THAT DOC.
 
-This is an algorithmic advance discovered 20 years ago.
-The three factors in G are separate and unitary, therefore. This means that any integrator  based on this Trotter factorization will be time-reversible. CITE Reversible multiple time scale molecular dynamics by Tuckermar Berne Martyna
+The ability for this algorithm to be time-reversible is the result of a Trotter factorization of the Liouville propagator derived by Martyna and coworkers 20 years ago. Through their Trotter factorization they proved that any resulting integrator will be time-reversible \cite{Tuckerman1992}.
 
 \subsection{Pair potentials} \label{subsec:potential}
 
@@ -207,11 +206,11 @@ We implemented parallelization on CPUs and GPUs in our molecular dynamics softwa
 On CPUs, we parallelized our code using OpenMP and therefore, our code can run in parallel on any shared memory cluster.
 %
 On GPUs, we parallelized our code using CUDA.
-The parallelization on GPUs is implemented in the force calculation, which accounts for XXXXX percent of the cost of the simulation according to our profiling studies.
+The parallelization on GPUs is implemented in the force calculation, which accounts for 27\% percent of the cost of the simulation according to our profiling studies (see Table\ref{tab:profiling}).
 %
-Parallelization and scaling was tested on the Adroit and TIGER clusters.
+Parallelization and scaling were tested on the Adroit and TIGER clusters.
 
-\subsection{Neighbor lists}
+\subsection{Neighbor Lists}
 
 \subsection{Testing}
 
@@ -226,27 +225,28 @@ We implemented the following tests:
 	\item[\texttt{PBC}] computes the distance between two particles using the minimum image convention and verifies that it is correctly computed for different scenarios (out of box, inside box, etc.)
 	\end{itemize}
 
+Additionally, we benchmarked/validated our code's results against LAMMPS \cite{Plimpton1995}, described later in this report.
 
 \section{Code Structure and Implementation Notes}
 
-The software is implemented in C++ and version-controlled through an actively updated github repository \url{https://github.com/PrincetonUniversity/CBEMDGPU}.
+The software is implemented in object-oriented C++ and version-controlled through an actively updated github repository \url{https://github.com/PrincetonUniversity/CBEMDGPU}. The code is completely documented using Doxygen in the /doc directory, which contains both an html and a pdf document (\textbf{refman.pdf}) outlining the code structure and commenting all of the functions in the software.
 %
 The class structure is as follows
 \begin{description}
 
 \item[\texttt{common.h}] This class implements the error catching functions.
 
-\item[\texttt{cudaHelper.h}] This function implements the cuda code for paralleization on GPUs.
+\item[\texttt{cudaHelper.h}] This function implements the CUDA code for parallelization on GPUs.
 
 \item[\texttt{cellList.cpp}] This class controls the cell lists (for parallelization on CPU) or neighbor lists (for parallelization on GPUs).
 
 \item[\texttt{dataTypes.h}] This function implements the custom structures, such as the atom struct, which stores the position, velocity, and acceleration of an atom.
 	
-\item[\texttt{integrator.cpp}] This class is a ``virtual'' class (maybe????)
+\item[\texttt{integrator.cpp}] This class is a ``virtual'' class
 
 \item[\texttt{nve.cpp}] This class implements the velocity-Verlet integration scheme for an NVE simulation.
 
-\item[\texttt{nvt.cpp}] This class implements the velocity-Verlet integration scheme with a Nos\'{e}-Hoover thermostat for an NVT simulation.
+\item[\texttt{nvt.cpp}] This class implements the velocity-Verlet integration scheme with a time-reversible Nos\'{e}-Hoover thermostat for an NVT simulation.
 
 \item[\texttt{potential.cpp}] The potential class implements the force and potential energy calculations for the standard Lennard-Jones potential.
 %
@@ -256,7 +256,7 @@ This class can be expanded to include other potential energy functions.
 
 \item[\texttt{utils.cpp}] This class implements the necessary ``helper'' functions for the simulation, such as the distance calculation with periodic boundary conditions using the minimum image convention.
 
-\item[\texttt{main.cpp}]
+\item[\texttt{main.cpp}] This is the main driver program to run the software.
 
 \item[\texttt{unittests.cpp}] This file implements Google Tests for our software.
 %
@@ -264,22 +264,53 @@ We used a test fixture to initialize the same system construct for multiple test
 
 \end{description}
 
+\subsection{Optimizations}
+This section provides an overview of the optimizations performed in our software to lead to the final submitted version.
+\textbf{Nate will go through and list them by going through the different CPP files.}
 \section{Results}
 
-\subsection{Scaling studies}
+\subsection{Profiling}
 
-\subsection{Benchmarking}
+Profiling was performed on the TIGER computer cluster using gprof with a number of different processor, skin radius, and particle combinations. We found that using 4 processors, 400 particles, a skin radius of 0.5 for 100 steps produced the most representative results. The software was compiled using the \textit{-pg} compiler option. The top 7 most expensive components of the software are presented in Table~\ref{tab:profiling}.
 
-We should discuss the fact that we performed optimizations while we were coding this.
+% Table generated by Excel2LaTeX from sheet 'Sheet1'
+\begin{table}[htbp]
+  \centering
+  \tiny
+  \caption{table son}
+    \begin{tabular}{ccccccc}
+    \toprule
+    \% time & Cum Seconds & Self Seconds & \# of Calls & Self (s/call) & Total (s/call) & Name \\
+    \midrule
+    26.86 & 1.3   & 1.3   & 101   & 0.01  & 0.05  & integrator::calcForce(systemDefinition\&) \\
+    17.05 & 2.13  & 0.83  & 6125941 & 0     & 0     & pbcDist2(float3 const\&, float3 const\&, float3\&, float3 const\&) \\
+    15.5  & 2.88  & 0.75  & 34484119 & 0     & 0     & std::vector<float3, std::allocator<float3> >::operator[](unsigned long) \\
+    10.74 & 3.4   & 0.52  & 5702835 & 0     & 0     & slj(float3 const*, float3 const*, float3*, float3 const*, float const*, float const*) \\
+    8.27  & 3.8   & 0.4   & 10997635 & 0     & 0     & cellList\_cpu::list(int) const \\
+    7.23  & 4.15  & 0.35  & 11617957 & 0     & 0     & std::vector<int, std::allocator<int> >::operator[](unsigned long) const \\
+    4.75  & 4.38  & 0.23  & 12810108 & 0     & 0     & std::vector<atom, std::allocator<atom> >::operator[](unsigned long) \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:profiling}%
+\end{table}%
 
-\subsection{Validation against literature values}
+The \textbf{calcForce} function consisted of the most expensive function in the program, followed by \textbf{pbcDist2}. The function calls to the shifted lennard-jones \textbf{slj} potential and cellLists that are maintained on the CPU \textbf{cellList\_cpu}. It would be expected that the \textbf{calcForce} function utilizes the majority of the computing time and this has been observed elsewhere in MD codes. Due to the expense of this function, this function was parallelized on the GPUs.
 
-MSD
-g(r)
-Temp and Energy consistencies.
+\subsection{Scaling Studies}
 
+We performed several scaling studies on both the TIGER and ADROIT clusters.
+Tiger timing\_results.txt.tiger
+\url{/home/gkhoury/APC523/project/tmp/CBEMDGPU}
 
-We validated our code against LAMMPS \cite{plimpton1995fast} (http://lammps.sandia.gov), an existing commercial molecular dynamics software.
+for low numbers of particles scaling really  perform well because there is a lot of communication overhead.
+this is expected.
+for large numbers of particles we scale and this is good.
+
+\subsection{Benchmarking and Validation against Literature Values}
+
+\textbf{WE NEED A MSD PLOT HERE}
+
+We validated our code against LAMMPS \cite{Plimpton1995} (http://lammps.sandia.gov), an existing and widely-used and tested commercial molecular dynamics software package.
 %
 We simulated a system of 4000 Lennard-Jones particles at a reduced temperature $T=0.71$.
 %
@@ -288,16 +319,16 @@ We used a cubic box with edge length $L=16.796$, so that the reduced density of 
 We used a timestep $\Delta t=0.005$, and simulated for $10,000$ timesteps.
 
 
-We compared the temperature, potential energy, total energy, and radial distribution function for the two simulations.
+We compared the temperature, potential energy, total energy, and radial distribution function for the simulations calculated in our package against LAMMPS.
 %
-The results are shown in Figure \ref{fig:lmp_compare}.
+The results are shown in Figure~\ref{fig:lmp_compare} and Table~\ref{table:lmp_compare}.
 %
-There is excellent agreement between our software (CBEMD) and the LAMMPS results.
 
 \begin{table}
+\begin{centering}
 	\begin{tabular}{| r | c | c |}
 		\hline
-		 & CBEMD & LAMMPS \\
+		 & CBEMDGPU & LAMMPS \\
 		 \hline
 		 T & 0.7104 & 0.7112 \\
 		 \hline
@@ -306,8 +337,9 @@ There is excellent agreement between our software (CBEMD) and the LAMMPS results
 		 Total energy / atom & -4.5879 & -4.5929 \\
 		 \hline
 	\end{tabular}
-	\caption{Comparison of average thermodynamic quantities for CBEMD and LAMMPS simulations.}
+	\caption{Comparison of average thermodynamic quantities for CBEMDGPU and LAMMPS simulations.}
 	\label{table:lmp_compare}
+\end{centering}
 \end{table}
 
 \begin{figure}[H]
@@ -327,12 +359,14 @@ There is excellent agreement between our software (CBEMD) and the LAMMPS results
 	\includegraphics[width=\textwidth]{gr_compare}
 	\caption{}
 	\end{subfigure}
-	\caption{Comparison between CBEMD simulation and LAMMPS simulation for 4000 Lennard Jones particles at $T=0.71$ and $\rho=0.8442$. (a) Comparison of temperature over time. (b) Comparison of potential energy/atom over time. (c) Comparison of total energy/atom over time. (d) Comparison of radial distribution functions. }
+	\caption{Comparison between CBEMDGPU simulation and LAMMPS simulation for 4000 Lennard Jones particles at $T=0.71$ and $\rho=0.8442$. (a) Comparison of temperature over time. (b) Comparison of potential energy/atom over time. (c) Comparison of total energy/atom over time. (d) Comparison of radial distribution functions. }
 	\label{fig:lmp_compare}
 \end{figure}
 
-\subsection{Image from VMD}
-We should attach an image from MD for a system of particles and we should also attach a small MD movie as a file viewable in Windows from an .xyz file for them to view and we should note that here.
+There is excellent agreement between our software (CBEMDGPU) and the LAMMPS results. The average temperature and the behavior of the temperature fluctuations were qualitatively and quantitatively in agreement. Our temperature fluctuations are more smooth since we don't have as much damping and since LAMMPS uses Nos\'{e}-Hoover chains. The potential and total energies' behaviors are the same, and the radial distribution functions calculated in both programs are within numerical error. These results strongly suggest that the software we have developed can largely reproduce the thermodynamic and simulation behavior of the LAMMPS software, and is a strong validation of our underlying code.
+
+\subsection{Example Movie}
+To see an example movie of a short LJ fluid simulation, see the file \url{/report/movie1.mpg}.
 \section{Conclusions and Future Work}
 
 \pagebreak
