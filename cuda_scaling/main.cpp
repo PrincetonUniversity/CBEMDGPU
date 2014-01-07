@@ -6,6 +6,7 @@
 #include "../utils.h"
 #include <omp.h>
 #include <stdlib.h>
+#include <string>
 
 #ifndef NOGPU
 #include "../cudaHelper.h"
@@ -56,8 +57,9 @@ int main (int argc, char* argv[]) {
 	#endif
 
 	#ifdef NVCC
-	systemProps cudaProps;
-	//cudaProps.displayAllProps();
+	std::string out_name = "gpu_data";
+	systemProps cudaProps (out_name);
+	cudaProps.displayAllProps();
 	if (cudaProps.numDevices() > 0) {
 		const int cudaDevID = 0;
 		a.cudaThreads = cudaProps.maxThreadsPerBlock(cudaDevID);
