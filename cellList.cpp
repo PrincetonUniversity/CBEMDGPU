@@ -12,9 +12,10 @@
 #include "utils.h"
 #include <stdlib.h>
 
+// if using cuda, "cell lists" are actually neighbor lists instead but are still maintained on the cpu
 #ifdef NVCC
 /*!
- * Initialize a neighbor list. If using cuda, "cell lists" are actually neighbor lists instead but are still maintained on the cpu
+ * Initialize a neighbor list
  *
  * \param [in] box Box size
  * \param [in] rc Cutoff radius
