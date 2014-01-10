@@ -79,8 +79,9 @@ int main (int argc, char* argv[]) {
  	nvt_NH integrate (1.0);     // damping constant for thermostat = 1.0
 	integrate.setTimestep(timestep);
 
-	const int report = nSteps/1000;
-
+    int report = nSteps/1000;
+    if (nSteps < 1000) report = 1;
+                                                         
 	for (unsigned int long step = 0; step < nSteps; ++step) {
 		integrate.step(a);
 		if (step%report == 0) {
