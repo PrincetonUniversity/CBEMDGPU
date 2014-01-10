@@ -95,12 +95,15 @@ void \hyperlink{classsystem_definition_a375afbe9e4ffc76793db1b222bc1f941}{set\-P
 \subsection{Detailed Description}
 Contains all information pertaining to a system being simulated. 
 
-System definition \begin{DoxyDate}{Date}
+System definition \begin{DoxyAuthor}{Author}
+Nathan A. Mahynski 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
 11/17/13 
 \end{DoxyDate}
 
 
-Definition at line 16 of file system.\-h.
+Definition at line 17 of file system.\-h.
 
 
 
@@ -124,7 +127,7 @@ Initialize a system of N atoms with random velocities and positions on a lattice
 \end{DoxyParams}
 
 
-Definition at line 31 of file system.\-cpp.
+Definition at line 37 of file system.\-cpp.
 
 
 
@@ -145,9 +148,9 @@ References atoms.
     \textcolor{keywordtype}{int} chunk = OMP\_CHUNK;
     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i;
     \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}.resize(N);
-\textcolor{preprocessor}{    #pragma omp parallel private(i)}
+\textcolor{preprocessor}{#pragma omp parallel private(i)}
 \textcolor{preprocessor}{}    \{
-\textcolor{preprocessor}{    #pragma omp for schedule(dynamic, chunk)}
+\textcolor{preprocessor}{#pragma omp for schedule(dynamic, chunk)}
 \textcolor{preprocessor}{}    \textcolor{keywordflow}{for} (i = 0; i < N; ++i) \{
         \textcolor{keywordflow}{if} (i < N-1) \{
             \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x = (RNG-0.5);
@@ -192,7 +195,7 @@ Initialize a system of N atoms with random velocities to meet a desired temperat
 \end{DoxyParams}
 
 
-Definition at line 77 of file system.\-cpp.
+Definition at line 83 of file system.\-cpp.
 
 
 
@@ -206,8 +209,8 @@ References atoms.
     totMomentum.x = 0; totMomentum.y = 0; totMomentum.z = 0;
 
     \textcolor{keywordflow}{if} (N < 1) \{
-        \textcolor{keywordflow}{throw} \hyperlink{classcustom_exception}{customException} (\textcolor{stringliteral}{"N must be > 0"});
-        \textcolor{keywordflow}{return};
+    \textcolor{keywordflow}{throw} \hyperlink{classcustom_exception}{customException} (\textcolor{stringliteral}{"N must be > 0"});
+    \textcolor{keywordflow}{return};
     \}
 
     srand(rngSeed);
@@ -244,25 +247,24 @@ References atoms.
             \}
         \}
     \}
-    
     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i = 0; i < N; ++i) \{
-        \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].acc.x = 0;
-        \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].acc.y = 0;
-        \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].acc.z = 0;
-        \textcolor{keywordflow}{if} (i < N-1) \{
-            \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x = distribution(eng);
-            \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.y = distribution(eng);
-            \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.z = distribution(eng);
-            totMomentum.x += \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x;
-            totMomentum.y += \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.y;
-            totMomentum.z += \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.z;
-        \} \textcolor{keywordflow}{else} \{
-            \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x = -totMomentum.x;
-            \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.y = -totMomentum.y;
-            \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.z = -totMomentum.z;
-        \}
-        tmpT += (\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x*\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x + \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.y*
-      \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.y + \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.z*\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.z);
+    \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].acc.x = 0;
+    \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].acc.y = 0;
+    \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].acc.z = 0;
+    \textcolor{keywordflow}{if} (i < N-1) \{
+        \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x = distribution(eng);
+        \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.y = distribution(eng);
+        \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.z = distribution(eng);
+        totMomentum.x += \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x;
+        totMomentum.y += \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.y;
+        totMomentum.z += \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.z;
+    \} \textcolor{keywordflow}{else} \{
+        \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x = -totMomentum.x;
+        \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.y = -totMomentum.y;
+        \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.z = -totMomentum.z;
+    \}
+    tmpT += (\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x*\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x + \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.y*\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{
+      atoms}[i].vel.y + \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.z*\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.z);
     \}
 
     \textcolor{comment}{// do velocity rescaling to get exactly the right T}
@@ -270,9 +272,9 @@ References atoms.
     tmpT /= Tset;
     tmpT = 1.0/tmpT;
     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i = 0; i < N; i ++ ) \{
-        \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x = \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x*sqrt(tmpT);
-        \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.y = \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.y*sqrt(tmpT);
-        \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.z = \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.z*sqrt(tmpT);
+    \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x = \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.x*sqrt(tmpT);
+    \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.y = \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.y*sqrt(tmpT);
+    \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.z = \hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].vel.z*sqrt(tmpT);
     \}
 \}
 \end{DoxyCode}
@@ -296,7 +298,7 @@ Sets the \char`\"{}host\char`\"{} pair potential function which also sets the G\
 \end{DoxyParams}
 
 
-Definition at line 20 of file system.\-cpp.
+Definition at line 21 of file system.\-cpp.
 
 
 
@@ -305,7 +307,12 @@ References potential.
 
 \begin{DoxyCode}
                                                        \{
+\textcolor{comment}{/*#ifdef NVCC}
+\textcolor{comment}{    dev\_potential = pp;}
+\textcolor{comment}{    cudaMemcpyFromSymbol(&potential, dev\_potential, sizeof(pointFunction\_t));}
+\textcolor{comment}{#else*/}
     \hyperlink{classsystem_definition_a4861989c8ca1ddef7ec521499453df3f}{potential} = pp;
+\textcolor{comment}{//#endif}
 \}
 \end{DoxyCode}
 \hypertarget{classsystem_definition_ae7be021831635d359872d046f58b337a}{\index{system\-Definition@{system\-Definition}!write\-Snapshot@{write\-Snapshot}}
@@ -321,7 +328,7 @@ Print a snapshot of the system.
 
 Write instantaneous snapshot of the system to a file called \char`\"{}trajectory.\-xyz\char`\"{} This file is appended not overwritten consecutively. 
 
-Definition at line 154 of file system.\-cpp.
+Definition at line 159 of file system.\-cpp.
 
 
 

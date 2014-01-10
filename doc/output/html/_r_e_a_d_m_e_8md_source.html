@@ -87,9 +87,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;CBEMDGPU</div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;========</div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;CBE MD on GPUs</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;&gt; CBE MD on GPUs</div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;by Nathan A. Mahynski, George A. Khoury, and Carmeline J. Dsilva</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;&gt;&gt; by Nathan A. Mahynski, George A. Khoury, and Carmeline J. Dsilva</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;See main.cpp to <span class="keyword">set</span> parameters which are documented by example in <span class="keyword">this</span> file.</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
@@ -99,13 +99,117 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;To compile the GPU version, type</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;$ make -f Makefile_cuda</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;To compile tests, etc., type</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;$ make ${var}</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;where var is the suffix desired (see Makefile <span class="keywordflow">for</span> details)</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;To compile tests, type</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;$ make TESTS</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;To compile the timing executable (used <span class="keywordflow">for</span> scaling studies), type</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;$ make TIMING</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;To compile the program that runs a simulation to compare with LAMMPS output, type</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;$ make LMP_COMPARE</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;To compile the program that tests the NVE <a class="code" href="classintegrator.html" title="Base class for integrators such as NVT (Nose-Hoover) or NVE ensembles.">integrator</a>, type</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;$ make TEST_NVE</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;In the Makefile, the PATHTOBOOST variable should point to the diretory where the C++ boost libraries are saved.</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;In the GTEST_DIR variable should point to the directory where the Google Tests libraries are saved.</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;Note that the Intel C++ compilers must be used; the GNU C++ compilers <span class="keywordflow">do</span> not work with the OpenMP portion of our code (<span class="keyword">this</span> is a known bug in the compiler, see FYI section).</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;Execution</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;====</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;main.cpp expects 4 input, the number of threads to use with OMP, the number of atoms, the skin radius <span class="keywordflow">for</span> the cell/neighbor lists, and the number of steps to simulate.</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;$ ./md &lt;nthreads&gt; &lt;natoms&gt; &lt;rs&gt; &lt;nsteps&gt;  &gt; log 2&gt; err</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;This also produces a trajectory.xyz file which can be visualized with VMD (<span class="keywordflow">if</span> you have it installed)</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;$ vmd -xyz trajectory.xyz</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;Explanation of main.cpp</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;====</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;&gt; How to use, change, and make your own in 10 steps.</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;1. main.cpp expects 4 input, the number of threads to use with OMP, the number of atoms, the skin radius <span class="keywordflow">for</span> the cell/neighbor lists, and the number of steps to simulate.</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;$ ./md &lt;nthreads&gt; &lt;natoms&gt; &lt;rs&gt; &lt;nsteps&gt;  &gt; log 2&gt; err</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;2. The random number generator seed is then <span class="keyword">set</span> manually to ensure that results are reproducible.</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;3. The user must then specify basic properties about the system.  A <a class="code" href="classsystem_definition.html" title="Contains all information pertaining to a system being simulated.">systemDefinition</a> <span class="keywordtype">object</span> should be instantiated and then temperature, box size, particle mass, and pair potential cutoff should be specified </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    $ <a class="code" href="classsystem_definition.html" title="Contains all information pertaining to a system being simulated.">systemDefinition</a> a;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    $ a.<a class="code" href="classsystem_definition.html#a14a9ee5c342fcfaa9d5682bf5bac7bb9" title="Assign the target temperature for NVT simulations.">setTemp</a>(1.0);... </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;4. The system can then be initialized with the command initThermal or initRandom (see doxygen documentation <span class="keywordflow">for</span> more details).  For example, in the former:</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    $ a.initThermal(nAtoms, Temp, rngSeed, separation);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;5. Where <span class="stringliteral">&quot;nAtoms&quot;</span> is the number of atoms, <span class="stringliteral">&quot;separation&quot;</span> is the initial separation of the particles on the simple cubic lattice on which they are initialized, and the rest of the variables are <span class="keyword">self</span>-explanatory.  This command completely initializes the system <span class="keywordflow">for</span> simulation.</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;6. Next, the pair potential should be specified.  As an example in main.cpp, the preprocessor flag NVCC is used to select either the CPU version of the shifted lennard-jones potential (slj) or the GPU version (dev_slj).  The Makefile (compare to Makefile_cuda) will define this if necessary and allows the code to flow naturally and work in both cases.</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    $ pointFunction_t pp = slj;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;   $ a.setPotential(pp);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;7. If the GPUs are used (NVCC compiler flag is defined) the number of threads and blocks the GPU kernel will be invoked with must be set.  This is done next.</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;8. Then additional arguments for the pair potential must be specified.  In the case of the slj function, variables epsilon, sigma, delta, and ushift must be given.  This is then set in the <a class="code" href="classsystem_definition.html" title="Contains all information pertaining to a system being simulated.">systemDefinition</a>.</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    $ std::vector &lt;<span class="keywordtype">float</span>&gt; args(5);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    $ args[0] = 1.0; <span class="comment">// epsilon</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    </div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    $ args[1] = 1.0; <span class="comment">// sigma</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    $ args[2] = 0.0; <span class="comment">// delta </span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    </div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    $ args[3] = 0.0; <span class="comment">// ushift</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    </div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    $ a.setPotentialArgs(args);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;9. Afterwards, the <a class="code" href="classintegrator.html" title="Base class for integrators such as NVT (Nose-Hoover) or NVE ensembles.">integrator</a> (ensemble) must be specified. In the case of the NVT ensemble where we are using the Nose-Hoover thermostat, the <a class="code" href="classintegrator.html" title="Base class for integrators such as NVT (Nose-Hoover) or NVE ensembles.">integrator</a> is given by the <span class="keywordtype">object</span> <a class="code" href="classnvt___n_h.html" title="Uses Nose-Hover integration method to thermostat a system (constant T rather than E)...">nvt_NH</a>.  This requires a damping constant, which for the slj potential should be about unity.  Then the numerical timestep should be given, for the slj this is usually efficient around 0.005.</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    $ <a class="code" href="classnvt___n_h.html" title="Uses Nose-Hover integration method to thermostat a system (constant T rather than E)...">nvt_NH</a> integrate (1.0);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    </div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    $ integrate.setTimestep(timestep);</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;10. Finally the simulation is ready to iterate.  A simple loop can be set to do this. An example for the case of the NVE ensemble is also provided in test_nve.cpp which can be compiled with make TEST_NVE (see test_nve.cpp)</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;FYI</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;====</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;&gt; Known bugs, etc.</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;There are a few known instances of bugs related to compiler options, etc.</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;1. Using icpc instead of g++</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    Our code uses OMP to parallelize many calculations.  Specifically, the atoms member (vector) in the <a class="code" href="classsystem_definition.html" title="Contains all information pertaining to a system being simulated.">systemDefinition</a> <span class="keywordtype">object</span> must be shared often.  </div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    However, because it is a member of a class g++ struggles to properly share this in memory.  </div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    This is a known bug in the g++ compiler which the intel (icpc) version handles rigorously. </div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    As a result, our code will produce errors if compiled with the g++ compiler when more than 1 core is used.  </div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    To use this on tiger the module openmpi/intel-12.1/1.4.5/64 should be loaded to make the icpc compiler accessible.</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;2. Cuda toolkit 5.5</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    CUDA is a finicky tool.  Different GPUs require different toolkits and versions to work properly.  </div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    In fact, compilation may succeed with a bad version but the run time behavior produces unexpected (incorrect) results.</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    For the K20 cards on tiger, the latest toolkit (v5.5) must be loaded.</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    To do so, load the module cudatoolkit/5.5.22 before attempting to compile the program.</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    The Makefile must include flags consistent with the GPUs version of CUDA (which on tiger in 3.5) so the Makefile_cuda contains a flag &quot;NVFLAGS = -gencode arch=compute_35,code=sm_35&quot;  for the .cu files. </div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    Furthermore, you will find that preprocessor flags NVCC and NOGPU are found throughout the code which act as switches to activate/deactivate GPU functionality throughout the compilation process.</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;3. Tiger GPUs</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    Unfortunately it appears that the queueing system on tiger is having problems reserving all or some of the GPUs exclusively for single jobs by users.</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    As a result, thrust (the GPU equivalent of the STL for C++) will have memory issues if one or more of the GPUs on a node are already in use.</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    Because of the unusually high load on tiger over the past month, we have been unable to obtain good results on this cluster since usually this situation is encountered.  </div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    Our private GPU cluster was used to obtian our results instead, though our Makefile_cuda is set so this should compile properly on tiger if you want to check.</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jan 4 2014 19:08:04 for Parallel Molecular Dynamics with a Time-Reversible Nose-Hoover Thermostat on CPUs and GPUs by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jan 10 2014 10:22:57 for Parallel Molecular Dynamics with a Time-Reversible Nose-Hoover Thermostat on CPUs and GPUs by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

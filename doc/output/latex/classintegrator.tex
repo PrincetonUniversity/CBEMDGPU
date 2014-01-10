@@ -47,12 +47,15 @@ void \hyperlink{classintegrator_ad630bf7c9b7339fa34f36fe43b0d9e3c}{calc\-Force} 
 \subsection{Detailed Description}
 Base class for integrators such as N\-V\-T (Nose-\/\-Hoover) or N\-V\-E ensembles. 
 
-Integrator \begin{DoxyDate}{Date}
+Integrator \begin{DoxyAuthor}{Author}
+Nathan A. Mahynski 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
 11/17/13 
 \end{DoxyDate}
 
 
-Definition at line 14 of file integrator.\-h.
+Definition at line 15 of file integrator.\-h.
 
 
 
@@ -68,7 +71,10 @@ Definition at line 14 of file integrator.\-h.
 
 Calculate the forces on each atom. 
 
-Integration \begin{DoxyDate}{Date}
+Integration \begin{DoxyAuthor}{Author}
+Nathan A. Mahynski 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
 11/19/13
 \end{DoxyDate}
 Calculate the pairwise forces in a system. This also calculates the potential energy of a system. The kinetic energy is calculated during the verlet integration.
@@ -80,7 +86,7 @@ Calculate the pairwise forces in a system. This also calculates the potential en
 \end{DoxyParams}
 
 
-Definition at line 22 of file integrator.\-cpp.
+Definition at line 23 of file integrator.\-cpp.
 
 
 
@@ -108,7 +114,7 @@ Referenced by nve\-::step(), and nvt\-\_\-\-N\-H\-::step().
     
     \textcolor{comment}{// traverse cell list and calculate total system potential energy }
     std::vector <float> args = sys.\hyperlink{classsystem_definition_ab20c0c30e84fccdf15f54c155d25420f}{potentialArgs}();
-\textcolor{preprocessor}{    #pragma omp parallel for reduction(+:Up) schedule(dynamic, 1)}
+\textcolor{preprocessor}{#pragma omp parallel for reduction(+:Up) schedule(dynamic, 1)}
 \textcolor{preprocessor}{}    \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} cellID = 0; cellID < \hyperlink{classintegrator_ad1f7813c9cf3c31898aa7d78fc22232a}{cl\_}.\hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.x*\hyperlink{classintegrator_ad1f7813c9cf3c31898aa7d78fc22232a}{cl\_}.\hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}
       .y*\hyperlink{classintegrator_ad1f7813c9cf3c31898aa7d78fc22232a}{cl\_}.\hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.z; ++cellID) \{
         \textcolor{keywordtype}{int} atom1 = \hyperlink{classintegrator_ad1f7813c9cf3c31898aa7d78fc22232a}{cl\_}.\hyperlink{classcell_list__cpu_a0769d2a8a9c6964a8c6894bab9841e71}{head}(cellID);

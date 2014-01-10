@@ -140,9 +140,10 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Integration scheme that preserves total energy of the system. </p>
 <p>NVE integration. </p>
+<dl class="section author"><dt>Author</dt><dd>Nathan A. Mahynski </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>11/18/13 </dd></dl>
 
-<p>Definition at line <a class="el" href="nve_8h_source.html#l00013">13</a> of file <a class="el" href="nve_8h_source.html">nve.h</a>.</p>
+<p>Definition at line <a class="el" href="nve_8h_source.html#l00014">14</a> of file <a class="el" href="nve_8h_source.html">nve.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="ad630bf7c9b7339fa34f36fe43b0d9e3c"></a>
 <div class="memitem">
@@ -168,6 +169,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 
 <p>Calculate the forces on each atom. </p>
 <p>Integration </p>
+<dl class="section author"><dt>Author</dt><dd>Nathan A. Mahynski </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>11/19/13</dd></dl>
 <p>Calculate the pairwise forces in a system. This also calculates the potential energy of a system. The kinetic energy is calculated during the verlet integration.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -177,11 +179,11 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="integrator_8cpp_source.html#l00022">22</a> of file <a class="el" href="integrator_8cpp_source.html">integrator.cpp</a>.</p>
+<p>Definition at line <a class="el" href="integrator_8cpp_source.html#l00023">23</a> of file <a class="el" href="integrator_8cpp_source.html">integrator.cpp</a>.</p>
 
-<p>References <a class="el" href="system_8h_source.html#l00050">systemDefinition::atoms</a>, <a class="el" href="system_8h_source.html#l00029">systemDefinition::box()</a>, <a class="el" href="cell_list_8cpp_source.html#l00264">cellList_cpu::checkUpdate()</a>, <a class="el" href="integrator_8h_source.html#l00021">integrator::cl_</a>, <a class="el" href="cell_list_8h_source.html#l00045">cellList_cpu::head()</a>, <a class="el" href="cell_list_8h_source.html#l00046">cellList_cpu::list()</a>, <a class="el" href="system_8h_source.html#l00032">systemDefinition::mass()</a>, <a class="el" href="cell_list_8h_source.html#l00047">cellList_cpu::nCells</a>, <a class="el" href="cell_list_8h_source.html#l00048">cellList_cpu::neighbors()</a>, <a class="el" href="system_8h_source.html#l00040">systemDefinition::numAtoms()</a>, <a class="el" href="system_8h_source.html#l00048">systemDefinition::potential</a>, <a class="el" href="system_8h_source.html#l00042">systemDefinition::potentialArgs()</a>, <a class="el" href="system_8h_source.html#l00038">systemDefinition::rcut()</a>, and <a class="el" href="system_8h_source.html#l00034">systemDefinition::setPotE()</a>.</p>
+<p>References <a class="el" href="system_8h_source.html#l00051">systemDefinition::atoms</a>, <a class="el" href="system_8h_source.html#l00030">systemDefinition::box()</a>, <a class="el" href="cell_list_8cpp_source.html#l00266">cellList_cpu::checkUpdate()</a>, <a class="el" href="integrator_8h_source.html#l00022">integrator::cl_</a>, <a class="el" href="cell_list_8h_source.html#l00046">cellList_cpu::head()</a>, <a class="el" href="cell_list_8h_source.html#l00047">cellList_cpu::list()</a>, <a class="el" href="system_8h_source.html#l00033">systemDefinition::mass()</a>, <a class="el" href="cell_list_8h_source.html#l00048">cellList_cpu::nCells</a>, <a class="el" href="cell_list_8h_source.html#l00049">cellList_cpu::neighbors()</a>, <a class="el" href="system_8h_source.html#l00041">systemDefinition::numAtoms()</a>, <a class="el" href="system_8h_source.html#l00049">systemDefinition::potential</a>, <a class="el" href="system_8h_source.html#l00043">systemDefinition::potentialArgs()</a>, <a class="el" href="system_8h_source.html#l00039">systemDefinition::rcut()</a>, and <a class="el" href="system_8h_source.html#l00035">systemDefinition::setPotE()</a>.</p>
 
-<p>Referenced by <a class="el" href="nve_8cpp_source.html#l00022">step()</a>, and <a class="el" href="nvt_8cpp_source.html#l00032">nvt_NH::step()</a>.</p>
+<p>Referenced by <a class="el" href="nve_8cpp_source.html#l00023">step()</a>, and <a class="el" href="nvt_8cpp_source.html#l00032">nvt_NH::step()</a>.</p>
 <div class="fragment"><div class="line">                                                 {</div>
 <div class="line">    <span class="comment">// For cache coeherency allocate new space for calculations</span></div>
 <div class="line">    <a class="code" href="structfloat3.html" title="3 floating point numbers, same as defined for GPUs">float3</a> empty;</div>
@@ -198,7 +200,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <div class="line">    </div>
 <div class="line">    <span class="comment">// traverse cell list and calculate total system potential energy </span></div>
 <div class="line">    std::vector &lt;float&gt; args = sys.<a class="code" href="classsystem_definition.html#ab20c0c30e84fccdf15f54c155d25420f" title="Report additional arguments to the pair potential function.">potentialArgs</a>();</div>
-<div class="line"><span class="preprocessor">    #pragma omp parallel for reduction(+:Up) schedule(dynamic, 1)</span></div>
+<div class="line"><span class="preprocessor">#pragma omp parallel for reduction(+:Up) schedule(dynamic, 1)</span></div>
 <div class="line"><span class="preprocessor"></span>    <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> cellID = 0; cellID &lt; <a class="code" href="classintegrator.html#ad1f7813c9cf3c31898aa7d78fc22232a" title="Cell or neighbor list.">cl_</a>.<a class="code" href="classcell_list__cpu.html#ae86e1c9604a39bc8a493fa0f6538fd37" title="Number of cells in each direction.">nCells</a>.x*<a class="code" href="classintegrator.html#ad1f7813c9cf3c31898aa7d78fc22232a" title="Cell or neighbor list.">cl_</a>.<a class="code" href="classcell_list__cpu.html#ae86e1c9604a39bc8a493fa0f6538fd37" title="Number of cells in each direction.">nCells</a>.y*<a class="code" href="classintegrator.html#ad1f7813c9cf3c31898aa7d78fc22232a" title="Cell or neighbor list.">cl_</a>.<a class="code" href="classcell_list__cpu.html#ae86e1c9604a39bc8a493fa0f6538fd37" title="Number of cells in each direction.">nCells</a>.z; ++cellID) {</div>
 <div class="line">        <span class="keywordtype">int</span> atom1 = <a class="code" href="classintegrator.html#ad1f7813c9cf3c31898aa7d78fc22232a" title="Cell or neighbor list.">cl_</a>.<a class="code" href="classcell_list__cpu.html#a0769d2a8a9c6964a8c6894bab9841e71" title="Return the first atom (aka &#39;head&#39;) of each cell.">head</a>(cellID);</div>
 <div class="line">        <span class="keywordflow">while</span> (atom1 &gt;= 0) {</div>
@@ -260,6 +262,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 </table>
 </div><div class="memdoc">
 <p>Do NVE integration </p>
+<dl class="section author"><dt>Author</dt><dd>Nathan A. Mahynski </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>11/18/13</dd></dl>
 <p>Integrate a single timestep forward using Velocity-Verlet integration scheme. Update the positions and velocities using velocity verlet integration. This uses the accelerations stored on each atom. Creates a cell list the first time it is called. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -271,39 +274,26 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 
 <p>Implements <a class="el" href="classintegrator.html#a6f7170652474f15c99b94a9b9c7f4df6">integrator</a>.</p>
 
-<p>Definition at line <a class="el" href="nve_8cpp_source.html#l00022">22</a> of file <a class="el" href="nve_8cpp_source.html">nve.cpp</a>.</p>
+<p>Definition at line <a class="el" href="nve_8cpp_source.html#l00023">23</a> of file <a class="el" href="nve_8cpp_source.html">nve.cpp</a>.</p>
 
-<p>References <a class="el" href="system_8h_source.html#l00050">systemDefinition::atoms</a>, <a class="el" href="integrator_8cpp_source.html#l00022">integrator::calcForce()</a>, <a class="el" href="integrator_8h_source.html#l00023">integrator::dt_</a>, <a class="el" href="integrator_8h_source.html#l00022">integrator::lastAccelerations_</a>, <a class="el" href="system_8h_source.html#l00032">systemDefinition::mass()</a>, <a class="el" href="system_8h_source.html#l00040">systemDefinition::numAtoms()</a>, <a class="el" href="system_8h_source.html#l00035">systemDefinition::setKinE()</a>, <a class="el" href="integrator_8h_source.html#l00024">integrator::start_</a>, and <a class="el" href="system_8h_source.html#l00022">systemDefinition::updateInstantTemp()</a>.</p>
+<p>References <a class="el" href="system_8h_source.html#l00051">systemDefinition::atoms</a>, <a class="el" href="system_8h_source.html#l00030">systemDefinition::box()</a>, <a class="el" href="integrator_8cpp_source.html#l00023">integrator::calcForce()</a>, <a class="el" href="integrator_8h_source.html#l00022">integrator::cl_</a>, <a class="el" href="integrator_8h_source.html#l00024">integrator::dt_</a>, <a class="el" href="system_8h_source.html#l00033">systemDefinition::mass()</a>, <a class="el" href="system_8h_source.html#l00041">systemDefinition::numAtoms()</a>, <a class="el" href="system_8h_source.html#l00039">systemDefinition::rcut()</a>, <a class="el" href="system_8h_source.html#l00038">systemDefinition::rskin()</a>, <a class="el" href="system_8h_source.html#l00036">systemDefinition::setKinE()</a>, <a class="el" href="integrator_8h_source.html#l00025">integrator::start_</a>, and <a class="el" href="system_8h_source.html#l00023">systemDefinition::updateInstantTemp()</a>.</p>
 <div class="fragment"><div class="line">                                     {</div>
+<div class="line">    <span class="keywordtype">int</span> chunk = OMP_CHUNK;</div>
 <div class="line">    <span class="keywordflow">if</span> (<a class="code" href="classintegrator.html#a5b3546a765d8a83b6db8a6d890ace480" title="Flag for whether this object has been initialized or not.">start_</a>) {</div>
 <div class="line">        <span class="keywordflow">try</span> {</div>
-<div class="line">            <a class="code" href="classintegrator.html#a3e183a65eb6a777479dca47e7f9a2676" title="Acceleration of particles on previous timestep (useful for NVE integrator)">lastAccelerations_</a>.resize(sys.<a class="code" href="classsystem_definition.html#ae8d3c2df2d56241cee03fcc4e2026ae0" title="Report the pair potential function cutoff radius.">numAtoms</a>());</div>
+<div class="line">            <a class="code" href="classcell_list__cpu.html">cellList_cpu</a> tmpCL (sys.<a class="code" href="classsystem_definition.html#a85b80dee3609ddb68e370cee3fa959ea" title="Report the box dimensions.">box</a>(), sys.<a class="code" href="classsystem_definition.html#acacd88aac7d451bdcf9779ae8c5a95c7" title="Report the pair potential function cutoff radius.">rcut</a>(), sys.<a class="code" href="classsystem_definition.html#a343c8b17c052215a32412ec3df4f1d9a" title="Report the skin radius for the neighbor/cell lists.">rskin</a>());</div>
+<div class="line">            <a class="code" href="classintegrator.html#ad1f7813c9cf3c31898aa7d78fc22232a" title="Cell or neighbor list.">cl_</a> = tmpCL;</div>
 <div class="line">        } <span class="keywordflow">catch</span> (std::exception &amp;e) {</div>
-<div class="line">            std::cerr &lt;&lt; e.what() &lt;&lt; std::endl;</div>
-<div class="line">            <span class="keywordflow">throw</span> <a class="code" href="classcustom_exception.html" title="Error reporting.">customException</a>(<span class="stringliteral">&quot;Failed to initialize integrator due to memory constraints&quot;</span>);</div>
-<div class="line">            <span class="keywordflow">return</span>;</div>
+<div class="line">            std::cerr &lt;&lt; e.what() &lt;&lt; std:: endl;</div>
+<div class="line">            <span class="keywordflow">throw</span> <a class="code" href="classcustom_exception.html" title="Error reporting.">customException</a>(<span class="stringliteral">&quot;Failed to integrate on first step&quot;</span>);</div>
 <div class="line">        }</div>
-<div class="line">        <span class="comment">// calculate the forces initially (sets Up)</span></div>
-<div class="line">        <a class="code" href="classintegrator.html#ad630bf7c9b7339fa34f36fe43b0d9e3c" title="Calculate the forces on each atom.">calcForce</a> (sys);</div>
-<div class="line">        </div>
-<div class="line">        <span class="comment">// also get initial T</span></div>
-<div class="line"><span class="preprocessor">        #pragma omp parallel</span></div>
-<div class="line"><span class="preprocessor"></span>        {</div>
-<div class="line"><span class="preprocessor">            #pragma omp for shared(sys.atoms) schedule(dynamic, OMP_CHUNK) </span></div>
-<div class="line"><span class="preprocessor"></span>            <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i = 0; i &lt; sys.<a class="code" href="classsystem_definition.html#ae8d3c2df2d56241cee03fcc4e2026ae0" title="Report the pair potential function cutoff radius.">numAtoms</a>(); ++i) {</div>
-<div class="line">                sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.x += <a class="code" href="classintegrator.html#a6e4712b8597e3c40124316d2e9dd5051" title="Timestep size.">dt_</a>*0.5*(<a class="code" href="classintegrator.html#a3e183a65eb6a777479dca47e7f9a2676" title="Acceleration of particles on previous timestep (useful for NVE integrator)">lastAccelerations_</a>[i].x+sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].acc.x);</div>
-<div class="line">                sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.y += <a class="code" href="classintegrator.html#a6e4712b8597e3c40124316d2e9dd5051" title="Timestep size.">dt_</a>*0.5*(<a class="code" href="classintegrator.html#a3e183a65eb6a777479dca47e7f9a2676" title="Acceleration of particles on previous timestep (useful for NVE integrator)">lastAccelerations_</a>[i].y+sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].acc.y);</div>
-<div class="line">                sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.z += <a class="code" href="classintegrator.html#a6e4712b8597e3c40124316d2e9dd5051" title="Timestep size.">dt_</a>*0.5*(<a class="code" href="classintegrator.html#a3e183a65eb6a777479dca47e7f9a2676" title="Acceleration of particles on previous timestep (useful for NVE integrator)">lastAccelerations_</a>[i].z+sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].acc.z);</div>
-<div class="line">            }</div>
-<div class="line">        }</div>
-<div class="line">        </div>
-<div class="line">        <span class="keywordtype">float</span> tmp = 0.0, Uk = 0.0;</div>
-<div class="line"><span class="preprocessor">        #pragma omp parallel</span></div>
-<div class="line"><span class="preprocessor"></span>        {</div>
-<div class="line"><span class="preprocessor">            #pragma omp reduction(+:Uk) schedule(dynamic, OMP_CHUNK) </span></div>
-<div class="line"><span class="preprocessor"></span>            <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i = 0; i &lt; sys.<a class="code" href="classsystem_definition.html#ae8d3c2df2d56241cee03fcc4e2026ae0" title="Report the pair potential function cutoff radius.">numAtoms</a>(); ++i) {</div>
-<div class="line">                Uk += (sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.x*sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.x)+(sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.y*sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.y)+(sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.z*sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.z);</div>
-<div class="line">            }</div>
+<div class="line"></div>
+<div class="line">        <span class="comment">// get initial temperature</span></div>
+<div class="line">        <a class="code" href="classintegrator.html#ad630bf7c9b7339fa34f36fe43b0d9e3c" title="Calculate the forces on each atom.">calcForce</a>(sys);</div>
+<div class="line">        <span class="keywordtype">float</span> tmp=0.0, Uk = 0.0;</div>
+<div class="line"><span class="preprocessor">        #pragma omp parallel for reduction(+:Uk)</span></div>
+<div class="line"><span class="preprocessor"></span>        <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i = 0; i &lt; sys.<a class="code" href="classsystem_definition.html#ae8d3c2df2d56241cee03fcc4e2026ae0" title="Report the pair potential function cutoff radius.">numAtoms</a>(); ++i) {</div>
+<div class="line">            Uk += (sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.x*sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.x)+(sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.y*sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.y)+(sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.z*sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.z);</div>
 <div class="line">        }</div>
 <div class="line">        Uk *= sys.<a class="code" href="classsystem_definition.html#acb6dd3df121e3e5bc0eb41c32bd937bd" title="Report the particle&#39;s mass.">mass</a>();</div>
 <div class="line">        tmp = Uk;</div>
@@ -314,47 +304,54 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <div class="line">        <a class="code" href="classintegrator.html#a5b3546a765d8a83b6db8a6d890ace480" title="Flag for whether this object has been initialized or not.">start_</a> = 0;</div>
 <div class="line">    }</div>
 <div class="line">    </div>
-<div class="line">    <span class="comment">// update positions based on current positions</span></div>
-<div class="line"><span class="preprocessor">    #pragma omp parallel</span></div>
+<div class="line">    <span class="comment">// (1) evolve particle velocities</span></div>
+<div class="line"><span class="preprocessor">    #pragma omp parallel shared(sys)</span></div>
 <div class="line"><span class="preprocessor"></span>    {</div>
-<div class="line"><span class="preprocessor">        #pragma omp for shared(sys.atoms) schedule(dynamic, OMP_CHUNK) </span></div>
+<div class="line"><span class="preprocessor">        #pragma omp for schedule(dynamic,OMP_CHUNK)</span></div>
 <div class="line"><span class="preprocessor"></span>        <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i = 0; i &lt; sys.<a class="code" href="classsystem_definition.html#ae8d3c2df2d56241cee03fcc4e2026ae0" title="Report the pair potential function cutoff radius.">numAtoms</a>(); ++i) {</div>
-<div class="line">            sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].pos.x += <a class="code" href="classintegrator.html#a6e4712b8597e3c40124316d2e9dd5051" title="Timestep size.">dt_</a>*(sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.x+0.5*<a class="code" href="classintegrator.html#a6e4712b8597e3c40124316d2e9dd5051" title="Timestep size.">dt_</a>*sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].acc.x);</div>
-<div class="line">            sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].pos.y += <a class="code" href="classintegrator.html#a6e4712b8597e3c40124316d2e9dd5051" title="Timestep size.">dt_</a>*(sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.y+0.5*<a class="code" href="classintegrator.html#a6e4712b8597e3c40124316d2e9dd5051" title="Timestep size.">dt_</a>*sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].acc.y);</div>
-<div class="line">            sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].pos.z += <a class="code" href="classintegrator.html#a6e4712b8597e3c40124316d2e9dd5051" title="Timestep size.">dt_</a>*(sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.z+0.5*<a class="code" href="classintegrator.html#a6e4712b8597e3c40124316d2e9dd5051" title="Timestep size.">dt_</a>*sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].acc.z);</div>
-<div class="line">            <a class="code" href="classintegrator.html#a3e183a65eb6a777479dca47e7f9a2676" title="Acceleration of particles on previous timestep (useful for NVE integrator)">lastAccelerations_</a>[i] = sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].acc;</div>
+<div class="line">            sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.x += 0.5*<a class="code" href="classintegrator.html#a6e4712b8597e3c40124316d2e9dd5051" title="Timestep size.">dt_</a>*(sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].acc.x);</div>
+<div class="line">            sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.y += 0.5*<a class="code" href="classintegrator.html#a6e4712b8597e3c40124316d2e9dd5051" title="Timestep size.">dt_</a>*(sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].acc.y);</div>
+<div class="line">            sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.z += 0.5*<a class="code" href="classintegrator.html#a6e4712b8597e3c40124316d2e9dd5051" title="Timestep size.">dt_</a>*(sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].acc.z);</div>
+<div class="line">        }</div>
+<div class="line"></div>
+<div class="line">        <span class="comment">// (2) evolve particle positions</span></div>
+<div class="line"><span class="preprocessor">        #pragma omp for schedule(dynamic,OMP_CHUNK)</span></div>
+<div class="line"><span class="preprocessor"></span>        <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i = 0; i &lt; sys.<a class="code" href="classsystem_definition.html#ae8d3c2df2d56241cee03fcc4e2026ae0" title="Report the pair potential function cutoff radius.">numAtoms</a>(); ++i) {</div>
+<div class="line">            sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].pos.x += sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.x*<a class="code" href="classintegrator.html#a6e4712b8597e3c40124316d2e9dd5051" title="Timestep size.">dt_</a>;</div>
+<div class="line">            sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].pos.y += sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.y*<a class="code" href="classintegrator.html#a6e4712b8597e3c40124316d2e9dd5051" title="Timestep size.">dt_</a>;</div>
+<div class="line">            sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].pos.z += sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.z*<a class="code" href="classintegrator.html#a6e4712b8597e3c40124316d2e9dd5051" title="Timestep size.">dt_</a>;</div>
 <div class="line">        }</div>
 <div class="line">    }</div>
 <div class="line">    </div>
-<div class="line">    <span class="comment">// calculate new forces at new positions</span></div>
-<div class="line">    <a class="code" href="classintegrator.html#ad630bf7c9b7339fa34f36fe43b0d9e3c" title="Calculate the forces on each atom.">calcForce</a> (sys);</div>
+<div class="line">    <span class="comment">// (3) calc force</span></div>
+<div class="line">    <a class="code" href="classintegrator.html#ad630bf7c9b7339fa34f36fe43b0d9e3c" title="Calculate the forces on each atom.">calcForce</a>(sys);</div>
 <div class="line">    </div>
-<div class="line">    <span class="comment">// update velocities and get Uk and kinetic temperature</span></div>
-<div class="line"><span class="preprocessor">    #pragma omp parallel</span></div>
+<div class="line">    <span class="comment">// (4) evolve particle velocities</span></div>
+<div class="line"><span class="preprocessor">    #pragma omp parallel shared(sys)</span></div>
 <div class="line"><span class="preprocessor"></span>    {</div>
-<div class="line"><span class="preprocessor">        #pragma omp for shared(sys.atoms) schedule(dynamic, OMP_CHUNK) </span></div>
-<div class="line"><span class="preprocessor"></span>        <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i = 0; i &lt; sys.<a class="code" href="classsystem_definition.html#ae8d3c2df2d56241cee03fcc4e2026ae0" title="Report the pair potential function cutoff radius.">numAtoms</a>(); ++i) {</div>
-<div class="line">            sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.x += <a class="code" href="classintegrator.html#a6e4712b8597e3c40124316d2e9dd5051" title="Timestep size.">dt_</a>*0.5*(<a class="code" href="classintegrator.html#a3e183a65eb6a777479dca47e7f9a2676" title="Acceleration of particles on previous timestep (useful for NVE integrator)">lastAccelerations_</a>[i].x+sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].acc.x);</div>
-<div class="line">            sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.y += <a class="code" href="classintegrator.html#a6e4712b8597e3c40124316d2e9dd5051" title="Timestep size.">dt_</a>*0.5*(<a class="code" href="classintegrator.html#a3e183a65eb6a777479dca47e7f9a2676" title="Acceleration of particles on previous timestep (useful for NVE integrator)">lastAccelerations_</a>[i].y+sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].acc.y);</div>
-<div class="line">            sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.z += <a class="code" href="classintegrator.html#a6e4712b8597e3c40124316d2e9dd5051" title="Timestep size.">dt_</a>*0.5*(<a class="code" href="classintegrator.html#a3e183a65eb6a777479dca47e7f9a2676" title="Acceleration of particles on previous timestep (useful for NVE integrator)">lastAccelerations_</a>[i].z+sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].acc.z);</div>
-<div class="line">        }</div>
+<div class="line"><span class="preprocessor">    #pragma omp for schedule(dynamic,OMP_CHUNK)</span></div>
+<div class="line"><span class="preprocessor"></span>    <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i = 0; i &lt; sys.<a class="code" href="classsystem_definition.html#ae8d3c2df2d56241cee03fcc4e2026ae0" title="Report the pair potential function cutoff radius.">numAtoms</a>(); ++i) {</div>
+<div class="line">            sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.x += 0.5*<a class="code" href="classintegrator.html#a6e4712b8597e3c40124316d2e9dd5051" title="Timestep size.">dt_</a>*(sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].acc.x);</div>
+<div class="line">            sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.y += 0.5*<a class="code" href="classintegrator.html#a6e4712b8597e3c40124316d2e9dd5051" title="Timestep size.">dt_</a>*(sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].acc.y);</div>
+<div class="line">            sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.z += 0.5*<a class="code" href="classintegrator.html#a6e4712b8597e3c40124316d2e9dd5051" title="Timestep size.">dt_</a>*(sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].acc.z);</div>
+<div class="line">    }</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordtype">float</span> Uk = 0.0;</div>
+<div class="line">    <span class="keywordtype">float</span> tmp = 0.0;</div>
+<div class="line"></div>
+<div class="line"><span class="preprocessor">    #pragma omp parallel for reduction(+:Uk)</span></div>
+<div class="line"><span class="preprocessor"></span>    <span class="comment">// get temperature and kinetic energy</span></div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i = 0; i &lt; sys.<a class="code" href="classsystem_definition.html#ae8d3c2df2d56241cee03fcc4e2026ae0" title="Report the pair potential function cutoff radius.">numAtoms</a>(); ++i) {</div>
+<div class="line">        Uk += (sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.x*sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.x)+(sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.y*sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.y)+(sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.z*sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.z);</div>
 <div class="line">    }</div>
 <div class="line">    </div>
-<div class="line">    <span class="comment">// get temperature and kinetic energy</span></div>
-<div class="line">    <span class="keywordtype">float</span> tmp = 0.0, Uk = 0.0;</div>
-<div class="line"><span class="preprocessor">    #pragma omp parallel</span></div>
-<div class="line"><span class="preprocessor"></span>    {</div>
-<div class="line"><span class="preprocessor">        #pragma omp reduction(+:Uk) schedule(dynamic, OMP_CHUNK) </span></div>
-<div class="line"><span class="preprocessor"></span>        <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i = 0; i &lt; sys.<a class="code" href="classsystem_definition.html#ae8d3c2df2d56241cee03fcc4e2026ae0" title="Report the pair potential function cutoff radius.">numAtoms</a>(); ++i) {</div>
-<div class="line">            Uk += (sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.x*sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.x)+(sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.y*sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.y)+(sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.z*sys.<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.z);</div>
-<div class="line">        }</div>
-<div class="line">    }</div>
 <div class="line">    Uk *= sys.<a class="code" href="classsystem_definition.html#acb6dd3df121e3e5bc0eb41c32bd937bd" title="Report the particle&#39;s mass.">mass</a>();</div>
 <div class="line">    tmp = Uk;</div>
 <div class="line">    Uk *= 0.5;</div>
 <div class="line">    tmp /= (3.0*(sys.<a class="code" href="classsystem_definition.html#ae8d3c2df2d56241cee03fcc4e2026ae0" title="Report the pair potential function cutoff radius.">numAtoms</a>()-1.0));</div>
 <div class="line">    sys.<a class="code" href="classsystem_definition.html#a285e6cd1de35ed125eecb20f0f774ab3" title="Manually set the instantaneous temperature.">updateInstantTemp</a>(tmp);</div>
 <div class="line">    sys.<a class="code" href="classsystem_definition.html#a2b2c236698886bd1d106be802b987b61" title="Assign the kinetic energy.">setKinE</a>(Uk);</div>
+<div class="line"></div>
 <div class="line">}</div>
 </div><!-- fragment -->
 </div>
@@ -366,7 +363,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jan 4 2014 19:08:04 for Parallel Molecular Dynamics with a Time-Reversible Nose-Hoover Thermostat on CPUs and GPUs by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jan 10 2014 10:22:58 for Parallel Molecular Dynamics with a Time-Reversible Nose-Hoover Thermostat on CPUs and GPUs by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

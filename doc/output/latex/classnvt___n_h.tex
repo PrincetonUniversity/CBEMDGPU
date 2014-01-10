@@ -48,12 +48,15 @@ void \hyperlink{classintegrator_ad630bf7c9b7339fa34f36fe43b0d9e3c}{calc\-Force} 
 \subsection{Detailed Description}
 Uses Nose-\/\-Hover integration method to thermostat a system (constant T rather than E) 
 
-N\-V\-T integration with Nose-\/\-Hoover thermostat. \begin{DoxyDate}{Date}
+N\-V\-T integration with Nose-\/\-Hoover thermostat. \begin{DoxyAuthor}{Author}
+Nathan A. Mahynski 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
 11/18/13 
 \end{DoxyDate}
 
 
-Definition at line 13 of file nvt.\-h.
+Definition at line 14 of file nvt.\-h.
 
 
 
@@ -105,7 +108,10 @@ References integrator\-::start\-\_\-.
 
 Calculate the forces on each atom. 
 
-Integration \begin{DoxyDate}{Date}
+Integration \begin{DoxyAuthor}{Author}
+Nathan A. Mahynski 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
 11/19/13
 \end{DoxyDate}
 Calculate the pairwise forces in a system. This also calculates the potential energy of a system. The kinetic energy is calculated during the verlet integration.
@@ -117,7 +123,7 @@ Calculate the pairwise forces in a system. This also calculates the potential en
 \end{DoxyParams}
 
 
-Definition at line 22 of file integrator.\-cpp.
+Definition at line 23 of file integrator.\-cpp.
 
 
 
@@ -145,7 +151,7 @@ Referenced by nve\-::step(), and step().
     
     \textcolor{comment}{// traverse cell list and calculate total system potential energy }
     std::vector <float> args = sys.\hyperlink{classsystem_definition_ab20c0c30e84fccdf15f54c155d25420f}{potentialArgs}();
-\textcolor{preprocessor}{    #pragma omp parallel for reduction(+:Up) schedule(dynamic, 1)}
+\textcolor{preprocessor}{#pragma omp parallel for reduction(+:Up) schedule(dynamic, 1)}
 \textcolor{preprocessor}{}    \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} cellID = 0; cellID < \hyperlink{classintegrator_ad1f7813c9cf3c31898aa7d78fc22232a}{cl\_}.\hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.x*\hyperlink{classintegrator_ad1f7813c9cf3c31898aa7d78fc22232a}{cl\_}.\hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}
       .y*\hyperlink{classintegrator_ad1f7813c9cf3c31898aa7d78fc22232a}{cl\_}.\hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.z; ++cellID) \{
         \textcolor{keywordtype}{int} atom1 = \hyperlink{classintegrator_ad1f7813c9cf3c31898aa7d78fc22232a}{cl\_}.\hyperlink{classcell_list__cpu_a0769d2a8a9c6964a8c6894bab9841e71}{head}(cellID);
@@ -234,7 +240,8 @@ References system\-Definition\-::atoms, system\-Definition\-::box(), integrator\
         gamma\_ /= Q\_;
 
         \textcolor{comment}{// get initial temperature}
-        \hyperlink{classintegrator_ad630bf7c9b7339fa34f36fe43b0d9e3c}{calcForce}(sys);
+    \hyperlink{classintegrator_ad630bf7c9b7339fa34f36fe43b0d9e3c}{calcForce}(sys);
+
         \textcolor{keywordtype}{float} tmp=0.0, Uk = 0.0;
 \textcolor{preprocessor}{        #pragma omp parallel for reduction(+:Uk)}
 \textcolor{preprocessor}{}        \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i = 0; i < sys.\hyperlink{classsystem_definition_ae8d3c2df2d56241cee03fcc4e2026ae0}{numAtoms}(); ++i) \{

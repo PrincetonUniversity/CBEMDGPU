@@ -79,16 +79,102 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">CBEMDGPU </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>CBE MD on GPUs</p>
+<div class="textblock"><blockquote class="doxtable">
+<p>CBE MD on GPUs</p>
+<p></p>
+</blockquote>
+<blockquote class="doxtable">
+<blockquote class="doxtable">
 <p>by Nathan A. Mahynski, George A. Khoury, and Carmeline J. Dsilva</p>
+<p></p>
+</blockquote>
+<p></p>
+</blockquote>
 <p>See <a class="el" href="main_8cpp_source.html">main.cpp</a> to set parameters which are documented by example in this file.</p>
 <p>To compile the CPU version, type $ make MD</p>
 <p>To compile the GPU version, type $ make -f Makefile_cuda</p>
-<p>To compile tests, etc., type $ make ${var} where var is the suffix desired (see Makefile for details) </p>
+<p>To compile tests, type $ make TESTS</p>
+<p>To compile the timing executable (used for scaling studies), type $ make TIMING</p>
+<p>To compile the program that runs a simulation to compare with LAMMPS output, type $ make LMP_COMPARE</p>
+<p>To compile the program that tests the NVE integrator, type $ make TEST_NVE</p>
+<p>In the Makefile, the PATHTOBOOST variable should point to the diretory where the C++ boost libraries are saved.</p>
+<p>In the GTEST_DIR variable should point to the directory where the Google Tests libraries are saved.</p>
+<p>Note that the Intel C++ compilers must be used; the GNU C++ compilers do not work with the OpenMP portion of our code (this is a known bug in the compiler, see FYI section).</p>
+<h1>Execution</h1>
+<p><a class="el" href="main_8cpp_source.html">main.cpp</a> expects 4 input, the number of threads to use with OMP, the number of atoms, the skin radius for the cell/neighbor lists, and the number of steps to simulate. $ ./md &lt;nthreads&gt; &lt;natoms&gt; &lt;rs&gt; &lt;nsteps&gt; &gt; log 2&gt; err</p>
+<p>This also produces a trajectory.xyz file which can be visualized with VMD (if you have it installed) $ vmd -xyz trajectory.xyz</p>
+<h1>Explanation of <a class="el" href="main_8cpp_source.html">main.cpp</a></h1>
+<blockquote class="doxtable">
+<p>How to use, change, and make your own in 10 steps.</p>
+<p></p>
+</blockquote>
+<ol type="1">
+<li><a class="el" href="main_8cpp_source.html">main.cpp</a> expects 4 input, the number of threads to use with OMP, the number of atoms, the skin radius for the cell/neighbor lists, and the number of steps to simulate. $ ./md &lt;nthreads&gt; &lt;natoms&gt; &lt;rs&gt; &lt;nsteps&gt; &gt; log 2&gt; err</li>
+</ol>
+<ol type="1">
+<li>The random number generator seed is then set manually to ensure that results are reproducible.</li>
+</ol>
+<ol type="1">
+<li><p class="startli">The user must then specify basic properties about the system. A <a class="el" href="classsystem_definition.html" title="Contains all information pertaining to a system being simulated.">systemDefinition</a> object should be instantiated and then temperature, box size, particle mass, and pair potential cutoff should be specified</p>
+<p class="startli">$ <a class="el" href="classsystem_definition.html" title="Contains all information pertaining to a system being simulated.">systemDefinition</a> a;</p>
+<p class="startli">$ a.setTemp(1.0);...</p>
+</li>
+</ol>
+<ol type="1">
+<li><p class="startli">The system can then be initialized with the command initThermal or initRandom (see doxygen documentation for more details). For example, in the former:</p>
+<p class="startli">$ a.initThermal(nAtoms, Temp, rngSeed, separation);</p>
+</li>
+</ol>
+<ol type="1">
+<li>Where "nAtoms" is the number of atoms, "separation" is the initial separation of the particles on the simple cubic lattice on which they are initialized, and the rest of the variables are self-explanatory. This command completely initializes the system for simulation.</li>
+</ol>
+<ol type="1">
+<li><p class="startli">Next, the pair potential should be specified. As an example in <a class="el" href="main_8cpp_source.html">main.cpp</a>, the preprocessor flag NVCC is used to select either the CPU version of the shifted lennard-jones potential (slj) or the GPU version (dev_slj). The Makefile (compare to Makefile_cuda) will define this if necessary and allows the code to flow naturally and work in both cases.</p>
+<p class="startli">$ pointFunction_t pp = slj;</p>
+<p class="startli">$ a.setPotential(pp);</p>
+</li>
+</ol>
+<ol type="1">
+<li>If the GPUs are used (NVCC compiler flag is defined) the number of threads and blocks the GPU kernel will be invoked with must be set. This is done next.</li>
+</ol>
+<ol type="1">
+<li><p class="startli">Then additional arguments for the pair potential must be specified. In the case of the slj function, variables epsilon, sigma, delta, and ushift must be given. This is then set in the <a class="el" href="classsystem_definition.html" title="Contains all information pertaining to a system being simulated.">systemDefinition</a>.</p>
+<p class="startli">$ std::vector &lt;float&gt; args(5);</p>
+<p class="startli">$ args[0] = 1.0; // epsilon</p>
+<p class="startli">$ args[1] = 1.0; // sigma</p>
+<p class="startli">$ args[2] = 0.0; // delta</p>
+<p class="startli">$ args[3] = 0.0; // ushift</p>
+<p class="startli">$ a.setPotentialArgs(args);</p>
+</li>
+</ol>
+<ol type="1">
+<li><p class="startli">Afterwards, the integrator (ensemble) must be specified. In the case of the NVT ensemble where we are using the Nose-Hoover thermostat, the integrator is given by the object <a class="el" href="classnvt___n_h.html" title="Uses Nose-Hover integration method to thermostat a system (constant T rather than E)...">nvt_NH</a>. This requires a damping constant, which for the slj potential should be about unity. Then the numerical timestep should be given, for the slj this is usually efficient around 0.005.</p>
+<p class="startli">$ <a class="el" href="classnvt___n_h.html" title="Uses Nose-Hover integration method to thermostat a system (constant T rather than E)...">nvt_NH</a> integrate (1.0);</p>
+<p class="startli">$ integrate.setTimestep(timestep);</p>
+</li>
+</ol>
+<ol type="1">
+<li>Finally the simulation is ready to iterate. A simple loop can be set to do this. An example for the case of the NVE ensemble is also provided in <a class="el" href="test__nve_8cpp_source.html">test_nve.cpp</a> which can be compiled with make TEST_NVE (see <a class="el" href="test__nve_8cpp_source.html">test_nve.cpp</a>)</li>
+</ol>
+<h1>FYI</h1>
+<blockquote class="doxtable">
+<p>Known bugs, etc.</p>
+<p></p>
+</blockquote>
+<p>There are a few known instances of bugs related to compiler options, etc.</p>
+<ol type="1">
+<li>Using icpc instead of g++ Our code uses OMP to parallelize many calculations. Specifically, the atoms member (vector) in the <a class="el" href="classsystem_definition.html" title="Contains all information pertaining to a system being simulated.">systemDefinition</a> object must be shared often. However, because it is a member of a class g++ struggles to properly share this in memory. This is a known bug in the g++ compiler which the intel (icpc) version handles rigorously. As a result, our code will produce errors if compiled with the g++ compiler when more than 1 core is used. To use this on tiger the module openmpi/intel-12.1/1.4.5/64 should be loaded to make the icpc compiler accessible.</li>
+</ol>
+<ol type="1">
+<li>Cuda toolkit 5.5 CUDA is a finicky tool. Different GPUs require different toolkits and versions to work properly. In fact, compilation may succeed with a bad version but the run time behavior produces unexpected (incorrect) results. For the K20 cards on tiger, the latest toolkit (v5.5) must be loaded. To do so, load the module cudatoolkit/5.5.22 before attempting to compile the program. The Makefile must include flags consistent with the GPUs version of CUDA (which on tiger in 3.5) so the Makefile_cuda contains a flag "NVFLAGS = -gencode arch=compute_35,code=sm_35" for the .cu files. Furthermore, you will find that preprocessor flags NVCC and NOGPU are found throughout the code which act as switches to activate/deactivate GPU functionality throughout the compilation process.</li>
+</ol>
+<ol type="1">
+<li>Tiger GPUs Unfortunately it appears that the queueing system on tiger is having problems reserving all or some of the GPUs exclusively for single jobs by users. As a result, thrust (the GPU equivalent of the STL for C++) will have memory issues if one or more of the GPUs on a node are already in use. Because of the unusually high load on tiger over the past month, we have been unable to obtain good results on this cluster since usually this situation is encountered. Our private GPU cluster was used to obtian our results instead, though our Makefile_cuda is set so this should compile properly on tiger if you want to check. </li>
+</ol>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jan 4 2014 19:08:04 for Parallel Molecular Dynamics with a Time-Reversible Nose-Hoover Thermostat on CPUs and GPUs by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jan 10 2014 10:22:58 for Parallel Molecular Dynamics with a Time-Reversible Nose-Hoover Thermostat on CPUs and GPUs by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

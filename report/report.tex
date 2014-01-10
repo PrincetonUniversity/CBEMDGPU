@@ -1,7 +1,7 @@
 \documentclass[12pt]{article}
 
 \usepackage{graphicx,booktabs}
-\usepackage{subcaption,epsfig,epstopdf}
+\usepackage{caption,subcaption,epsfig,epstopdf}
 \usepackage{float}
 
 \usepackage{pslatex,multicol,verbatim,wrapfig,pdfpages,url}
@@ -167,8 +167,8 @@ The thermostat acceleration, $\ddot{\eta}(t)$ is expressed in the form
 \begin{equation}
 \ddot{\xi}(t) = \frac{1}{\tau^{2}} [\frac{T(t)}{T_{target}} -1 ]
 \end{equation}
-where $\tau^{2} = \frac{Q}{(3N-1)*T_{target}}$ and $Q$, which is the thermal mass of the thermostat spring equal to unity.
-Because this algorithm is time-reversible, this algorithm is implemented in our software.
+where $\tau^{2} = \frac{Q}{(3N-1)*T_{target}}$ and $Q$, which is the thermal mass of the thermostat spring equal to unity (although it is adjustable).
+Because this algorithm is time-reversible, we implemented it in our software.
 % END OF THAT DOC.
 
 The ability for this algorithm to be time-reversible is the result of a Trotter factorization of the Liouville propagator derived by Martyna and coworkers 20 years ago. Through their Trotter factorization they proved that any resulting integrator will be time-reversible \cite{Tuckerman1992}.
@@ -208,13 +208,53 @@ On CPUs, we parallelized our code using OpenMP and therefore, our code can run i
 On GPUs, we parallelized our code using CUDA.
 The parallelization on GPUs is implemented in the force calculation, which accounts for 27\% percent of the cost of the simulation according to our profiling studies (see Table\ref{tab:profiling}).
 %
-Parallelization and scaling were tested on the Adroit and TIGER clusters.
+Parallelization and scaling were tested on the Adroit and TIGER clusters, though a private GPU cluster (ANDROS) was also used due to unusually heavy usage of TIGER over the past month.
 
+\subsubsection{CUDA}
+CUDA stands for Compute Unified Device Architecture and is the product of the NVIDIA corporation.  CUDA is a programming language  that extends the C and C++ languages to allow a user to perform highly accelerated Single Instruction Multiple Data (SIMD) calculations by taking control of a GPU device.  Although this is a complex topic which cannot be discussed in complete detail here, the basic principle of a
+GPU code is to allocate memory on the device, copy information from the host CPU to the device into the previously allocate slot(s), perform calculations, then copy the results back.  Clearly, this process is bandwidth limited as will be discussed in detail in following sections.  To simplify the above process, a very convenient library called ``thrust" has been developed which essentially extends the C++ STL onto GPU devices and takes advantage of iterators, scoping, etc. which make coding significantly easier.  This is now a standard in modern versions of CUDA (version 4.0 and greater).
+
+CUDA code must be written in files with a ``.cu" extension to be interpreted by the nvcc compiler.  The CUDA toolkit used to compile and run the code must be the same.  On TIGER, we used the module cudatoolkit/5.5.22 which must be loaded before compilation and in the submission script for jobs.  Furthermore, the correct version flags must be enabled during compilation to make thrust work properly.  For the K20 GPUs on TIGER this requires the compiler flag ``NVFLAGS = -gencode arch=compute\_35,code=sm\_35" (see Makefile\_cuda).  The success of GPU codes is very sensitive to these details, and failure to strictly adhere to these (and many other) subtleties can produce code which compiles without error, but whose run time behavior is erroneous.
+
+A CUDA kernel function is a function which, when invoked, performs SIMD operations on a team of threads, processed in groups called warps.  Each warp is 32 threads, and there are a set number of threads per ``block".  Each block of threads is loaded on the GPU as a single unit and has access to shared memory allowing them to communicate locally but not with threads in other blocks.  To do so, global, constant, and texture memory must be used, and are valuable resources.  You will see we have included a class called systemProps in cudaHelper.h (also see cudaHelper.cu) which evaluates the properties of each device the code detects on a CPU host such as the maximum number of threads per block, etc. allowing the code to dynamically adjust to different GPUs.  We have found that a block size of 512 threads is roughly optimal, which is set in main.cpp.  Because the GPUs are generally memory and bandwidth limited, we set out to design an algorithm that uses a minimal amount of memory when performing GPU operations.
+
+\begin{figure}[H]
+   	\includegraphics[width=\textwidth]{gpu2.png}
+	\caption{CUDA layout and how the host CPU communicates information to the GPU when a kernel is invoked. (Adapted from http://geco.mines.edu/tesla/cuda\_tutorial\_mio/)}
+	\label{fig:cuda}
+\end{figure}
+
+The CUDA kernel we created parallelize the calculation of forces onto the GPU.  As shown in Table~\ref{tab:profiling} later, this is the primary place where time is spent when performing these simulations.  In order to minimize the number of pairs that need to be evaluated when performing this calculation, we employ neighbor lists when performing GPU simulations.  The reason we use neighbor lists over cell lists is that each thread on the GPU is calculating the net force on a given particle.  This all the possible atoms that contribute must be locally available (local memory).  If we used cell lists, this number (per atom) could be far too large and we did not expect this to be efficient.  However, on the CPU cell lists are much easier to maintain and so are more efficient when such size concerns are irrelevant.  In both cases, a coherent memory pool makes maintenance of these lists easy so for both the GPU and CPU version of our code these lists are maintained on the CPU, hence the name of class ``cellList\_cpu" (see cellList.h).  Although for the both the GPU and CPU versions of the code the name of the class does not change, in the former it is actually a neighbor list while in the latter it is a true cell list.  A preprocessor flag separates the two at compile time depending on whether the NVCC compiler flag is defined (see Makefiles for comparison).  This is just one of many examples which illustrate the need for fundamentally different algorithms on GPUs over CPUs.
+
+\subsection{Cell Lists}
+On CPUs we maintain cell lists to minimize the number of pairwise comparisons each particle must check to compute the net force on each particle.  The easiest way to do this is by decomposing the simulation box domain into rectangular cells of size $r_s + r_{cut}$ where $r_{cut}$ is the cutoff in the pairwise potential and $r_s$ is the skin radius beyond this.  The use of a finite $r_s$ means that as the system evolve, the cell list does not need to be rebuilt (expensive) at every step.  Instead, one can simply check the net displacement since the last build of each particle.  If the sum of the two largest displacement exceeds $r_s$ then it is possible (if these displacements are antiparallel) that two particles which were not initially in each others' lists, now need to be (see cellList\_cpu::checkUpdate).  At this point the list must be rebuilt.  Full implementation details may be found in cellLists.cpp
+
+A cell list is created the first time the force calculation is called.  This is comprised of two vectors in the cellList\_cpu class (which is a member of the virtual base class ``integrator") called ``head" and ``list" (private members of cellList\_cpu) which define a minimal linked list.
+The head vector is a vector which contains the index of the ``first" atom in each cell.  This location is then iteratively looked up in ``list" which contains the index of the next atom in the cell.  The value located at that index in ``list" to provide the next, and so on until the value at a location in ``list" is 0 (in our C++ implementation we actually set this to be a negative number).  This is shown schematically in Fig.~\ref{fig:cell}.
+
+\begin{figure}[H]
+   	\includegraphics[width=\textwidth]{cell_list.png}
+	\caption{Schematic of how our implemented cell lists work for the case of 9 atoms in 10 total cells, of which only cells 1 and 2 contain particles.}
+	\label{fig:cell}
+\end{figure}
+
+The advantage of this technique is its simplicity; cell lists are easy to iterate through and only require $\mathcal{O}(N)$ space to store the information, where $N$ is the number of particles.  On a practical note, however, this iteration means that subsequent members of the list are not stored near each other in memory.  As a result, memory prefetching cannot be taken advantage of as cache misses become prevalent as N becomes large.  However, profiling has revealed that this is not too costly and we chose not to focus our efforts on changing this.
 \subsection{Neighbor Lists}
+On GPUs we maintain a neighbor list for each atom.  This neighbor list again, keeps a record of all other atoms that are within $r_s + r_{cut}$ of each atom.  The addition of a finite skin radius again means the neighbor lists do not need to be rebuilt at every time step. If this radius is too large, each atom checks an excessive number of neighbors at each integration step, however, if it is too small the lists must be rebuilt more often.  We investigated the effects of changing this radius systematically as discussed in detail in following sections.  
+
+These lists are stored as two linear arrays called ``nlist" and ``nlist\_index" (see cellList.cpp).  Element $j$ of the latter contains the index of the former where the information pertaining to the neighbors of $j$ is located.  At nlist[j] is an integer which is the number of neighbors, $n$, atom $j$ has, whose indices are recorded in the following $n$ elements of nlist (see Fig.~\ref{fig:nlist}).  This linear storage is optimal for passing it to the GPU.  These lists are built and maintained on the CPU since, when being built, every atom must be compared to every other one ($\mathcal{O}(N^2)$ process) which we deemed to be far too much communication for the GPU to handle locally on the device.
+
+\begin{figure}[H]
+   	\includegraphics[width=\textwidth]{nlist.png}
+	\caption{Schematic of how our implemented neighbor lists work.  Above is a depiction of nlist, while nlist\_index contains the indices of the green cells.}
+	\label{fig:nlist}
+\end{figure}
+
+In fact, in very advanced codes such as HOOMD (http://codeblue.umich.edu/hoomd-blue/)~\cite{Anderson2008}, the neighbor lists themselves may be maintained on the GPUs.  This \emph{significantly} improves the speed of the code because it reduces the number of times data (memory) has to be sent back to the CPU.   However, this requires communication between threads outside different blocks, various clever reductions, and a very careful consideration of the cache coherency on the GPU.  As a result, it is (unfortunately) well beyond what we found feasible for a semester project though we did investigate this in the literature~\cite{Lipscomb2012}.  As will be shown in the following sections, this communication loss actually makes our GPU code overall slower than our CPU version, however, the GPU does significantly improve the speed of the force calculation which was the goal of this exercise.
 
 \subsection{Testing}
 
-We implemented Google Tests within our software.
+We implemented Google Tests within our software (see Makefile TESTS, and unit tests.cpp) to ensure our code was functioning properly.
 
 We implemented the following tests:
 	\begin{itemize}
@@ -229,32 +269,35 @@ Additionally, we benchmarked/validated our code's results against LAMMPS \cite{P
 
 \section{Code Structure and Implementation Notes}
 
-The software is implemented in object-oriented C++ and version-controlled through an actively updated github repository \url{https://github.com/PrincetonUniversity/CBEMDGPU}. The code is completely documented using Doxygen in the /doc directory, which contains both an html and a pdf document (\textbf{refman.pdf}) outlining the code structure and commenting all of the functions in the software.
+The software is implemented in object-oriented C++ and version-controlled through an actively updated github repository \url{https://github.com/PrincetonUniversity/CBEMDGPU}. The code is completely documented using Doxygen in the /doc directory, which contains both an html and a pdf document (doc/output/latex/\textbf{refman.pdf}) outlining the code structure and commenting all of the functions in the software.
 %
-The class structure is as follows
+The code structure is briefly summarized as follows:
 \begin{description}
 
-\item[\texttt{common.h}] This class implements the error catching functions.
+\item[\texttt{common.h}] This file contains classes that implement the error catching functions.
 
-\item[\texttt{cudaHelper.h}] This function implements the CUDA code for parallelization on GPUs.
+\item[\texttt{cudaHelper.cu/.h}] This file contains classes that assist in communicating with, and tuning, the GPUs.
 
-\item[\texttt{cellList.cpp}] This class controls the cell lists (for parallelization on CPU) or neighbor lists (for parallelization on GPUs).
+\item[\texttt{cellList.cpp/.h}] This file contains the class which controls the cell lists (for parallelization on CPU) or neighbor lists (for parallelization on GPUs).
 
-\item[\texttt{dataTypes.h}] This function implements the custom structures, such as the atom struct, which stores the position, velocity, and acceleration of an atom.
+\item[\texttt{dataTypes.h}] This file contains custom data structures, such as the ``atom" structure, which stores the position, velocity, and acceleration of an atom, and identical structures like int3 and float3 which are implemented by default on the GPU.  For consistency, we use identical structures in our CPU version as well, however they require an explicit definition which is provided herein.
 	
-\item[\texttt{integrator.cpp}] This class is a ``virtual'' class
+\item[\texttt{integrator.cpp/.h}] This file contains the ``virtual'' base class which is the parent of all integrators we implemented (NVE and NVT with Nos\'{e}-Hoover)
 
-\item[\texttt{nve.cpp}] This class implements the velocity-Verlet integration scheme for an NVE simulation.
+\item[\texttt{integrator.cu}] This file contains all potential functions, kernels, etc. required for the GPU implementation of our code.
 
-\item[\texttt{nvt.cpp}] This class implements the velocity-Verlet integration scheme with a time-reversible Nos\'{e}-Hoover thermostat for an NVT simulation.
+\item[\texttt{nve.cpp/.h}] This file contains the integrator class which implements the velocity-Verlet integration scheme for an NVE simulation.
 
-\item[\texttt{potential.cpp}] The potential class implements the force and potential energy calculations for the standard Lennard-Jones potential.
+\item[\texttt{nvt.cpp/.h}] This file contains the integrator class which implements the velocity-Verlet integration scheme with a time-reversible Nos\'{e}-Hoover thermostat for an NVT simulation.
+
+\item[\texttt{potential.cpp/.h}] The file contains the potential class which implements the force and potential energy calculations for the standard Lennard-Jones potential.
+
 %
 This class can be expanded to include other potential energy functions.
 
-\item[\texttt{system.cpp}] This class stores all of the parameters relevant to the simulation system, such as the box size, potential energy function, and the number of atoms.
+\item[\texttt{system.cpp}] This file contains the class which stores all of the parameters relevant to the simulation system, such as the box size, potential energy function, and the number of atoms.
 
-\item[\texttt{utils.cpp}] This class implements the necessary ``helper'' functions for the simulation, such as the distance calculation with periodic boundary conditions using the minimum image convention.
+\item[\texttt{utils.cpp}] This file contains the necessary ``helper'' functions for the simulation, such as the distance calculation with periodic boundary conditions using the minimum image convention.
 
 \item[\texttt{main.cpp}] This is the main driver program to run the software.
 
@@ -265,9 +308,60 @@ We used a test fixture to initialize the same system construct for multiple test
 \end{description}
 
 \subsection{Optimizations}
-This section provides an overview of the optimizations performed in our software to lead to the final submitted version.
-\textbf{Nate will go through and list them by going through the different CPP files.}
-\section{Results}
+This section provides an overview of the optimizations performed in our software to lead to the final submitted version.  Iterative profiling was performed during development to prove these led to speed improvements, generally on the order of 5-20\% each between successive iterations.  The principle optimization tool was the use of OMP wherever possible, though intelligent C/C++ programming techniques also led to expected improvements. We outline the major optimizations employed in each file here.
+
+\begin{description}
+
+\item[\texttt{cellLists.cpp}] In order to maintain the cell and neighbor lists on the CPU efficiently we implemented a number of optimizations in the cellList\_cpu class, mostly in the cellList\_cpu::checkUpdate method which is responsible for checking whether the lists need to be updated.  Most algorithms we found in textbooks and in the literature simply state that if any pair of particles move toward each other more than the skin radius added to the cutoff radius of the potential used to build these lists, then the lists must be rebuilt.  This implies checking all pairs of particles which is an $\mathcal{O}(N^2)$ expense.  In fact, it is clear that this can be made truly $\mathcal{O}(N)$ by simply storing the positions of each atom at the time the lists are constructed, then calculating the displacement from those positions at each step. The largest two displacement magnitudes are then recorded (which does not require a full sorting of all the displacements, which is, in itself, an improvement). If one always assumes the worst possible scenario, that is, these two displacements are antiparallel, then if the sum of the displacements exceeds the skin radius, the lists should be reconstructed.  We employ this for both the CPU (cell lists) and GPU (neighbor lists) implementations.  This assumption is more restrictive than if each pair were truly calculated, especially since no assumption about the direction of each displacement is necessary, however this requires $N^2$ calculations each of which involve taking a square root which is very costly.  By making this blind, worst case scenario assumption, in fact we find that the code speeds up between 5 and 20\% depending on the system depending on the density, cutoff and skin radius, etc.
+
+On the GPU, where we implement neighbor lists, we also use some basic tricks of memory allocation to speed up the creation of the list.  As previously discussed, this must be a linear array in memory so they cane sent efficiently to the GPU.  However, since the number of neighbors changes, so does the size of each region between the green colored indices in Fig.~\ref{fig:nlist}. In fact, we preallocate a 2D array with space for each particles neighbors, into which each the list is built initially.  However, instead of simply appending each dimension every time an addition neighbor is found (beyond what was initially allocated in the 2D array), that list is doubled in size each time a new neighbor would otherwise overflow the current list.  Afterward the list is trimmed and linearized.  This dramatically reduces the number of memory operations and led to an estimated speed up of 10\%.  
+
+Such considerations were not necessary on the CPU since the ``head" and ``list" arrays (linked lists) are constant in size.  However, because of the memory operations for neighbor lists and the iterative nature of linked lists, neither list construction could be parallelized with OMP.  For true cell lists on the CPU, each cell must be linked to each of its neighbors so their constituent atoms could be compared.  Precomputing this, rather than on the fly led to another increase in speed of about 15\%.
+
+\item[\texttt{integrator.cpp}] 
+The integrator::calcForce member of the virtual base class ``integrator" calculates the pairwise forces for all atoms in the simulation.  It first calls the checkUpdate member of its private cell list to see if the list needs to be updated, then proceeds to calculate the forces by comparing all the particles in a cell with those in the neighboring cells.  The cell width (skin radius plus the potential cutoff) is such that all particles within these neighbors are the only particles that need to be compared with those in the central cell.  Thus the loop executes by going cell by cell through the list.  OMP can be exploited to parallelize this and to compute the total potential energy simultaneously by using an ``omp parallel reduction" clause.  Dynamic scheduling was found to be the fastest (marginally since the system's density was generally homogeneous) with a chunk size of 1.  Because each thread is comparing all particles in a cell to all of those in the neighboring cells, a chunk size of 1 was actually found to be optimal.  
+
+In addition, since the instantaneous accelerations of each atom is the result of a sum over all pairwise interactions, we stored the accelerations in a separate vector rather than storing them locally in each atom structure.  This is because the instantaneous accelerations would otherwise have to be set to zero initially before each integration step which becomes a significant cost once the simulation incorporates many thousand of atoms.  OMP can then be used to assign these after the loop has finished, which gave us optimal performance.  Such considerations were irrelevant in the GPU implementation.
+
+\item[\texttt{integrator.cu}] 
+The GPU functions necessary for our simulation must be compiled with NVIDIA's nvcc compiler which only recognizes .cu extensions.  As a result, we placed all the necessary functions to parallelize the force calculation in this file.  ``Device" analogs of functions that otherwise would execute on the host in the CPU version are indicated with ``dev\_" prefixes.  This includes dev\_pbcDist2, dev\_pairUF, and dev\_slj.  These include similar optimizations as applied to their CPU counterparts which are discussed in the following sections, so we will not repeat them here.  The GPU kernel ``loopOverNeighbors" is discussed in Section~\ref{sec:gpukernel} which we also neglect for the moment.  
+
+The primary ``optimizations" which we implemented in the GPU version of integrator::calcForce come simply from the use of the thrust library.  As previously discuss, thrust is a library which extend STL-like functionality from the CPU to the GPU (vectors, iterators, etc.) and most importantly, introduces the concept of scoping.  Traditionally, when before a GPU kernel is called, memory must be allocated, data sent to that location, then the kernel is executed, and memory must be deallocated afterwards.  However, with scoping, the deallocation is handled automatically preventing memory leaks.  Furthermore, the use of ``device\_vectors" automatically allocates memory on the GPU device which can be directly filled with (relatively) fast memcpy (memory copy) commands behind the scenes.
+
+Technically, the kernel cannot be invoked with a direct pointer to the host side device\_vectors so a pointer to the GPU device memory location must be used instead.  Fortunately, thrust provides a built-in function called ``thrust::raw\_pointer\_cast" which produces this automatically.  Refer to the code for examples of how this is implemented.  Following the kernel call, which computes all the forces
+on each atom, the data can be collected back on the host CPU with a simple copy command and the total potential energy can be found by using a ``thrust::reduce" call which is similar to its OMP counterpart (which also helps speed up the calculation).  We found that a block size of roughly 512 threads per block was optimal, and this is automatically set in main.cpp, though for smaller GPUs the block size is detected and checked with the help of the class (and subsequent members of) systemProps in cudaHelper.cu
+
+As will be pointed out later, our GPU code actually was not faster overall than our CPU code.  The reason is because this memory allocation and deallocation must occur at every time step in the simulation.  We did not believe this would turn out to be such as issue so we initially designed the CPU code to be commensurate with this sort of parallelization of the force calculation by separating the force calculation and integration steps into different classes.  Given more time, we suspect that one improvement would come from actually performing the integration step directly on the GPU.  However, even then the system would have to be returned to the CPU host to maintain the neighbor lists.  
+
+Highly optimized codes are actually capable of maintaining these list directly on the GPU and so do not suffer from these problems.  However, after investigation into the literature and source code of available examples~\cite{Anderson2008, Lipscomb2012} we soon realized this is very nontrivial task. One which has been the subject of a number of recent research topics and is still an active area of research in computer science.  Unfortunately, this was well beyond what we could implement in a semester project, but the reasons for our code's slow overall performance are well understood.  In fact, although the overall performance was worse due to the frequent memory operations, the force calculation itself was accelerated thanks to the GPUs as discussed later (see Section~\ref{sec:scalingstudies}).
+
+\item[\texttt{nve.cpp and nvt.cpp}] 
+Both of these integrators make straightforward, extensive use of OMP parallelization to perform the necessary calculations.  Both reductions and ``parallel for" clauses were very useful.  Dynamic scheduling with a chunk size of 100 was found to be roughly optimal in most cases, hence we defined the OMP\_CHUNK macro in common.h to reflect this, which is used by default for these loops whenever possible.
+
+\item[\texttt{potential.cpp}] 
+Two pair potentials are actually provided in this file; one is called ``pairUF" which is the potential from the last homework assignment (which was used as another test to verify our code worked properly) and the shifted Lennard-Jones (``slj").  The implementation of the latter was the primary goal of this project, however, we tested and implemented both.  Basic optimization generally apply to both cases and were a fruitful endeavor since the potential calculation constitutes a significant fraction of the overall simulation time.  After the following optimizations the total time spent in these routines dropped by about 10\% overall (see Table~\ref{tab:profiling}).  
+
+To begin, the pair potential is zero if two atoms are beyond a certain cutoff distance and require no computational effort; using the square of this to compare before any calculation is performed is actually faster since when the distances are computed (see utils.cpp) the distance function can avoid taking an expensive square root.  Furthermore, precomputing factors which are constantly reused led to increased performance.  This was particularly noticeable for cases where we replaced quotients with products, that is, replacing a division by $x$ with a multiplication by $1/x$, at least when compiling the g++ compiler.  The intel compiler (icpc) actually seemed intelligent enough to replace this automatically when optimization flags were specified at compile time and we saw no significant change, though we left the code with the hard-coded improvements anyway.  In addition, the slj function must take certain quotients to the powers of 12 and 6; replacing this with products (say x2 = x*x; x6 = x2*x2*x2; x12 = x6*x6) also led to noticeable improvements in some cases.
+
+\item[\texttt{system.cpp}] 
+This file contains the methods for the systemDefinition class.  These routines are involved in start-up and tear-down of the simulation and are not called on a regular basis except systemDefinition::writeSnapshot (which prints instantaneous snapshots of the system to a file).  As a result optimizations were not typically employed here, though we did use an OMP statement in systemDefinition::initRandom (creates a random initial condition) just to illustrate the point.  We did, however, make use of the boost library's ``normal\_distribution" to generate initial velocities according to a Maxwell-Boltzmann distribution which helps the system reach equilibrium faster during simulation.
+
+\item[\texttt{utils.cpp}] 
+The functions in this file pertain to handling the so-called ``minimum image" convention used in simulations with periodic boundaries.  The ``minimum image distance" is the distance between the two nearest periodic images of a pair of atoms.  Often the ``real distance" is initially computed by simply subtracting the two coordinates to obtain a vector, then each dimension is reduced by L*floor($dx$/L), where $dx$ is the component of the vector in a given principle cartesian direction and L is the box length in that direction.  While general, the floor function is costly and can be replicated with while loops as illustrated in the functions ``pbc" and ``pbcDist2."  In the latter function, for reasons previously discussed, we also choose to return the square (magnitude) of the minimum image distance to avoid taking a square root uneccessarily.
+
+\end{description}
+
+\subsection{The GPU Kernel}
+\label{sec:gpukernel}
+
+In the future, cache coherency sorting can be performed to improve the speed of the GPU simulations (neighbor lists).  Something already performed by HOOMD but well beyond the realm of a semester project.
+
+
+FINISH
+
+
+
+%\section{Results}
 
 \subsection{Profiling}
 
@@ -297,6 +391,7 @@ Profiling was performed on the TIGER computer cluster using gprof with a number 
 The \textbf{calcForce} function consisted of the most expensive function in the program, followed by \textbf{pbcDist2}. The function calls to the shifted lennard-jones \textbf{slj} potential and cellLists that are maintained on the CPU \textbf{cellList\_cpu}. It would be expected that the \textbf{calcForce} function utilizes the majority of the computing time and this has been observed elsewhere in MD codes. Due to the expense of this function, this function was parallelized on the GPUs.
 
 \subsection{Scaling Studies}
+\label{sec:scalingstudies}
 
 We performed several scaling studies on both the TIGER and ADROIT clusters.
 Tiger timing\_results.txt.tiger
@@ -306,25 +401,15 @@ for low numbers of particles scaling really  perform well because there is a lot
 this is expected.
 for large numbers of particles we scale and this is good.
 
+add GPU scaling here
+
+
+FINISH
+
+
 \subsection{Benchmarking and Validation against Literature Values}
 
-\textbf{WE NEED A MSD PLOT HERE}
-
-We validated our code against LAMMPS \cite{Plimpton1995} (http://lammps.sandia.gov), an existing and widely-used and tested commercial molecular dynamics software package.
-%
-We simulated a system of 4000 Lennard-Jones particles at a reduced temperature $T=0.71$.
-%
-We used a cubic box with edge length $L=16.796$, so that the reduced density of the system $\rho = 0.8442$.
-%
-We used a timestep $\Delta t=0.005$, and simulated for $10,000$ timesteps.
-
-
-We compared the temperature, potential energy, total energy, and radial distribution function for the simulations calculated in our package against LAMMPS.
-%
-The results are shown in Figure~\ref{fig:lmp_compare} and Table~\ref{table:lmp_compare}.
-%
-
-\begin{table}
+\begin{table}[H]
 \begin{centering}
 	\begin{tabular}{| r | c | c |}
 		\hline
@@ -341,6 +426,20 @@ The results are shown in Figure~\ref{fig:lmp_compare} and Table~\ref{table:lmp_c
 	\label{table:lmp_compare}
 \end{centering}
 \end{table}
+
+We validated our code against LAMMPS \cite{Plimpton1995} (http://lammps.sandia.gov), an existing and widely-used and tested commercial molecular dynamics software package.
+%
+We simulated a system of 4000 Lennard-Jones particles at a reduced temperature $T=0.71$.
+%
+We used a cubic box with edge length $L=16.796$, so that the reduced density of the system $\rho = 0.8442$.
+%
+We used a timestep $\Delta t=0.005$, and simulated for $10,000$ timesteps.
+
+
+We compared the temperature, potential energy, total energy, and radial distribution function for the simulations calculated in our package against LAMMPS.
+%
+The results are shown in Figure~\ref{fig:lmp_compare} and Table~\ref{table:lmp_compare}.
+%
 
 \begin{figure}[H]
 	\begin{subfigure}{0.5\textwidth}
@@ -359,7 +458,11 @@ The results are shown in Figure~\ref{fig:lmp_compare} and Table~\ref{table:lmp_c
 	\includegraphics[width=\textwidth]{gr_compare}
 	\caption{}
 	\end{subfigure}
-	\caption{Comparison between CBEMDGPU simulation and LAMMPS simulation for 4000 Lennard Jones particles at $T=0.71$ and $\rho=0.8442$. (a) Comparison of temperature over time. (b) Comparison of potential energy/atom over time. (c) Comparison of total energy/atom over time. (d) Comparison of radial distribution functions. }
+	\begin{subfigure}{0.5\textwidth}
+	\includegraphics[width=0.65\textwidth, angle=-90]{msd.eps}
+	\caption{}
+	\end{subfigure}
+	\caption{Comparison between CBEMDGPU simulation and LAMMPS simulation for 4000 Lennard Jones particles at $T=0.71$ and $\rho=0.8442$. (a) Comparison of temperature over time. (b) Comparison of potential energy/atom over time. (c) Comparison of total energy/atom over time. (d) Comparison of radial distribution functions. (e) Mean squared displacement of atoms over normalized time; we report results well into the diffusive regime, as evidenced by the slope of unity in log-log scale.  Anticorrelation (from collisions) following the ballistic regime are responsible for the poor fit at short times as well as the local reduced slope.}
 	\label{fig:lmp_compare}
 \end{figure}
 
@@ -367,7 +470,22 @@ There is excellent agreement between our software (CBEMDGPU) and the LAMMPS resu
 
 \subsection{Example Movie}
 To see an example movie of a short LJ fluid simulation, see the file \url{/report/movie1.mpg}.
+\begin{figure}[H]
+	\begin{center}
+    	\includegraphics[width=0.5\textwidth]{vmd_image.png}
+	\end{center}
+\end{figure}
 \section{Conclusions and Future Work}
+
+Outline what our goals were, and how we met them
+also did nve
+added other (pairUF potential)
+
+dependencies: requires boost, omp, cuds toolkits (add to read me, etc.)
+fix author tags again, clean up actual code
+verify compilation and execution before submission
+
+FINISH
 
 \pagebreak
 \bibliographystyle{proteins1}

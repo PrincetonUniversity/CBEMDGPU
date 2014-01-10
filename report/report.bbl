@@ -142,8 +142,12 @@ Swope WC, Andersen HC, Berens PH, Wilson KR. A computer simulation method for
   clusters of molecules: Application to small water clusters The Journal of
   Chemical Physics 1982;\hspace{0pt}76:637.
 
-\bibitem{plimpton1995fast}
-Plimpton S. Fast parallel algorithms for short-range molecular dynamics Journal
-  of Computational Physics 1995;\hspace{0pt}117(1):1--19.
+\bibitem{Tuckerman1992}
+Tuckerman M, Berne BJ, Martyna GJ. Reversible multiple time scale molecular
+  dynamics The Journal of chemical physics 1992;\hspace{0pt}97(3):1990.
+
+\bibitem{Lipscomb2012}
+Lipscomb TJ, Zhou A, Cho SS. Parallel verlet neighbor list algorithm for
+  gpu-optimized md simulations ACM-BCB 2012;\hspace{0pt}.
 
 \end{thebibliography}

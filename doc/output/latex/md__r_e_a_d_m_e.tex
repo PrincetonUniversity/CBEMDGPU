@@ -1,6 +1,18 @@
+\begin{quotation}
 C\-B\-E M\-D on G\-P\-Us
 
+\end{quotation}
+
+
+\begin{quotation}
+\begin{quotation}
 by Nathan A. Mahynski, George A. Khoury, and Carmeline J. Dsilva
+
+\end{quotation}
+
+
+\end{quotation}
+
 
 See \hyperlink{main_8cpp_source}{main.\-cpp} to set parameters which are documented by example in this file.
 
@@ -8,4 +20,131 @@ To compile the C\-P\-U version, type \$ make M\-D
 
 To compile the G\-P\-U version, type \$ make -\/f Makefile\-\_\-cuda
 
-To compile tests, etc., type \$ make \$\{var\} where var is the suffix desired (see Makefile for details) 
+To compile tests, type \$ make T\-E\-S\-T\-S
+
+To compile the timing executable (used for scaling studies), type \$ make T\-I\-M\-I\-N\-G
+
+To compile the program that runs a simulation to compare with L\-A\-M\-M\-P\-S output, type \$ make L\-M\-P\-\_\-\-C\-O\-M\-P\-A\-R\-E
+
+To compile the program that tests the N\-V\-E integrator, type \$ make T\-E\-S\-T\-\_\-\-N\-V\-E
+
+In the Makefile, the P\-A\-T\-H\-T\-O\-B\-O\-O\-S\-T variable should point to the diretory where the C++ boost libraries are saved.
+
+In the G\-T\-E\-S\-T\-\_\-\-D\-I\-R variable should point to the directory where the Google Tests libraries are saved.
+
+Note that the Intel C++ compilers must be used; the G\-N\-U C++ compilers do not work with the Open\-M\-P portion of our code (this is a known bug in the compiler, see F\-Y\-I section).
+
+\section*{Execution}
+
+\hyperlink{main_8cpp_source}{main.\-cpp} expects 4 input, the number of threads to use with O\-M\-P, the number of atoms, the skin radius for the cell/neighbor lists, and the number of steps to simulate. \$ ./md $<$nthreads$>$ $<$natoms$>$ $<$rs$>$ $<$nsteps$>$ $>$ log 2$>$ err
+
+This also produces a trajectory.\-xyz file which can be visualized with V\-M\-D (if you have it installed) \$ vmd -\/xyz trajectory.\-xyz
+
+\section*{Explanation of \hyperlink{main_8cpp_source}{main.\-cpp}}
+
+\begin{quotation}
+How to use, change, and make your own in 10 steps.
+
+\end{quotation}
+
+
+
+\begin{DoxyEnumerate}
+\item \hyperlink{main_8cpp_source}{main.\-cpp} expects 4 input, the number of threads to use with O\-M\-P, the number of atoms, the skin radius for the cell/neighbor lists, and the number of steps to simulate. \$ ./md $<$nthreads$>$ $<$natoms$>$ $<$rs$>$ $<$nsteps$>$ $>$ log 2$>$ err
+\end{DoxyEnumerate}
+
+
+\begin{DoxyEnumerate}
+\item The random number generator seed is then set manually to ensure that results are reproducible.
+\end{DoxyEnumerate}
+
+
+\begin{DoxyEnumerate}
+\item The user must then specify basic properties about the system. A \hyperlink{classsystem_definition}{system\-Definition} object should be instantiated and then temperature, box size, particle mass, and pair potential cutoff should be specified
+
+\$ \hyperlink{classsystem_definition}{system\-Definition} a;
+
+\$ a.\-set\-Temp(1.\-0);...
+\end{DoxyEnumerate}
+
+
+\begin{DoxyEnumerate}
+\item The system can then be initialized with the command init\-Thermal or init\-Random (see doxygen documentation for more details). For example, in the former\-:
+
+\$ a.\-init\-Thermal(n\-Atoms, Temp, rng\-Seed, separation);
+\end{DoxyEnumerate}
+
+
+\begin{DoxyEnumerate}
+\item Where \char`\"{}n\-Atoms\char`\"{} is the number of atoms, \char`\"{}separation\char`\"{} is the initial separation of the particles on the simple cubic lattice on which they are initialized, and the rest of the variables are self-\/explanatory. This command completely initializes the system for simulation.
+\end{DoxyEnumerate}
+
+
+\begin{DoxyEnumerate}
+\item Next, the pair potential should be specified. As an example in \hyperlink{main_8cpp_source}{main.\-cpp}, the preprocessor flag N\-V\-C\-C is used to select either the C\-P\-U version of the shifted lennard-\/jones potential (slj) or the G\-P\-U version (dev\-\_\-slj). The Makefile (compare to Makefile\-\_\-cuda) will define this if necessary and allows the code to flow naturally and work in both cases.
+
+\$ point\-Function\-\_\-t pp = slj;
+
+\$ a.\-set\-Potential(pp);
+\end{DoxyEnumerate}
+
+
+\begin{DoxyEnumerate}
+\item If the G\-P\-Us are used (N\-V\-C\-C compiler flag is defined) the number of threads and blocks the G\-P\-U kernel will be invoked with must be set. This is done next.
+\end{DoxyEnumerate}
+
+
+\begin{DoxyEnumerate}
+\item Then additional arguments for the pair potential must be specified. In the case of the slj function, variables epsilon, sigma, delta, and ushift must be given. This is then set in the \hyperlink{classsystem_definition}{system\-Definition}.
+
+\$ std\-::vector $<$float$>$ args(5);
+
+\$ args\mbox{[}0\mbox{]} = 1.\-0; // epsilon
+
+\$ args\mbox{[}1\mbox{]} = 1.\-0; // sigma
+
+\$ args\mbox{[}2\mbox{]} = 0.\-0; // delta
+
+\$ args\mbox{[}3\mbox{]} = 0.\-0; // ushift
+
+\$ a.\-set\-Potential\-Args(args);
+\end{DoxyEnumerate}
+
+
+\begin{DoxyEnumerate}
+\item Afterwards, the integrator (ensemble) must be specified. In the case of the N\-V\-T ensemble where we are using the Nose-\/\-Hoover thermostat, the integrator is given by the object \hyperlink{classnvt___n_h}{nvt\-\_\-\-N\-H}. This requires a damping constant, which for the slj potential should be about unity. Then the numerical timestep should be given, for the slj this is usually efficient around 0.\-005.
+
+\$ \hyperlink{classnvt___n_h}{nvt\-\_\-\-N\-H} integrate (1.\-0);
+
+\$ integrate.\-set\-Timestep(timestep);
+\end{DoxyEnumerate}
+
+
+\begin{DoxyEnumerate}
+\item Finally the simulation is ready to iterate. A simple loop can be set to do this. An example for the case of the N\-V\-E ensemble is also provided in \hyperlink{test__nve_8cpp_source}{test\-\_\-nve.\-cpp} which can be compiled with make T\-E\-S\-T\-\_\-\-N\-V\-E (see \hyperlink{test__nve_8cpp_source}{test\-\_\-nve.\-cpp})
+\end{DoxyEnumerate}
+
+\section*{F\-Y\-I}
+
+\begin{quotation}
+Known bugs, etc.
+
+\end{quotation}
+
+
+There are a few known instances of bugs related to compiler options, etc.
+
+
+\begin{DoxyEnumerate}
+\item Using icpc instead of g++ Our code uses O\-M\-P to parallelize many calculations. Specifically, the atoms member (vector) in the \hyperlink{classsystem_definition}{system\-Definition} object must be shared often. However, because it is a member of a class g++ struggles to properly share this in memory. This is a known bug in the g++ compiler which the intel (icpc) version handles rigorously. As a result, our code will produce errors if compiled with the g++ compiler when more than 1 core is used. To use this on tiger the module openmpi/intel-\/12.\-1/1.4.\-5/64 should be loaded to make the icpc compiler accessible.
+\end{DoxyEnumerate}
+
+
+\begin{DoxyEnumerate}
+\item Cuda toolkit 5.\-5 C\-U\-D\-A is a finicky tool. Different G\-P\-Us require different toolkits and versions to work properly. In fact, compilation may succeed with a bad version but the run time behavior produces unexpected (incorrect) results. For the K20 cards on tiger, the latest toolkit (v5.\-5) must be loaded. To do so, load the module cudatoolkit/5.\-5.\-22 before attempting to compile the program. The Makefile must include flags consistent with the G\-P\-Us version of C\-U\-D\-A (which on tiger in 3.\-5) so the Makefile\-\_\-cuda contains a flag \char`\"{}\-N\-V\-F\-L\-A\-G\-S = -\/gencode arch=compute\-\_\-35,code=sm\-\_\-35\char`\"{} for the .cu files. Furthermore, you will find that preprocessor flags N\-V\-C\-C and N\-O\-G\-P\-U are found throughout the code which act as switches to activate/deactivate G\-P\-U functionality throughout the compilation process.
+\end{DoxyEnumerate}
+
+
+\begin{DoxyEnumerate}
+\item Tiger G\-P\-Us Unfortunately it appears that the queueing system on tiger is having problems reserving all or some of the G\-P\-Us exclusively for single jobs by users. As a result, thrust (the G\-P\-U equivalent of the S\-T\-L for C++) will have memory issues if one or more of the G\-P\-Us on a node are already in use. Because of the unusually high load on tiger over the past month, we have been unable to obtain good results on this cluster since usually this situation is encountered. Our private G\-P\-U cluster was used to obtian our results instead, though our Makefile\-\_\-cuda is set so this should compile properly on tiger if you want to check. 
+\end{DoxyEnumerate}

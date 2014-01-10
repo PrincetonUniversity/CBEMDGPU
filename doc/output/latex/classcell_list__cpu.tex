@@ -32,12 +32,15 @@ int \hyperlink{classcell_list__cpu_a564d95c9bd7af0829291789d173361e0}{cell} (con
 
 
 \subsection{Detailed Description}
-Cell Lists \begin{DoxyDate}{Date}
+Cell Lists \begin{DoxyAuthor}{Author}
+Nathan A. Mahynski 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
 11/19/13
 \end{DoxyDate}
 Maintains a linked list to track cells on the C\-P\-U 
 
-Definition at line 38 of file cell\-List.\-h.
+Definition at line 39 of file cell\-List.\-h.
 
 
 
@@ -51,10 +54,13 @@ Definition at line 38 of file cell\-List.\-h.
 \item[{const float}]{rs}
 \end{DoxyParamCaption}
 )}}\label{classcell_list__cpu_a2ac134374c8e561617433e03bb6b2d1e}
-Cell Lists \begin{DoxyDate}{Date}
+Cell Lists \begin{DoxyAuthor}{Author}
+Nathan A. Mahynski 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
 11/19/13
 \end{DoxyDate}
-Initialize a cell list on the C\-P\-Us.
+Initialize a cell list
 
 
 \begin{DoxyParams}[1]{Parameters}
@@ -67,7 +73,7 @@ Initialize a cell list on the C\-P\-Us.
 \end{DoxyParams}
 
 
-Definition at line 154 of file cell\-List.\-cpp.
+Definition at line 156 of file cell\-List.\-cpp.
 
 
 
@@ -77,13 +83,13 @@ References n\-Cells.
 \begin{DoxyCode}
                                                                              \{
     \textcolor{keywordflow}{if} (rc < 0.0) \{
-        \textcolor{keywordflow}{throw} \hyperlink{classcustom_exception}{customException}(\textcolor{stringliteral}{"Cutoff radius must be > 0"});
-        \textcolor{keywordflow}{return};
+    \textcolor{keywordflow}{throw} \hyperlink{classcustom_exception}{customException}(\textcolor{stringliteral}{"Cutoff radius must be > 0"});
+    \textcolor{keywordflow}{return};
     \}
     rc\_ = rc;
     \textcolor{keywordflow}{if} (rs < 0.0) \{
-        \textcolor{keywordflow}{throw} \hyperlink{classcustom_exception}{customException}(\textcolor{stringliteral}{"Skin radius must be > 0"});
-        \textcolor{keywordflow}{return};
+    \textcolor{keywordflow}{throw} \hyperlink{classcustom_exception}{customException}(\textcolor{stringliteral}{"Skin radius must be > 0"});
+    \textcolor{keywordflow}{return};
     \}
     rs\_ = rs;
 
@@ -103,40 +109,40 @@ References n\-Cells.
     lcell\_.z = (box.z/\hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.z);
 
     \textcolor{keywordflow}{if} (lcell\_.x <= (rc+rs) || lcell\_.y <= (rc+rs) || lcell\_.z < (rc+rs)) \{
-        \textcolor{keywordflow}{throw} \hyperlink{classcustom_exception}{customException}(\textcolor{stringliteral}{"Cell width must exceed sum of
-       cutoff and skin radius"});
-        \textcolor{keywordflow}{return};
+    \textcolor{keywordflow}{throw} \hyperlink{classcustom_exception}{customException}(\textcolor{stringliteral}{"Cell width must exceed sum of cutoff
+       and skin radius"});
+    \textcolor{keywordflow}{return};
     \}
 
     \textcolor{keywordflow}{if} (lcell\_.x < 1) \{
-        \textcolor{keywordflow}{throw} \hyperlink{classcustom_exception}{customException} (\textcolor{stringliteral}{"Box dimension x too small
-       relative to skin and cutoff radius to use cell lists"});
-        \textcolor{keywordflow}{return};
+    \textcolor{keywordflow}{throw} \hyperlink{classcustom_exception}{customException} (\textcolor{stringliteral}{"Box dimension x too small relative
+       to skin and cutoff radius to use cell lists"});
+    \textcolor{keywordflow}{return};
     \}
     \textcolor{keywordflow}{if} (lcell\_.y < 1) \{
-        \textcolor{keywordflow}{throw} \hyperlink{classcustom_exception}{customException} (\textcolor{stringliteral}{"Box dimension y too small
-       relative to skin and cutoff radius to use cell lists"});
-        \textcolor{keywordflow}{return};
+    \textcolor{keywordflow}{throw} \hyperlink{classcustom_exception}{customException} (\textcolor{stringliteral}{"Box dimension y too small relative
+       to skin and cutoff radius to use cell lists"});
+    \textcolor{keywordflow}{return};
     \}
     \textcolor{keywordflow}{if} (lcell\_.z < 1) \{
-        \textcolor{keywordflow}{throw} \hyperlink{classcustom_exception}{customException} (\textcolor{stringliteral}{"Box dimension z too small
-       relative to skin and cutoff radius to use cell lists"});
-        \textcolor{keywordflow}{return};
+    \textcolor{keywordflow}{throw} \hyperlink{classcustom_exception}{customException} (\textcolor{stringliteral}{"Box dimension z too small relative
+       to skin and cutoff radius to use cell lists"});
+    \textcolor{keywordflow}{return};
     \}
 
     \textcolor{keywordflow}{if} (\hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.x < 3 || \hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.y < 3 || \hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.z < 3) \{
-        \textcolor{keywordflow}{throw} \hyperlink{classcustom_exception}{customException}(\textcolor{stringliteral}{"Must be able to have at least 3
-       cells in each direction, change box size, skin, or cutoff radius"});
-        \textcolor{keywordflow}{return};
+    \textcolor{keywordflow}{throw} \hyperlink{classcustom_exception}{customException}(\textcolor{stringliteral}{"Must be able to have at least 3 cells
+       in each direction, change box size, skin, or cutoff radius"});
+    \textcolor{keywordflow}{return};
     \}
 
     \textcolor{keywordflow}{try} \{
-        head\_.resize(\hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.x*\hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.y*\hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.z, -1);
+    head\_.resize(\hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.x*\hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.y*\hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.z, -1);
     \} \textcolor{keywordflow}{catch} (std::exception &e) \{
-        std::cerr << e.what() << std::endl;
-        \textcolor{keywordflow}{throw} \hyperlink{classcustom_exception}{customException} (\textcolor{stringliteral}{"Unable to initialize head for
-       cell list"});
-        \textcolor{keywordflow}{return};
+    std::cerr << e.what() << std::endl;
+    \textcolor{keywordflow}{throw} \hyperlink{classcustom_exception}{customException} (\textcolor{stringliteral}{"Unable to initialize head for cell
+       list"});
+    \textcolor{keywordflow}{return};
     \}
     \textcolor{comment}{// build neighbors for each cell}
     neighbor\_.resize(\hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.x*\hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.y*\hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.z);
@@ -148,31 +154,31 @@ References n\-Cells.
         \textcolor{keyword}{const} \textcolor{keywordtype}{int} xref = floor(cellID - zref*(\hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.x*\hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.y) - 
       yref*\hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.x);
         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} dx = -1; dx <= 1; ++dx) \{
-            \textcolor{keywordtype}{int} xcell = xref + dx;
-            \textcolor{keywordflow}{if} (xcell >= \hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.x) xcell = 0;
-            \textcolor{keywordflow}{if} (xcell < 0) xcell = \hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.x-1;
-            \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} dy = -1; dy <= 1; ++dy) \{
-                \textcolor{keywordtype}{int} ycell = yref + dy;
-                \textcolor{keywordflow}{if} (ycell >= \hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.y) ycell = 0;
-                \textcolor{keywordflow}{if} (ycell < 0) ycell = \hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.y-1;
-                \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} dz = -1; dz <= 1; ++dz) \{
-                    \textcolor{keywordtype}{int} zcell = zref + dz;
-                    \textcolor{keywordflow}{if} (zcell >= \hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.z) zcell = 0;
-                    \textcolor{keywordflow}{if} (zcell < 0) zcell = \hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.z-1;
-                    \textcolor{keyword}{const} \textcolor{keywordtype}{int} cellID2 = xcell + ycell*\hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.x + zcell*(
-      \hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.x*\hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.y);
-                    neighbor\_[cellID].push\_back(cellID2);
-                \}
+        \textcolor{keywordtype}{int} xcell = xref + dx;
+        \textcolor{keywordflow}{if} (xcell >= \hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.x) xcell = 0;
+        \textcolor{keywordflow}{if} (xcell < 0) xcell = \hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.x-1;
+        \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} dy = -1; dy <= 1; ++dy) \{
+            \textcolor{keywordtype}{int} ycell = yref + dy;
+            \textcolor{keywordflow}{if} (ycell >= \hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.y) ycell = 0;
+            \textcolor{keywordflow}{if} (ycell < 0) ycell = \hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.y-1;
+            \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} dz = -1; dz <= 1; ++dz) \{
+            \textcolor{keywordtype}{int} zcell = zref + dz;
+            \textcolor{keywordflow}{if} (zcell >= \hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.z) zcell = 0;
+            \textcolor{keywordflow}{if} (zcell < 0) zcell = \hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.z-1;
+            \textcolor{keyword}{const} \textcolor{keywordtype}{int} cellID2 = xcell + ycell*\hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.x + zcell*(\hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}
+      .x*\hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.y);
+            neighbor\_[cellID].push\_back(cellID2);
             \}
+        \}
         \}
     \}
     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} cellID = 0; cellID < \hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.x*\hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}.y*\hyperlink{classcell_list__cpu_ae86e1c9604a39bc8a493fa0f6538fd37}{nCells}
       .z; ++cellID) \{
     \textcolor{keywordflow}{if} (neighbor\_[cellID].size() != 27) \{
-            \textcolor{keywordflow}{throw} \hyperlink{classcustom_exception}{customException} (\textcolor{stringliteral}{"Cell list initial build
-       failed to find 27 neighbors (including self)"});
-            \textcolor{keywordflow}{return};
-        \}
+        \textcolor{keywordflow}{throw} \hyperlink{classcustom_exception}{customException} (\textcolor{stringliteral}{"Cell list initial build failed
+       to find 27 neighbors (including self)"});
+        \textcolor{keywordflow}{return};
+    \}
     \}
 \}
 \end{DoxyCode}
@@ -202,7 +208,7 @@ cell
 \end{DoxyReturn}
 
 
-Definition at line 250 of file cell\-List.\-cpp.
+Definition at line 252 of file cell\-List.\-cpp.
 
 
 
@@ -242,7 +248,7 @@ Checks to see if the cell list needs to be updated and if so, rebuilds Uses link
 \end{DoxyParams}
 
 
-Definition at line 264 of file cell\-List.\-cpp.
+Definition at line 266 of file cell\-List.\-cpp.
 
 
 
@@ -307,12 +313,12 @@ Referenced by integrator\-::calc\-Force().
         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i = 0; i < head\_.size(); ++i) \{
             head\_[i] = -1;
         \}
-        \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i = 0; i < sys.\hyperlink{classsystem_definition_ae8d3c2df2d56241cee03fcc4e2026ae0}{numAtoms}(); ++i) \{
-            \textcolor{keyword}{const} \textcolor{keywordtype}{int} icell = \hyperlink{classcell_list__cpu_a564d95c9bd7af0829291789d173361e0}{cell}(sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].pos);
-            list\_[i] = head\_[icell];
-            head\_[icell] = i;
-            posAtLastBuild\_[i] = sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].pos;
-        \}
+            \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i = 0; i < sys.\hyperlink{classsystem_definition_ae8d3c2df2d56241cee03fcc4e2026ae0}{numAtoms}(); ++i) \{
+                \textcolor{keyword}{const} \textcolor{keywordtype}{int} icell = \hyperlink{classcell_list__cpu_a564d95c9bd7af0829291789d173361e0}{cell}(sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].pos);
+                list\_[i] = head\_[icell];
+                head\_[icell] = i;
+                posAtLastBuild\_[i] = sys.\hyperlink{classsystem_definition_ae8814d3f60fc1111af2a3f218a4bfcab}{atoms}[i].pos;
+            \}
     \} 
 
     \textcolor{keywordflow}{return};

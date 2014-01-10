@@ -46,23 +46,42 @@
 \newlabel{subsec:integrator}{{2.1}{3}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Thermostats}{4}}
 \newlabel{subsec:thermostat}{{2.2}{4}}
+\citation{Tuckerman1992}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Pair potentials}{6}}
 \newlabel{subsec:potential}{{2.3}{6}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Parallelization}{6}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.5}Neighbor lists}{6}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.6}Testing}{6}}
-\@writefile{toc}{\contentsline {section}{\numberline {3}Code Structure and Implementation Notes}{7}}
-\citation{plimpton1995fast}
-\@writefile{toc}{\contentsline {section}{\numberline {4}Results}{8}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Scaling studies}{8}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Benchmarking}{8}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Validation against literature values}{8}}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Comparison of average thermodynamic quantities for CBEMD and LAMMPS simulations.\relax }}{9}}
-\newlabel{table:lmp_compare}{{1}{9}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Comparison between CBEMD simulation and LAMMPS simulation for 4000 Lennard Jones particles at $T=0.71$ and $\rho =0.8442$. (a) Comparison of temperature over time. (b) Comparison of potential energy/atom over time. (c) Comparison of total energy/atom over time. (d) Comparison of radial distribution functions. \relax }}{9}}
-\newlabel{fig:lmp_compare}{{2}{9}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Image from VMD}{10}}
-\@writefile{toc}{\contentsline {section}{\numberline {5}Conclusions and Future Work}{10}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.4.1}CUDA}{7}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces CUDA layout and how the host CPU communicates information to the GPU when a kernel is invoked. (Adapted from http://geco.mines.edu/tesla/cuda\_tutorial\_mio/)\relax }}{8}}
+\newlabel{fig:cuda}{{2}{8}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5}Cell Lists}{9}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Schematic of how our implemented cell lists work for the case of 9 atoms in 10 total cells, of which only cells 1 and 2 contain particles.\relax }}{10}}
+\newlabel{fig:cell}{{3}{10}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.6}Neighbor Lists}{10}}
+\citation{Anderson2008}
+\citation{Lipscomb2012}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Schematic of how our implemented neighbor lists work. Above is a depiction of nlist, while nlist\_index contains the indices of the green cells.\relax }}{11}}
+\newlabel{fig:nlist}{{4}{11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.7}Testing}{11}}
+\citation{Plimpton1995}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Code Structure and Implementation Notes}{12}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Optimizations}{13}}
+\citation{Anderson2008}
+\citation{Lipscomb2012}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}The GPU Kernel}{18}}
+\newlabel{sec:gpukernel}{{3.2}{18}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Profiling}{18}}
+\citation{Plimpton1995}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces table son\relax }}{19}}
+\newlabel{tab:profiling}{{1}{19}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Scaling Studies}{19}}
+\newlabel{sec:scalingstudies}{{3.4}{19}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}Benchmarking and Validation against Literature Values}{19}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Comparison of average thermodynamic quantities for CBEMDGPU and LAMMPS simulations.\relax }}{19}}
+\newlabel{table:lmp_compare}{{2}{19}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Comparison between CBEMDGPU simulation and LAMMPS simulation for 4000 Lennard Jones particles at $T=0.71$ and $\rho =0.8442$. (a) Comparison of temperature over time. (b) Comparison of potential energy/atom over time. (c) Comparison of total energy/atom over time. (d) Comparison of radial distribution functions. (e) Mean squared displacement of atoms over normalized time; we report results well into the diffusive regime, as evidenced by the slope of unity in log-log scale. Anticorrelation (from collisions) following the ballistic regime are responsible for the poor fit at short times as well as the local reduced slope.\relax }}{21}}
+\newlabel{fig:lmp_compare}{{5}{21}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6}Example Movie}{22}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Conclusions and Future Work}{22}}
 \bibstyle{proteins1}
 \bibdata{references}
 \bibcite{Karplus2002}{1}
@@ -93,4 +112,5 @@
 \bibcite{Rahman1964}{26}
 \bibcite{Debenedetti2001}{27}
 \bibcite{Swope1982}{28}
-\bibcite{plimpton1995fast}{29}
+\bibcite{Tuckerman1992}{29}
+\bibcite{Lipscomb2012}{30}

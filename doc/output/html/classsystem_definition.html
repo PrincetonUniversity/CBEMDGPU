@@ -204,9 +204,10 @@ std::vector&lt; <a class="el" href="structatom.html">atom</a> &gt;&#160;</td><td
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Contains all information pertaining to a system being simulated. </p>
 <p>System definition </p>
+<dl class="section author"><dt>Author</dt><dd>Nathan A. Mahynski </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>11/17/13 </dd></dl>
 
-<p>Definition at line <a class="el" href="system_8h_source.html#l00016">16</a> of file <a class="el" href="system_8h_source.html">system.h</a>.</p>
+<p>Definition at line <a class="el" href="system_8h_source.html#l00017">17</a> of file <a class="el" href="system_8h_source.html">system.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="ae9db403f9fe40c07afe541187c2e61b5"></a>
 <div class="memitem">
@@ -240,9 +241,9 @@ std::vector&lt; <a class="el" href="structatom.html">atom</a> &gt;&#160;</td><td
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="system_8cpp_source.html#l00031">31</a> of file <a class="el" href="system_8cpp_source.html">system.cpp</a>.</p>
+<p>Definition at line <a class="el" href="system_8cpp_source.html#l00037">37</a> of file <a class="el" href="system_8cpp_source.html">system.cpp</a>.</p>
 
-<p>References <a class="el" href="system_8h_source.html#l00050">atoms</a>.</p>
+<p>References <a class="el" href="system_8h_source.html#l00051">atoms</a>.</p>
 <div class="fragment"><div class="line">                                                                 {</div>
 <div class="line">    <a class="code" href="structfloat3.html" title="3 floating point numbers, same as defined for GPUs">float3</a> totMomentum;</div>
 <div class="line">    totMomentum.x = 0; totMomentum.y = 0; totMomentum.z = 0;</div>
@@ -256,9 +257,9 @@ std::vector&lt; <a class="el" href="structatom.html">atom</a> &gt;&#160;</td><td
 <div class="line">    <span class="keywordtype">int</span> chunk = OMP_CHUNK;</div>
 <div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i;</div>
 <div class="line">    <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>.resize(N);</div>
-<div class="line"><span class="preprocessor">    #pragma omp parallel private(i)</span></div>
+<div class="line"><span class="preprocessor">#pragma omp parallel private(i)</span></div>
 <div class="line"><span class="preprocessor"></span>    {</div>
-<div class="line"><span class="preprocessor">    #pragma omp for schedule(dynamic, chunk)</span></div>
+<div class="line"><span class="preprocessor">#pragma omp for schedule(dynamic, chunk)</span></div>
 <div class="line"><span class="preprocessor"></span>    <span class="keywordflow">for</span> (i = 0; i &lt; N; ++i) {</div>
 <div class="line">        <span class="keywordflow">if</span> (i &lt; N-1) {</div>
 <div class="line">            <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.x = (RNG-0.5);</div>
@@ -328,16 +329,16 @@ std::vector&lt; <a class="el" href="structatom.html">atom</a> &gt;&#160;</td><td
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="system_8cpp_source.html#l00077">77</a> of file <a class="el" href="system_8cpp_source.html">system.cpp</a>.</p>
+<p>Definition at line <a class="el" href="system_8cpp_source.html#l00083">83</a> of file <a class="el" href="system_8cpp_source.html">system.cpp</a>.</p>
 
-<p>References <a class="el" href="system_8h_source.html#l00050">atoms</a>.</p>
+<p>References <a class="el" href="system_8h_source.html#l00051">atoms</a>.</p>
 <div class="fragment"><div class="line">                                                                                                    {</div>
 <div class="line">    <a class="code" href="structfloat3.html" title="3 floating point numbers, same as defined for GPUs">float3</a> totMomentum;</div>
 <div class="line">    totMomentum.x = 0; totMomentum.y = 0; totMomentum.z = 0;</div>
 <div class="line"></div>
 <div class="line">    <span class="keywordflow">if</span> (N &lt; 1) {</div>
-<div class="line">        <span class="keywordflow">throw</span> <a class="code" href="classcustom_exception.html" title="Error reporting.">customException</a> (<span class="stringliteral">&quot;N must be &gt; 0&quot;</span>);</div>
-<div class="line">        <span class="keywordflow">return</span>;</div>
+<div class="line">    <span class="keywordflow">throw</span> <a class="code" href="classcustom_exception.html" title="Error reporting.">customException</a> (<span class="stringliteral">&quot;N must be &gt; 0&quot;</span>);</div>
+<div class="line">    <span class="keywordflow">return</span>;</div>
 <div class="line">    }</div>
 <div class="line"></div>
 <div class="line">    srand(rngSeed);</div>
@@ -373,24 +374,23 @@ std::vector&lt; <a class="el" href="structatom.html">atom</a> &gt;&#160;</td><td
 <div class="line">            }</div>
 <div class="line">        }</div>
 <div class="line">    }</div>
-<div class="line">    </div>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i = 0; i &lt; N; ++i) {</div>
-<div class="line">        <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].acc.x = 0;</div>
-<div class="line">        <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].acc.y = 0;</div>
-<div class="line">        <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].acc.z = 0;</div>
-<div class="line">        <span class="keywordflow">if</span> (i &lt; N-1) {</div>
-<div class="line">            <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.x = distribution(eng);</div>
-<div class="line">            <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.y = distribution(eng);</div>
-<div class="line">            <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.z = distribution(eng);</div>
-<div class="line">            totMomentum.x += <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.x;</div>
-<div class="line">            totMomentum.y += <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.y;</div>
-<div class="line">            totMomentum.z += <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.z;</div>
-<div class="line">        } <span class="keywordflow">else</span> {</div>
-<div class="line">            <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.x = -totMomentum.x;</div>
-<div class="line">            <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.y = -totMomentum.y;</div>
-<div class="line">            <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.z = -totMomentum.z;</div>
-<div class="line">        }</div>
-<div class="line">        tmpT += (<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.x*<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.x + <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.y*<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.y + <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.z*<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.z);</div>
+<div class="line">    <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].acc.x = 0;</div>
+<div class="line">    <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].acc.y = 0;</div>
+<div class="line">    <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].acc.z = 0;</div>
+<div class="line">    <span class="keywordflow">if</span> (i &lt; N-1) {</div>
+<div class="line">        <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.x = distribution(eng);</div>
+<div class="line">        <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.y = distribution(eng);</div>
+<div class="line">        <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.z = distribution(eng);</div>
+<div class="line">        totMomentum.x += <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.x;</div>
+<div class="line">        totMomentum.y += <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.y;</div>
+<div class="line">        totMomentum.z += <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.z;</div>
+<div class="line">    } <span class="keywordflow">else</span> {</div>
+<div class="line">        <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.x = -totMomentum.x;</div>
+<div class="line">        <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.y = -totMomentum.y;</div>
+<div class="line">        <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.z = -totMomentum.z;</div>
+<div class="line">    }</div>
+<div class="line">    tmpT += (<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.x*<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.x + <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.y*<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.y + <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.z*<a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.z);</div>
 <div class="line">    }</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">// do velocity rescaling to get exactly the right T</span></div>
@@ -398,9 +398,9 @@ std::vector&lt; <a class="el" href="structatom.html">atom</a> &gt;&#160;</td><td
 <div class="line">    tmpT /= Tset;</div>
 <div class="line">    tmpT = 1.0/tmpT;</div>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i = 0; i &lt; N; i ++ ) {</div>
-<div class="line">        <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.x = <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.x*sqrt(tmpT);</div>
-<div class="line">        <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.y = <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.y*sqrt(tmpT);</div>
-<div class="line">        <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.z = <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.z*sqrt(tmpT);</div>
+<div class="line">    <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.x = <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.x*sqrt(tmpT);</div>
+<div class="line">    <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.y = <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.y*sqrt(tmpT);</div>
+<div class="line">    <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.z = <a class="code" href="classsystem_definition.html#ae8814d3f60fc1111af2a3f218a4bfcab" title="Vector of atoms in the system.">atoms</a>[i].vel.z*sqrt(tmpT);</div>
 <div class="line">    }</div>
 <div class="line">}</div>
 </div><!-- fragment -->
@@ -429,11 +429,16 @@ std::vector&lt; <a class="el" href="structatom.html">atom</a> &gt;&#160;</td><td
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="system_8cpp_source.html#l00020">20</a> of file <a class="el" href="system_8cpp_source.html">system.cpp</a>.</p>
+<p>Definition at line <a class="el" href="system_8cpp_source.html#l00021">21</a> of file <a class="el" href="system_8cpp_source.html">system.cpp</a>.</p>
 
-<p>References <a class="el" href="system_8h_source.html#l00048">potential</a>.</p>
+<p>References <a class="el" href="system_8h_source.html#l00049">potential</a>.</p>
 <div class="fragment"><div class="line">                                                       {</div>
+<div class="line"><span class="comment">/*#ifdef NVCC</span></div>
+<div class="line"><span class="comment">    dev_potential = pp;</span></div>
+<div class="line"><span class="comment">    cudaMemcpyFromSymbol(&amp;potential, dev_potential, sizeof(pointFunction_t));</span></div>
+<div class="line"><span class="comment">#else*/</span></div>
 <div class="line">    <a class="code" href="classsystem_definition.html#a4861989c8ca1ddef7ec521499453df3f" title="Pointer to pair potential function.">potential</a> = pp;</div>
+<div class="line"><span class="comment">//#endif</span></div>
 <div class="line">}</div>
 </div><!-- fragment -->
 </div>
@@ -454,9 +459,9 @@ std::vector&lt; <a class="el" href="structatom.html">atom</a> &gt;&#160;</td><td
 <p>Print a snapshot of the system. </p>
 <p>Write instantaneous snapshot of the system to a file called "trajectory.xyz" This file is appended not overwritten consecutively. </p>
 
-<p>Definition at line <a class="el" href="system_8cpp_source.html#l00154">154</a> of file <a class="el" href="system_8cpp_source.html">system.cpp</a>.</p>
+<p>Definition at line <a class="el" href="system_8cpp_source.html#l00159">159</a> of file <a class="el" href="system_8cpp_source.html">system.cpp</a>.</p>
 
-<p>References <a class="el" href="system_8h_source.html#l00050">atoms</a>.</p>
+<p>References <a class="el" href="system_8h_source.html#l00051">atoms</a>.</p>
 <div class="fragment"><div class="line">                                      {</div>
 <div class="line">    <span class="keyword">static</span> <span class="keywordtype">int</span> snapNum = 0;</div>
 <div class="line">    <span class="keywordflow">if</span> (snapFile_ == NULL) {</div>
@@ -481,7 +486,7 @@ std::vector&lt; <a class="el" href="structatom.html">atom</a> &gt;&#160;</td><td
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jan 4 2014 19:08:05 for Parallel Molecular Dynamics with a Time-Reversible Nose-Hoover Thermostat on CPUs and GPUs by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jan 10 2014 10:22:58 for Parallel Molecular Dynamics with a Time-Reversible Nose-Hoover Thermostat on CPUs and GPUs by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

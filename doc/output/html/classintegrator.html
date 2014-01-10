@@ -143,9 +143,10 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base class for integrators such as NVT (Nose-Hoover) or NVE ensembles. </p>
 <p>Integrator </p>
+<dl class="section author"><dt>Author</dt><dd>Nathan A. Mahynski </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>11/17/13 </dd></dl>
 
-<p>Definition at line <a class="el" href="integrator_8h_source.html#l00014">14</a> of file <a class="el" href="integrator_8h_source.html">integrator.h</a>.</p>
+<p>Definition at line <a class="el" href="integrator_8h_source.html#l00015">15</a> of file <a class="el" href="integrator_8h_source.html">integrator.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="ad630bf7c9b7339fa34f36fe43b0d9e3c"></a>
 <div class="memitem">
@@ -163,6 +164,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 
 <p>Calculate the forces on each atom. </p>
 <p>Integration </p>
+<dl class="section author"><dt>Author</dt><dd>Nathan A. Mahynski </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>11/19/13</dd></dl>
 <p>Calculate the pairwise forces in a system. This also calculates the potential energy of a system. The kinetic energy is calculated during the verlet integration.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -172,11 +174,11 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="integrator_8cpp_source.html#l00022">22</a> of file <a class="el" href="integrator_8cpp_source.html">integrator.cpp</a>.</p>
+<p>Definition at line <a class="el" href="integrator_8cpp_source.html#l00023">23</a> of file <a class="el" href="integrator_8cpp_source.html">integrator.cpp</a>.</p>
 
-<p>References <a class="el" href="system_8h_source.html#l00050">systemDefinition::atoms</a>, <a class="el" href="system_8h_source.html#l00029">systemDefinition::box()</a>, <a class="el" href="cell_list_8cpp_source.html#l00264">cellList_cpu::checkUpdate()</a>, <a class="el" href="integrator_8h_source.html#l00021">cl_</a>, <a class="el" href="cell_list_8h_source.html#l00045">cellList_cpu::head()</a>, <a class="el" href="cell_list_8h_source.html#l00046">cellList_cpu::list()</a>, <a class="el" href="system_8h_source.html#l00032">systemDefinition::mass()</a>, <a class="el" href="cell_list_8h_source.html#l00047">cellList_cpu::nCells</a>, <a class="el" href="cell_list_8h_source.html#l00048">cellList_cpu::neighbors()</a>, <a class="el" href="system_8h_source.html#l00040">systemDefinition::numAtoms()</a>, <a class="el" href="system_8h_source.html#l00048">systemDefinition::potential</a>, <a class="el" href="system_8h_source.html#l00042">systemDefinition::potentialArgs()</a>, <a class="el" href="system_8h_source.html#l00038">systemDefinition::rcut()</a>, and <a class="el" href="system_8h_source.html#l00034">systemDefinition::setPotE()</a>.</p>
+<p>References <a class="el" href="system_8h_source.html#l00051">systemDefinition::atoms</a>, <a class="el" href="system_8h_source.html#l00030">systemDefinition::box()</a>, <a class="el" href="cell_list_8cpp_source.html#l00266">cellList_cpu::checkUpdate()</a>, <a class="el" href="integrator_8h_source.html#l00022">cl_</a>, <a class="el" href="cell_list_8h_source.html#l00046">cellList_cpu::head()</a>, <a class="el" href="cell_list_8h_source.html#l00047">cellList_cpu::list()</a>, <a class="el" href="system_8h_source.html#l00033">systemDefinition::mass()</a>, <a class="el" href="cell_list_8h_source.html#l00048">cellList_cpu::nCells</a>, <a class="el" href="cell_list_8h_source.html#l00049">cellList_cpu::neighbors()</a>, <a class="el" href="system_8h_source.html#l00041">systemDefinition::numAtoms()</a>, <a class="el" href="system_8h_source.html#l00049">systemDefinition::potential</a>, <a class="el" href="system_8h_source.html#l00043">systemDefinition::potentialArgs()</a>, <a class="el" href="system_8h_source.html#l00039">systemDefinition::rcut()</a>, and <a class="el" href="system_8h_source.html#l00035">systemDefinition::setPotE()</a>.</p>
 
-<p>Referenced by <a class="el" href="nve_8cpp_source.html#l00022">nve::step()</a>, and <a class="el" href="nvt_8cpp_source.html#l00032">nvt_NH::step()</a>.</p>
+<p>Referenced by <a class="el" href="nve_8cpp_source.html#l00023">nve::step()</a>, and <a class="el" href="nvt_8cpp_source.html#l00032">nvt_NH::step()</a>.</p>
 <div class="fragment"><div class="line">                                                 {</div>
 <div class="line">    <span class="comment">// For cache coeherency allocate new space for calculations</span></div>
 <div class="line">    <a class="code" href="structfloat3.html" title="3 floating point numbers, same as defined for GPUs">float3</a> empty;</div>
@@ -193,7 +195,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <div class="line">    </div>
 <div class="line">    <span class="comment">// traverse cell list and calculate total system potential energy </span></div>
 <div class="line">    std::vector &lt;float&gt; args = sys.<a class="code" href="classsystem_definition.html#ab20c0c30e84fccdf15f54c155d25420f" title="Report additional arguments to the pair potential function.">potentialArgs</a>();</div>
-<div class="line"><span class="preprocessor">    #pragma omp parallel for reduction(+:Up) schedule(dynamic, 1)</span></div>
+<div class="line"><span class="preprocessor">#pragma omp parallel for reduction(+:Up) schedule(dynamic, 1)</span></div>
 <div class="line"><span class="preprocessor"></span>    <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> cellID = 0; cellID &lt; <a class="code" href="classintegrator.html#ad1f7813c9cf3c31898aa7d78fc22232a" title="Cell or neighbor list.">cl_</a>.<a class="code" href="classcell_list__cpu.html#ae86e1c9604a39bc8a493fa0f6538fd37" title="Number of cells in each direction.">nCells</a>.x*<a class="code" href="classintegrator.html#ad1f7813c9cf3c31898aa7d78fc22232a" title="Cell or neighbor list.">cl_</a>.<a class="code" href="classcell_list__cpu.html#ae86e1c9604a39bc8a493fa0f6538fd37" title="Number of cells in each direction.">nCells</a>.y*<a class="code" href="classintegrator.html#ad1f7813c9cf3c31898aa7d78fc22232a" title="Cell or neighbor list.">cl_</a>.<a class="code" href="classcell_list__cpu.html#ae86e1c9604a39bc8a493fa0f6538fd37" title="Number of cells in each direction.">nCells</a>.z; ++cellID) {</div>
 <div class="line">        <span class="keywordtype">int</span> atom1 = <a class="code" href="classintegrator.html#ad1f7813c9cf3c31898aa7d78fc22232a" title="Cell or neighbor list.">cl_</a>.<a class="code" href="classcell_list__cpu.html#a0769d2a8a9c6964a8c6894bab9841e71" title="Return the first atom (aka &#39;head&#39;) of each cell.">head</a>(cellID);</div>
 <div class="line">        <span class="keywordflow">while</span> (atom1 &gt;= 0) {</div>
@@ -240,7 +242,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jan 4 2014 19:08:04 for Parallel Molecular Dynamics with a Time-Reversible Nose-Hoover Thermostat on CPUs and GPUs by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jan 10 2014 10:22:58 for Parallel Molecular Dynamics with a Time-Reversible Nose-Hoover Thermostat on CPUs and GPUs by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>
