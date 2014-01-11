@@ -120,7 +120,7 @@ __global__ void loopOverNeighbors (atom* dev_atoms, int* nlist, int* nlist_index
 	
 	if (tid < *natoms) {
 		float Up = 0.0;
-		const int nn = nlist_index[tid]; // number of neighbors
+		const int start = nlist_index[tid];
 		
 		// choose the potential function
 		pointFunction_t pFunc;
@@ -136,7 +136,7 @@ __global__ void loopOverNeighbors (atom* dev_atoms, int* nlist, int* nlist_index
 		myforce.z = 0;
 
 		// loop over this atom's neighbors
-		for (unsigned int i = nlist_index[tid]+1; i < nlist_index[tid]+1+nn; ++i) {
+		for (unsigned int i = start+1; i < start+1+nlist[start]; ++i) {
 			// compute potential between dev_atoms[nlist[i]] and dev_atoms[tid]
 			float3 dummyForce;
 			Up += pFunc (&dev_atoms[nlist[i]].pos, &dev_atoms[tid].pos, &dummyForce, box, args, rcut);

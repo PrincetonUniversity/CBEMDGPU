@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.7.3)  10 JAN 2014 10:22
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.7.3)  11 JAN 2014 11:52
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -385,26 +385,170 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <17.28> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 19.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 28.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 22.
+
+
+LaTeX Warning: Citation `Karplus2002' on page 1 undefined on input line 22.
+
+
+LaTeX Warning: Citation `Levitt2001' on page 1 undefined on input line 22.
+
+
+LaTeX Warning: Citation `Jorgensen2004' on page 1 undefined on input line 24.
+
+
+LaTeX Warning: Citation `Duan1998' on page 1 undefined on input line 24.
+
+
+LaTeX Warning: Citation `Shaw2010' on page 1 undefined on input line 24.
+
+
+LaTeX Warning: Citation `Piana2013' on page 1 undefined on input line 24.
+
+
+LaTeX Warning: Citation `Lindorff-Larsen2011' on page 1 undefined on input line
+ 24.
+
+
+LaTeX Warning: Citation `Boero1998' on page 1 undefined on input line 24.
+
+
+LaTeX Warning: Citation `Zipoli2010' on page 1 undefined on input line 24.
+
+
+LaTeX Warning: Citation `Karplus1979' on page 1 undefined on input line 26.
+
+
+LaTeX Warning: Citation `Kohlhoff2014' on page 1 undefined on input line 26.
+
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 28.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 28.
+
+LaTeX Warning: Reference `fig:mdfigure' on page 1 undefined on input line 34.
 
 <mdfigure.png, id=1, 518.8986pt x 256.7994pt>
 File: mdfigure.png Graphic file (type png)
  <use mdfigure.png>
 Package pdftex.def Info: mdfigure.png used on input line 38.
 (pdftex.def)             Requested size: 253.49762pt x 125.45271pt.
- [1
 
-{/usr/local/texlive/2011/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2 <./m
-dfigure.png>] [3]
+
+LaTeX Warning: Citation `Plimpton1995' on page 1 undefined on input line 45.
+
+
+LaTeX Warning: Citation `Case2010' on page 1 undefined on input line 45.
+
+
+LaTeX Warning: Citation `MacKerell1998' on page 1 undefined on input line 45.
+
+
+LaTeX Warning: Citation `Scott1999' on page 1 undefined on input line 45.
+
+
+LaTeX Warning: Citation `Ponder2003' on page 1 undefined on input line 45.
+
+
+LaTeX Warning: Citation `Brown2012' on page 1 undefined on input line 47.
+
+
+LaTeX Warning: Citation `Brown2011' on page 1 undefined on input line 47.
+
+
+LaTeX Warning: Citation `Gotz2012' on page 1 undefined on input line 47.
+
+
+LaTeX Warning: Citation `Salomon-Ferrer2013' on page 1 undefined on input line 
+47.
+
+
+LaTeX Warning: Citation `Anderson2008' on page 1 undefined on input line 47.
+
+[1
+
+{/usr/local/texlive/2011/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+
+LaTeX Warning: Citation `Anderson2008' on page 2 undefined on input line 50.
+
+
+LaTeX Warning: Citation `Brown2012' on page 2 undefined on input line 50.
+
+
+LaTeX Warning: Citation `Brown2011' on page 2 undefined on input line 50.
+
+
+LaTeX Warning: Citation `Gotz2012' on page 2 undefined on input line 50.
+
+
+LaTeX Warning: Citation `Salomon-Ferrer2013' on page 2 undefined on input line 
+50.
+
+
+LaTeX Warning: Citation `Case2010' on page 2 undefined on input line 56.
+
+
+LaTeX Warning: Citation `MacKerell1998' on page 2 undefined on input line 56.
+
+
+LaTeX Warning: Citation `Scott1999' on page 2 undefined on input line 56.
+
+
+LaTeX Warning: Citation `Kaminski2001' on page 2 undefined on input line 56.
+
+
+LaTeX Warning: Citation `Arnautova2006' on page 2 undefined on input line 56.
+
+
+LaTeX Warning: Citation `Khoury2013' on page 2 undefined on input line 56.
+
+
+LaTeX Warning: Citation `Jorgensen1983' on page 2 undefined on input line 58.
+
+
+LaTeX Warning: Citation `Rahman1964' on page 2 undefined on input line 60.
+
+
+LaTeX Warning: Citation `Debenedetti2001' on page 2 undefined on input line 60.
+
+
+[2 <./mdfigure.png>]
+
+LaTeX Warning: Reference `fig:mdfigure' on page 3 undefined on input line 76.
+
+
+LaTeX Warning: Reference `itm:MD_start' on page 3 undefined on input line 82.
+
+
+LaTeX Warning: Reference `itm:MD_end' on page 3 undefined on input line 82.
+
+
+LaTeX Warning: Citation `Swope1982' on page 3 undefined on input line 89.
+
+
+LaTeX Warning: Reference `subsec:potential' on page 3 undefined on input line 9
+8.
+
+[3]
+
+LaTeX Warning: Reference `subsec:integrator' on page 4 undefined on input line 
+108.
+
+
 Overfull \hbox (6.34117pt too wide) in alignment at lines 130--135
  [][][] []
  []
 
-[4] [5] [6]
+[4]
+
+LaTeX Warning: Citation `Tuckerman1992' on page 5 undefined on input line 174.
+
+[5]
+
+LaTeX Warning: Reference `tab:profiling' on page 6 undefined on input line 209.
+
+
+[6]
 Overfull \hbox (3.44029pt too wide) in paragraph at lines 217--218
 \OT1/ptm/m/n/12 ``NVFLAGS = -gencode arch=compute[]35,code=sm[]35" (see Make-fi
 le[]cuda). The
@@ -427,18 +571,37 @@ Underfull \hbox (badness 6300) in paragraph at lines 223--223
 m
  []
 
-[7] [8 <./gpu2.png>] <cell_list.png, id=43, 582.175pt x 224.84pt>
-File: cell_list.png Graphic file (type png)
+[7]
 
-<use cell_list.png>
+LaTeX Warning: Reference `tab:profiling' on page 8 undefined on input line 227.
+
+
+[8 <./gpu2.png>]
+
+LaTeX Warning: Reference `fig:cell' on page 9 undefined on input line 233.
+
+<cell_list.png, id=43, 582.175pt x 224.84pt>
+File: cell_list.png Graphic file (type png)
+ <use cell_list.png>
 Package pdftex.def Info: cell_list.png used on input line 236.
 (pdftex.def)             Requested size: 390.0pt x 150.62486pt.
- [9] [10 <./cell_list.png>]
-<nlist.png, id=51, 994.71625pt x 227.85126pt>
+ [9]
+
+LaTeX Warning: Reference `fig:nlist' on page 10 undefined on input line 245.
+
+[10 <./cell_list.png>] <nlist.png, id=51, 994.71625pt x 227.85126pt>
 File: nlist.png Graphic file (type png)
- <use nlist.png>
+
+<use nlist.png>
 Package pdftex.def Info: nlist.png used on input line 248.
 (pdftex.def)             Requested size: 390.0pt x 89.33446pt.
+
+
+LaTeX Warning: Citation `Anderson2008' on page 11 undefined on input line 253.
+
+
+LaTeX Warning: Citation `Lipscomb2012' on page 11 undefined on input line 253.
+
 
 Overfull \hbox (29.27295pt too wide) in paragraph at lines 253--254
 []\OT1/ptm/m/n/12 In fact, in very ad-vanced codes such as HOOMD (http://codebl
@@ -446,6 +609,10 @@ ue.umich.edu/hoomd-
  []
 
 [11 <./nlist.png>]
+
+LaTeX Warning: Citation `Plimpton1995' on page 12 undefined on input line 268.
+
+
 Overfull \hbox (7.02814pt too wide) in paragraph at lines 272--275
 \OT1/ptm/m/n/12 The soft-ware is im-ple-mented in object-oriented C++ and versi
 on-controlled through
@@ -483,7 +650,16 @@ Overfull \hbox (12.00314pt too wide) in paragraph at lines 291--292
 s the velocity-
  []
 
-[13] [14] [15]
+[13]
+
+LaTeX Warning: Reference `fig:nlist' on page 14 undefined on input line 317.
+
+[14]
+
+LaTeX Warning: Reference `sec:gpukernel' on page 15 undefined on input line 327
+.
+
+[15]
 Overfull \hbox (78.93013pt too wide) in paragraph at lines 331--333
 \OT1/ptm/m/n/12 used in-stead. For-tu-nately, thrust pro-vides a built-in func-
 tion called ``thrust::raw[]pointer[]cast"
@@ -495,29 +671,59 @@ Overfull \hbox (2.44333pt too wide) in paragraph at lines 331--333
 in cu-d-a-Helper.cu 
  []
 
+
+LaTeX Warning: Citation `Anderson2008' on page 16 undefined on input line 336.
+
+
+LaTeX Warning: Citation `Lipscomb2012' on page 16 undefined on input line 336.
+
+
+LaTeX Warning: Reference `sec:scalingstudies' on page 16 undefined on input lin
+e 336.
+
 [16]
-Overfull \hbox (10.75916pt too wide) in paragraph at lines 339--340
+Overfull \hbox (10.75916pt too wide) in paragraph at lines 341--342
 \OT1/ptm/m/n/12 Both re-duc-tions and ``par-al-lel for" clauses were very use-f
 ul. Dy-namic schedul-
  []
 
 
-Overfull \hbox (7.23921pt too wide) in paragraph at lines 347--348
+LaTeX Warning: Reference `tab:profiling' on page 17 undefined on input line 344
+.
+
+
+Overfull \hbox (7.23921pt too wide) in paragraph at lines 349--350
 []\OT1/ptm/m/n/12 This file con-tains the meth-ods for the sys-temDef-i-ni-tion
  class. These
  []
 
-[17]
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 375.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 375.
+[17] [18]
 
-Overfull \hbox (47.17393pt too wide) in paragraph at lines 375--389
+LaTeX Warning: Reference `tab:profiling' on page 19 undefined on input line 373
+.
+
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 380.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 380.
+
+Overfull \hbox (47.17393pt too wide) in paragraph at lines 380--394
  [][][] 
  []
 
-[18] [19]
+[19]
+
+LaTeX Warning: Citation `Plimpton1995' on page 20 undefined on input line 435.
+
+[20]
+
+LaTeX Warning: Reference `fig:lmp_compare' on page 21 undefined on input line 4
+46.
+
+
+LaTeX Warning: Reference `table:lmp_compare' on page 21 undefined on input line
+ 446.
+
 Package epstopdf Info: Source file: <T_compare.eps>
 (epstopdf)                    date: 2014-01-06 22:21:40
 (epstopdf)                    size: 24173 bytes
@@ -526,13 +732,13 @@ Package epstopdf Info: Source file: <T_compare.eps>
 (epstopdf)                    size: 18193 bytes
 (epstopdf)             Command: <epstopdf --outfile=T_compare-eps-converted-to.
 pdf T_compare.eps>
-(epstopdf)             \includegraphics on input line 446.
+(epstopdf)             \includegraphics on input line 451.
 Package epstopdf Info: Output file is already uptodate.
- <T_compare-eps-converted-to.pdf, id=83, 578.16pt x 433.62pt>
+<T_compare-eps-converted-to.pdf, id=86, 578.16pt x 433.62pt>
 File: T_compare-eps-converted-to.pdf Graphic file (type pdf)
 
 <use T_compare-eps-converted-to.pdf>
-Package pdftex.def Info: T_compare-eps-converted-to.pdf used on input line 446.
+Package pdftex.def Info: T_compare-eps-converted-to.pdf used on input line 451.
 
 (pdftex.def)             Requested size: 195.0pt x 146.24449pt.
 Package epstopdf Info: Source file: <PE_compare.eps>
@@ -543,14 +749,14 @@ Package epstopdf Info: Source file: <PE_compare.eps>
 (epstopdf)                    size: 23392 bytes
 (epstopdf)             Command: <epstopdf --outfile=PE_compare-eps-converted-to
 .pdf PE_compare.eps>
-(epstopdf)             \includegraphics on input line 450.
+(epstopdf)             \includegraphics on input line 455.
 Package epstopdf Info: Output file is already uptodate.
 
-<PE_compare-eps-converted-to.pdf, id=84, 578.16pt x 433.62pt>
+<PE_compare-eps-converted-to.pdf, id=87, 578.16pt x 433.62pt>
 File: PE_compare-eps-converted-to.pdf Graphic file (type pdf)
 
 <use PE_compare-eps-converted-to.pdf>
-Package pdftex.def Info: PE_compare-eps-converted-to.pdf used on input line 450
+Package pdftex.def Info: PE_compare-eps-converted-to.pdf used on input line 455
 .
 (pdftex.def)             Requested size: 195.0pt x 146.24449pt.
 Package epstopdf Info: Source file: <E_compare.eps>
@@ -561,14 +767,14 @@ Package epstopdf Info: Source file: <E_compare.eps>
 (epstopdf)                    size: 23432 bytes
 (epstopdf)             Command: <epstopdf --outfile=E_compare-eps-converted-to.
 pdf E_compare.eps>
-(epstopdf)             \includegraphics on input line 454.
+(epstopdf)             \includegraphics on input line 459.
 Package epstopdf Info: Output file is already uptodate.
 
-<E_compare-eps-converted-to.pdf, id=85, 578.16pt x 433.62pt>
+<E_compare-eps-converted-to.pdf, id=88, 578.16pt x 433.62pt>
 File: E_compare-eps-converted-to.pdf Graphic file (type pdf)
 
 <use E_compare-eps-converted-to.pdf>
-Package pdftex.def Info: E_compare-eps-converted-to.pdf used on input line 454.
+Package pdftex.def Info: E_compare-eps-converted-to.pdf used on input line 459.
 
 (pdftex.def)             Requested size: 195.0pt x 146.24449pt.
 Package epstopdf Info: Source file: <gr_compare.eps>
@@ -579,14 +785,14 @@ Package epstopdf Info: Source file: <gr_compare.eps>
 (epstopdf)                    size: 18486 bytes
 (epstopdf)             Command: <epstopdf --outfile=gr_compare-eps-converted-to
 .pdf gr_compare.eps>
-(epstopdf)             \includegraphics on input line 458.
+(epstopdf)             \includegraphics on input line 463.
 Package epstopdf Info: Output file is already uptodate.
 
-<gr_compare-eps-converted-to.pdf, id=86, 578.16pt x 433.62pt>
+<gr_compare-eps-converted-to.pdf, id=89, 578.16pt x 433.62pt>
 File: gr_compare-eps-converted-to.pdf Graphic file (type pdf)
 
 <use gr_compare-eps-converted-to.pdf>
-Package pdftex.def Info: gr_compare-eps-converted-to.pdf used on input line 458
+Package pdftex.def Info: gr_compare-eps-converted-to.pdf used on input line 463
 .
 (pdftex.def)             Requested size: 195.0pt x 146.24449pt.
 Package epstopdf Info: Source file: <msd.eps>
@@ -597,38 +803,38 @@ Package epstopdf Info: Source file: <msd.eps>
 (epstopdf)                    size: 11673 bytes
 (epstopdf)             Command: <epstopdf --outfile=msd-eps-converted-to.pdf ms
 d.eps>
-(epstopdf)             \includegraphics on input line 462.
+(epstopdf)             \includegraphics on input line 467.
 Package epstopdf Info: Output file is already uptodate.
 
-<msd-eps-converted-to.pdf, id=87, 505.89pt x 722.7pt>
+<msd-eps-converted-to.pdf, id=90, 505.89pt x 722.7pt>
 File: msd-eps-converted-to.pdf Graphic file (type pdf)
 
 <use msd-eps-converted-to.pdf>
-Package pdftex.def Info: msd-eps-converted-to.pdf used on input line 462.
+Package pdftex.def Info: msd-eps-converted-to.pdf used on input line 467.
 (pdftex.def)             Requested size: 126.74881pt x 181.07153pt.
 
-Overfull \hbox (2.28003pt too wide) in paragraph at lines 445--465
+Overfull \hbox (2.28003pt too wide) in paragraph at lines 450--470
 []$[]$ $[]$
  []
 
 
-Overfull \hbox (2.28003pt too wide) in paragraph at lines 445--465
+Overfull \hbox (2.28003pt too wide) in paragraph at lines 450--470
 []$ $[]$
  []
 
-[20]
+[21]
 Overfull \vbox (57.53775pt too high) has occurred while \output is active []
 
 
-[21 <./T_compare-eps-converted-to.pdf> <./PE_compare-eps-converted-to.pdf> <./E
+[22 <./T_compare-eps-converted-to.pdf> <./PE_compare-eps-converted-to.pdf> <./E
 _compare-eps-converted-to.pdf> <./gr_compare-eps-converted-to.pdf> <./msd-eps-c
-onverted-to.pdf>] <vmd_image.png, id=267, 513.92pt x 513.92pt>
+onverted-to.pdf>] <vmd_image.png, id=270, 513.92pt x 513.92pt>
 File: vmd_image.png Graphic file (type png)
 
 <use vmd_image.png>
-Package pdftex.def Info: vmd_image.png used on input line 475.
+Package pdftex.def Info: vmd_image.png used on input line 480.
 (pdftex.def)             Requested size: 195.0pt x 195.00148pt.
- [22 <./vmd_image.png>] [23] (./report.bbl
+ [23 <./vmd_image.png>] [24] (./report.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 4--6
 []\OT1/ptm/m/n/12 Karplus M, Mc-Cam-mon JA. Molec-u-lar dy-nam-ics sim-u-la-tio
 ns of
@@ -654,7 +860,7 @@ Missing character: There is no † in font ptmr7t!
 Missing character: There is no â in font ptmr7t!
 Missing character: There is no € in font ptmr7t!
 Missing character: There is no ™ in font ptmr7t!
-[24]
+[25]
 Underfull \hbox (badness 4108) in paragraph at lines 83--87
 []\OT1/ptm/m/n/12 Brown WM, Kohlmeyer A, Plimp-ton SJ, Thar-ring-ton AN. Im-ple
 -
@@ -666,31 +872,37 @@ Underfull \hbox (badness 1163) in paragraph at lines 83--87
 omputers--
  []
 
-[25]) [26] (./report.aux) ) 
+[26]) [27] (./report.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
 Here is how much of TeX's memory you used:
  4483 strings out of 493633
  67805 string characters out of 3143378
- 141689 words of memory out of 3000000
+ 140440 words of memory out of 3000000
  7661 multiletter control sequences out of 15000+200000
  48798 words of font info for 101 fonts, out of 3000000 for 9000
  831 hyphenation exceptions out of 8191
  42i,10n,39p,1795b,431s stack positions out of 5000i,500n,10000p,200000b,50000s
-{/usr/local/texlive/2011/texmf-dist/fonts/enc/dvips/
-base/8r.enc}</usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmex10.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mmi10.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-r10.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
-10.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb><
-/usr/local/texlive/2011/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/loc
-al/texlive/2011/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/
-2011/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2011/texmf
--dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2011/texmf-dist/font
-s/type1/urw/times/utmri8a.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/u
-rw/zapfchan/uzcmi8a.pfb>
-Output written on report.pdf (26 pages, 736315 bytes).
+{/usr/local/texlive/2011/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
+exlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/te
+xlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/tex
+live/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texli
+ve/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texliv
+e/2011/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb></usr/local/texlive/2011/t
+exmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2011/texmf-dis
+t/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2011/texmf-dist/fonts/typ
+e1/urw/times/utmb8a.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/urw/tim
+es/utmr8a.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/urw/times/utmri8a
+.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/urw/zapfchan/uzcmi8a.pfb>
+Output written on report.pdf (27 pages, 740610 bytes).
 PDF statistics:
- 322 PDF objects out of 1000 (max. 8388607)
- 121 compressed objects within 2 object streams
+ 325 PDF objects out of 1000 (max. 8388607)
+ 123 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  51 words of extra memory for PDF output out of 10000 (max. 10000000)
 

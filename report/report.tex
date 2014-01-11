@@ -335,6 +335,8 @@ As will be pointed out later, our GPU code actually was not faster overall than 
 
 Highly optimized codes are actually capable of maintaining these list directly on the GPU and so do not suffer from these problems.  However, after investigation into the literature and source code of available examples~\cite{Anderson2008, Lipscomb2012} we soon realized this is very nontrivial task. One which has been the subject of a number of recent research topics and is still an active area of research in computer science.  Unfortunately, this was well beyond what we could implement in a semester project, but the reasons for our code's slow overall performance are well understood.  In fact, although the overall performance was worse due to the frequent memory operations, the force calculation itself was accelerated thanks to the GPUs as discussed later (see Section~\ref{sec:scalingstudies}).
 
+%add bit about slj singularity protection
+
 \item[\texttt{nve.cpp and nvt.cpp}] 
 Both of these integrators make straightforward, extensive use of OMP parallelization to perform the necessary calculations.  Both reductions and ``parallel for" clauses were very useful.  Dynamic scheduling with a chunk size of 100 was found to be roughly optimal in most cases, hence we defined the OMP\_CHUNK macro in common.h to reflect this, which is used by default for these loops whenever possible.
 
@@ -353,15 +355,18 @@ The functions in this file pertain to handling the so-called ``minimum image" co
 
 \subsection{The GPU Kernel}
 \label{sec:gpukernel}
+The CUDA kernel we invoke is called ``loopOverNeighbors" in integrator.cu; this function takes a linear array of atoms, a neighbor list, and 
+a few other parameter inputs and returns the force experienced by each atom in the simulation.  A thread for every atom is executed, organized into chunks called ``blocks" on the GPU.   This kernel is what each thread in each block  on the GPU is performing.   Since the total number of atoms is, in general, not evenly divisible by the blocks size (512 as previously discussed), a check is first performed to ensure that the thread executing these instructions corresponds to an atom in the system.  For example, a system of 1200 atoms will have to employ 3 blocks of 512 threads each, though the last one will be largely empty.  The thread identification index (called ``tid" in the code) is first calculated based on the size of each grid (blockDim.x), the current grid the thread is residing in (blockIdx.x) and the local thread index within that block (threadIdx.x), such that
 
-In the future, cache coherency sorting can be performed to improve the speed of the GPU simulations (neighbor lists).  Something already performed by HOOMD but well beyond the realm of a semester project.
+\begin{equation}
+	tid = threadIdx.x + blockIdx.x*blockDim.x
+\end{equation}
 
+Once this identification is made, one simply iterates through the neighbor list, calling the pair potential function on each atom in the list relative to this atom (index tid).  Refer to the loop in integrator.cu for more implementation details.  In order to identify which potential function to use, in the anticipation of future extensibility, we explicitly send a flag to the kernel (pFlag) which indicates which one to select.  The alternative we investigated was to formally bind the memory location of the device function equivalent to the host CPU's potential function (as a pointer to device memory) to a variable which can be passed as the kernel is called; however, we were unable to obtain consistent results, likely due to some memory management issues behind the scenes so we opted to use a simpler route.
 
-FINISH
+We point out that the way the neighbor list is organized is not very cache-coherent, that is, each time new atoms must be found in the list (global memory) and thus loaded into the local registers, they are not guaranteed to be ``close" to other atoms in the same list.  So hierarchical memory management does not usually assist this process.  In highly optimized simulations, very advanced cache-sorting routines are employed to sort the list based on atom positions which helps the GPU take advantage of keeping the same data in the local registers for longer, thus improving their performance.  However, such routines do not always produce a speed up, since the cache-coherency is still only approximate when such sorting is applied and the overhead for doing so is not trivial.  Due to its level of sophistication, our limited time,  and minimal promised gains we did not pursue this for our own code, though in the future this could be added.
 
-
-
-%\section{Results}
+\section{Results}
 
 \subsection{Profiling}
 
@@ -480,6 +485,8 @@ To see an example movie of a short LJ fluid simulation, see the file \url{/repor
 Outline what our goals were, and how we met them
 also did nve
 added other (pairUF potential)
+
+implemented many optimizations only applied last 
 
 dependencies: requires boost, omp, cuds toolkits (add to read me, etc.)
 fix author tags again, clean up actual code
