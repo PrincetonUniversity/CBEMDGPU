@@ -69,7 +69,7 @@ __device__ float dev_pairUF (const float3 *p1, const float3 *p2, float3 *pairFor
  *
  * \param [in] p1 Pointer to atom 1's position
  * \param [in] p2 Pointer to atom 2's position
- * \param [in, out] pairForce Force atom 2 experiences due to atom 1
+ * \param [in, out] pairForce Force atom 1 experiences due to atom 2
  * \param [in] box Pointer to box dimensions
  * \param [in] args Additional arguments, in this case {epsilon, sigma, delta, ushift}
  * \param [in] rcut Cutoff distance; NOTE: this MUST already incorporate the delta shift, ie. if r < ((rc' + delta) = rc), then force is computed
@@ -141,12 +141,12 @@ __global__ void loopOverNeighbors (atom* dev_atoms, int* nlist, int* nlist_index
 			float3 dummyForce;
 			Up += pFunc (&dev_atoms[nlist[i]].pos, &dev_atoms[tid].pos, &dummyForce, box, args, rcut);
 
-			// sign convention is to add the returned force on particle 2
 			myforce.x += dummyForce.x;
 			myforce.y += dummyForce.y;
 			myforce.z += dummyForce.z;	
 		}
 
+		// maintaining sign convention
 		force[tid].x = -myforce.x;
 		force[tid].y = -myforce.y;
 		force[tid].z = -myforce.z;
@@ -216,7 +216,7 @@ void integrator::calcForce (systemDefinition &sys) {
 	float* dev_rcut_ptr = thrust::raw_pointer_cast(&dev_rcut[0]);
 
 	// invoke kernel to compute
-	/*loopOverNeighbors <<< sys.cudaBlocks, sys.cudaThreads >>> (dev_atoms_ptr, dev_neighbor_list_ptr, dev_neighbor_index_ptr, dev_force_ptr, dev_sysbox_ptr, dev_Up_each_atom_ptr, dev_natoms_ptr, dev_args_ptr, dev_rcut_ptr, dev_pFlag_ptr);
+	loopOverNeighbors <<< sys.cudaBlocks, sys.cudaThreads >>> (dev_atoms_ptr, dev_neighbor_list_ptr, dev_neighbor_index_ptr, dev_force_ptr, dev_sysbox_ptr, dev_Up_each_atom_ptr, dev_natoms_ptr, dev_args_ptr, dev_rcut_ptr, dev_pFlag_ptr);
 	
 	// call a reduction to collect Up then divide by 2 since double counted
 	Up = thrust::reduce(dev_Up_each_atom.begin(), dev_Up_each_atom.end(), (float) 0.0, thrust::plus<float>());
@@ -231,8 +231,6 @@ void integrator::calcForce (systemDefinition &sys) {
 		sys.atoms[i].acc.y = netForces[i].y*invMass;
 		sys.atoms[i].acc.z = netForces[i].z*invMass;
 	}	
-
-*/
 
 	// set Up
 	sys.setPotE(Up);
