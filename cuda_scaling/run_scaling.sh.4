@@ -1,5 +1,5 @@
 #!/bin/bash
-#PBS -N cudaTiming
+#PBS -N cudaTiming-4
 #PBS -q gpu
 #PBS -l nodes=1:ppn=16:gpus=4,walltime=23:00:00
 #PBS -j oe
@@ -15,10 +15,4 @@ module load intel
 
 i=4
 
-for j in 1000 2000 4000 8000 16000
-do
-	for k in 0 0.5 1.0 
-      	do
-	./cuda_timing $i $j $k 10000 >> cuda_timing_results.txt
-	done
-done
+for j in 1000 2000 4000 8000 16000; do for k in 0 0.5 1.0 ; do ./cuda_timing $i $j $k 10000 >> cuda_timing_results.txt; done; done

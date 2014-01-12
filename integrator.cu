@@ -13,6 +13,7 @@
 #include <thrust/copy.h>
 #include <thrust/system_error.h>
 #include "potential.h"
+#include <omp.h>
 
 // Cuda Potential must be compiled together with the integrator so they are here, not in their own file
 
@@ -226,6 +227,7 @@ void integrator::calcForce (systemDefinition &sys) {
 	std::vector < float3 > netForces (sys.numAtoms());
 	thrust::copy(dev_force.begin(), dev_force.end(), netForces.begin());
 
+	#pragma omp parallel for schedule(dynamic,OMP_CHUNK)
 	for (unsigned int i = 0; i < sys.numAtoms(); ++i) {
 		sys.atoms[i].acc.x = netForces[i].x*invMass;
 		sys.atoms[i].acc.y = netForces[i].y*invMass;

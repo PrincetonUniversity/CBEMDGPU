@@ -401,7 +401,7 @@ The \textbf{calcForce} function consisted of the most expensive function in the 
 \subsection{Scaling Studies}
 \label{sec:scalingstudies}
 
-We performed several scaling studies on the TIGER cluster for CPUs and ANDROS/TIGER for GPUs. Runs were performed on 1,2,4,8, and 16 processors on tiger, for $r_{s}$ cutoffs of 0.00, 0.50, and 1.00 and for 1000, 2000, 4000, 8000 particles for 10,000 steps. The scaling results are shown in Figure~\ref{fig:scaling_compare}.
+We performed several scaling studies on the TIGER cluster for CPUs and ANDROS/TIGER for GPUs. Runs were performed on 1,2,4,8, and 16 processors on tiger, for $r_{s}$ (skin) cutoffs of 0.00, 0.50, and 1.00 and for 1000, 2000, 4000, 8000 particles for 10,000 steps. We used the shifted Lennard-Jones potential with parameters $\sigma = 1.0$, $\delta = 0$, $U_{shift} = 0.0$, and $\epsilon = 1.0$ where the cutoff radius ($r_c$) was set to 2.5$\sigma$.  The system box size was set to the cube root of the number of particles to maintain a fluid-like density.  The scaling results are shown in Figure~\ref{fig:scaling_compare}.  
 
 \begin{figure}[H]
 	\begin{subfigure}{0.5\textwidth}
@@ -416,13 +416,17 @@ We performed several scaling studies on the TIGER cluster for CPUs and ANDROS/TI
 	\includegraphics[width=\textwidth]{scalingtiger_rs_100}
 	\caption{}
 	\end{subfigure}
-	\caption{Scaling results from testing our molecular dynamics simulations on CPUs and GPUs for different combinations of particle numbers, $r_{s}$ values, and number of processors. (a) $r_{s}$ = 0.00 (b) $r_{s}$ = 0.50 (c) $r_{s}$ = 1.00 (d) GPU}
+	\begin{subfigure}{0.5\textwidth}
+	\includegraphics[width=0.7\textwidth, angle=-90]{gpu_time.eps}
+	\caption{}
+	\end{subfigure}
+	\caption{Scaling results from testing our molecular dynamics simulations on CPUs and GPUs for different combinations of particle numbers, $r_{s}$ values, and number of processors. (a) $r_{s}$ = 0.00 (b) $r_{s}$ = 0.50 (c) $r_{s}$ = 1.00 (d) Scaling on the GPU when the CPU fraction of the code used 1 and 4 processors compared to the CPU results on a single core at various skin radii.}
 	\label{fig:scaling_compare}
 \end{figure}
 
-We observed that for all particle numbers introducing more processors scaled relatively well, except for the case of 8000 particles an $r_{s}$ of 0.00 and for 16 processors, possibly due to communication inefficiencies at high particle number or with hardware on TIGER. The overall behavior from Figure~\ref{fig:scaling_compare} for all processors, particle numbers, and $r_{s}$ values are overall the same.
+We observed that for all particle numbers introducing more processors scaled relatively well, except for the case of $r_{s}$ of 0.00. Note that in this case, the simulations nearly always finished sooner than their corresponding simulations when $r_s > 0$.  When the skin radius is zero, the cell lists are rebuilt every time and no maintenance (checkUpdate routine) needs to be done.  In fact, this reveals that the maintenance cost for cell lists on these systems outweighs their advantages for (relatively) small numbers of particles.  Adjusting the chunk size for OMP did not lead to qualitative changes in these trends.  However, we expect that for extremely large systems, this would no longer hold.  In the case of $r_s = 0$ for 16 processors with 8,000 atoms some communication issues arose on TIGER's hardware and led to poor scaling.  
 
-\underline{\textbf{**************ADD GPU SCALING DISCUSSION HERE and FIGUREd********}}
+On the GPU we found that our simulations were sped up by about 30-50\% over their CPU counterparts on a single processor for smaller system sizes.  This is an impressive step forward given that the only thing we parallelized was the force calculation which comprises only about 27\% of the cost in the CPU implementation (see Table~\ref{tab:profiling}).  However, given that we additionally deployed device functions for the ``slj" and ``pbcDist2" on the GPU we were also able to cut into how much time each of these functions contributed to the overall speed of the program.  Thus we found that our GPU code performed quite admirably in this regime.  The size of the skin radius had negligible effect on the GPU code's speed so the results in Fig.~\ref{fig:scaling_compare} are representative for $r_s = 0,0.5$, and 1.  This is not uncommon for neighbor list implementations.  We also tested the case of having a different number of processors available for the (albeit small) fraction of the GPU code's use of the CPU to perform additional tasks.  As evidenced, this is negligible so it made almost no difference going from 1 to 4 processors.  Compared to the purely CPU code on a single core, the GPU code was up to twice as fast for a small number of particles when using large skin radii.  However, as shown by the fitted curve, the GPU time scales as $N^2$.  This is because of its reliance on neighbor lists (which is $\mathcal{O}(N^2)$) rather than cell lists ($\mathcal{O}(N)$ expense).  For the system sizes we investigated this did not present an advantage because our systems were small enough that, it is likely cell lists could be feasibly implemented on the GPU.   However, it is known that for large systems this becomes untenable due to bandwidth limitations~\cite{Anderson2008, Lipscomb2012} which is why we chose not pursue this.  This simply emphasizes the importance of maintaining these lists directly on the GPU, though for reasons already discussed, we were not able to implement such a routine.
 
 \subsection{Benchmarking and Validation against Literature Values}
 
@@ -483,7 +487,7 @@ The results are shown in Figure~\ref{fig:lmp_compare} and Table~\ref{table:lmp_c
 	\label{fig:lmp_compare}
 \end{figure}
 
-There is excellent agreement between our software (CBEMDGPU) and the LAMMPS results. The average temperature and the behavior of the temperature fluctuations were qualitatively and quantitatively in agreement. Our temperature fluctuations are more smooth since we don't have as much damping and since LAMMPS uses Nos\'{e}-Hoover chains. The potential and total energies' behaviors are the same, and the radial distribution functions calculated in both programs are within numerical error. These results strongly suggest that the software we have developed can largely reproduce the thermodynamic and simulation behavior of the LAMMPS software, and is a strong validation of our underlying code.
+There is excellent agreement between our software (CBEMDGPU) and the LAMMPS results. The average temperature and the behavior of the temperature fluctuations were qualitatively and quantitatively in agreement. Our temperature fluctuations are more smooth since we don't have as much damping and since LAMMPS uses Nos\'{e}-Hoover \emph{chains} whereas we use a single ``spring" to dampen the fluctuations. The potential and total energies' behaviors are the same, and the radial distribution functions calculated in both programs are within numerical error. These results illustrate that the software we have developed can reproduce the thermodynamic and dynamic behavior of the LAMMPS software, and is a strong validation of our underlying code.
 
 \subsection{Example Movie}
 To see an example movie of a short LJ fluid simulation, see the file \url{/report/movie1.mpg}.
@@ -503,6 +507,7 @@ implemented many optimizations only applied last
 dependencies: requires boost, omp, cuds toolkits (add to read me, etc.)
 fix author tags again, clean up actual code
 verify compilation and execution before submission
+add tiger gpu scaling to repo
 
 FINISH
 
