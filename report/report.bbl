@@ -150,4 +150,8 @@ Tuckerman M, Berne BJ, Martyna GJ. Reversible multiple time scale molecular
 Lipscomb TJ, Zhou A, Cho SS. Parallel verlet neighbor list algorithm for
   gpu-optimized md simulations ACM-BCB 2012;\hspace{0pt}.
 
+\bibitem{HUMP96}
+Humphrey W, Dalke A, Schulten K. {VMD} -- {V}isual {M}olecular {D}ynamics
+  Journal of Molecular Graphics 1996;\hspace{0pt}14:33--38.
+
 \end{thebibliography}

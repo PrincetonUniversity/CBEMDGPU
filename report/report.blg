@@ -2,7 +2,7 @@ This is BibTeX, Version 0.99dThe top-level auxiliary file: report.aux
 The style file: proteins1.bst
 Database file #1: references.bib
 Warning--entry type for "Plimpton1995" isn't style-file defined
---line 30884 of file references.bib
+--line 30897 of file references.bib
 ptr=1, stack=
 
 ---the literal stack isn't empty for entry Karplus2002
@@ -123,4 +123,8 @@ ptr=1, stack=
 
 ---the literal stack isn't empty for entry Lipscomb2012
 while executing---line 1164 of file proteins1.bst
-(There were 30 error messages)
+ptr=1, stack=
+
+---the literal stack isn't empty for entry HUMP96
+while executing---line 1164 of file proteins1.bst
+(There were 31 error messages)

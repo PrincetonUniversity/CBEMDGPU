@@ -1,25 +1,21 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.7.3)  12 JAN 2014 14:51
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.6.14)  12 JAN 2014 18:22
 entering extended mode
- \write18 enabled.
- file:line:error style messages enabled.
- %&-line parsing enabled.
-**report.tex
-(./report.tex
-LaTeX2e <2009/09/24>
-Babel <v3.8l> and hyphenation patterns for english, dumylang, nohyphenation, ge
-rman-x-2009-06-19, ngerman-x-2009-06-19, afrikaans, ancientgreek, ibycus, arabi
-c, armenian, basque, bulgarian, catalan, pinyin, coptic, croatian, czech, danis
-h, dutch, ukenglish, usenglishmax, esperanto, estonian, ethiopic, farsi, finnis
-h, french, galician, german, ngerman, swissgerman, monogreek, greek, hungarian,
- icelandic, assamese, bengali, gujarati, hindi, kannada, malayalam, marathi, or
-iya, panjabi, tamil, telugu, indonesian, interlingua, irish, italian, kurmanji,
- lao, latin, latvian, lithuanian, mongolian, mongolianlmc, bokmal, nynorsk, pol
-ish, portuguese, romanian, russian, sanskrit, serbian, serbianc, slovak, sloven
-ian, spanish, swedish, turkish, turkmen, ukrainian, uppersorbian, welsh, loaded
-.
-(/usr/local/texlive/2011/texmf-dist/tex/latex/base/article.cls
+**C:/Users/George/Desktop/project7/report/report.tex
+(C:/Users/George/Desktop/project7/report/report.tex
+LaTeX2e <2011/06/27>
+Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
+abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
+croatian, czech, danish, dutch, esperanto, estonian, farsi, finnish, french, ga
+lician, german, german-x-2012-05-30, greek, gujarati, hindi, hungarian, iceland
+ic, indonesian, interlingua, irish, italian, kannada, kurmanji, latin, latvian,
+ lithuanian, malayalam, marathi, mongolian, mongolianlmc, monogreek, ngerman, n
+german-x-2012-05-30, nynorsk, oriya, panjabi, pinyin, polish, portuguese, roman
+ian, russian, sanskrit, serbian, slovak, slovenian, spanish, swedish, swissgerm
+an, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, usengl
+ishmax, welsh, loaded.
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\article.cls"
 Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
-(/usr/local/texlive/2011/texmf-dist/tex/latex/base/size12.clo
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\size12.clo"
 File: size12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count79
@@ -34,39 +30,40 @@ File: size12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
 )
-(/usr/local/texlive/2011/texmf-dist/tex/latex/graphics/graphicx.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
 Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
 
-(/usr/local/texlive/2011/texmf-dist/tex/latex/graphics/keyval.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\keyval.sty"
 Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 \KV@toks@=\toks14
 )
-(/usr/local/texlive/2011/texmf-dist/tex/latex/graphics/graphics.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphics.sty"
 Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
 
-(/usr/local/texlive/2011/texmf-dist/tex/latex/graphics/trig.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\trig.sty"
 Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
 )
-(/usr/local/texlive/2011/texmf-dist/tex/latex/latexconfig/graphics.cfg
-File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
+("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\graphics.cfg"
+File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
 )
 Package graphics Info: Driver file: pdftex.def on input line 91.
 
-(/usr/local/texlive/2011/texmf-dist/tex/latex/pdftex-def/pdftex.def
+("C:\Program Files\MiKTeX 2.9\tex\latex\pdftex-def\pdftex.def"
 File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
 
-(/usr/local/texlive/2011/texmf-dist/tex/generic/oberdiek/infwarerr.sty
-Package: infwarerr 2010/04/08 v1.3 Providing info/warning/message (HO)
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\infwarerr.sty"
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
 )
-(/usr/local/texlive/2011/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
-Package: ltxcmds 2011/04/18 v1.20 LaTeX kernel commands for general use (HO)
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ltxcmds.sty"
+Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 )
 \Gread@gobject=\count87
 ))
 \Gin@req@height=\dimen103
 \Gin@req@width=\dimen104
 )
-(/usr/local/texlive/2011/texmf-dist/tex/latex/booktabs/booktabs.sty
+(C:/Users/George/Documents/georgepsu/phdgradschool/research/forcefield/paper\bo
+oktabs.sty
 Package: booktabs 2005/04/14 v1.61803 publication quality tables
 \heavyrulewidth=\dimen105
 \lightrulewidth=\dimen106
@@ -86,52 +83,54 @@ Package: booktabs 2005/04/14 v1.61803 publication quality tables
 \@lastruleclass=\count91
 \@thisrulewidth=\dimen117
 )
-(/usr/local/texlive/2011/texmf-dist/tex/latex/caption/caption.sty
-Package: caption 2010/01/09 v3.1m Customizing captions (AR)
+(C:\Users\George\AppData\Roaming\MiKTeX\2.9\tex\latex\caption\caption.sty
+Package: caption 2013/05/02 v3.3-89 Customizing captions (AR)
 
-(/usr/local/texlive/2011/texmf-dist/tex/latex/caption/caption3.sty
-Package: caption3 2010/01/14 v3.1m caption3 kernel (AR)
+(C:\Users\George\AppData\Roaming\MiKTeX\2.9\tex\latex\caption\caption3.sty
+Package: caption3 2013/05/02 v1.6-88 caption3 kernel (AR)
+Package caption3 Info: TeX engine: e-TeX on input line 57.
 \captionmargin=\dimen118
 \captionmargin@=\dimen119
 \captionwidth=\dimen120
-\caption@indent=\dimen121
-\caption@parindent=\dimen122
-\caption@hangindent=\dimen123
+\caption@tempdima=\dimen121
+\caption@indent=\dimen122
+\caption@parindent=\dimen123
+\caption@hangindent=\dimen124
 )
 \c@ContinuedFloat=\count92
 )
-(/usr/local/texlive/2011/texmf-dist/tex/latex/caption/subcaption.sty
-Package: subcaption 2008/08/31 v1.0b Adding subcaptions (AR)
+(C:\Users\George\AppData\Roaming\MiKTeX\2.9\tex\latex\caption\subcaption.sty
+Package: subcaption 2013/02/03 v1.1-62 Sub-captions (AR)
 \c@subfigure=\count93
 \c@subtable=\count94
 )
-(/usr/local/texlive/2011/texmf-dist/tex/latex/graphics/epsfig.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\epsfig.sty"
 Package: epsfig 1999/02/16 v1.7a (e)psfig emulation (SPQR)
-\epsfxsize=\dimen124
-\epsfysize=\dimen125
+\epsfxsize=\dimen125
+\epsfysize=\dimen126
 )
-(/usr/local/texlive/2011/texmf-dist/tex/latex/oberdiek/epstopdf.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\epstopdf.sty"
 Package: epstopdf 2010/02/09 v2.5 Conversion with epstopdf on the fly (HO)
 
-(/usr/local/texlive/2011/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\epstopdf-base.sty"
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
 
-(/usr/local/texlive/2011/texmf-dist/tex/latex/oberdiek/grfext.sty
-Package: grfext 2010/08/19 v1.1 Managing graphics extensions (HO)
+("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\grfext.sty"
+Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
 
-(/usr/local/texlive/2011/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
-Package: kvdefinekeys 2011/04/07 v1.3 Defining keys (HO)
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\kvdefinekeys.sty"
+Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
 ))
-(/usr/local/texlive/2011/texmf-dist/tex/latex/oberdiek/kvoptions.sty
-Package: kvoptions 2010/12/23 v3.10 Keyval support for LaTeX options (HO)
+("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\kvoptions.sty"
+Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
 
-(/usr/local/texlive/2011/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
-Package: kvsetkeys 2011/04/07 v1.13 Key value parser (HO)
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\kvsetkeys.sty"
+Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
 
-(/usr/local/texlive/2011/texmf-dist/tex/generic/oberdiek/etexcmds.sty
-Package: etexcmds 2011/02/16 v1.5 Prefix for e-TeX command names (HO)
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\etexcmds.sty"
+Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
 
-(/usr/local/texlive/2011/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ifluatex.sty"
 Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
 Package ifluatex Info: LuaTeX not detected.
 )
@@ -140,10 +139,11 @@ Package etexcmds Info: Could not find \expanded.
 (etexcmds)             that some package has redefined \expanded.
 (etexcmds)             In the latter case, load this package earlier.
 )))
-(/usr/local/texlive/2011/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
-Package: pdftexcmds 2011/04/22 v0.16 Utilities of pdfTeX for LuaTeX (HO)
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\pdftexcmds.sty"
+Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
+)
 
-(/usr/local/texlive/2011/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ifpdf.sty"
 Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
 Package ifpdf Info: pdfTeX in PDF mode is detected.
 )
@@ -156,12 +156,8 @@ Package grfext Info: Graphics extension search list:
 (grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
 G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 452.
-
-(/usr/local/texlive/2011/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
-File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
-e
-)))
-(/usr/local/texlive/2011/texmf-dist/tex/latex/float/float.sty
+))
+("C:\Program Files\MiKTeX 2.9\tex\latex\float\float.sty"
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \c@float@type=\count95
 \float@exts=\toks15
@@ -169,7 +165,7 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \@float@everytoks=\toks16
 \@floatcapt=\box27
 )
-(/usr/local/texlive/2011/texmf-dist/tex/latex/pslatex/pslatex.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\pslatex\pslatex.sty"
 Package: pslatex 1996/07/24 v1.2 pslatex emulation (DPC)
 LaTeX Font Info:    Redeclaring symbol font `operators' on input line 65.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
@@ -204,20 +200,20 @@ LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
 (Font)                  OT1/cmr/bx/it --> OT1/ptm/m/it on input line 75.
 )
-(/usr/local/texlive/2011/texmf-dist/tex/latex/tools/multicol.sty
-Package: multicol 2008/12/05 v1.6h multicolumn formatting (FMi)
+("C:\Program Files\MiKTeX 2.9\tex\latex\tools\multicol.sty"
+Package: multicol 2011/06/27 v1.7a multicolumn formatting (FMi)
 \c@tracingmulticols=\count96
 \mult@box=\box28
-\multicol@leftmargin=\dimen126
+\multicol@leftmargin=\dimen127
 \c@unbalance=\count97
 \c@collectmore=\count98
 \doublecol@number=\count99
 \multicoltolerance=\count100
 \multicolpretolerance=\count101
-\full@width=\dimen127
-\page@free=\dimen128
-\premulticols=\dimen129
-\postmulticols=\dimen130
+\full@width=\dimen128
+\page@free=\dimen129
+\premulticols=\dimen130
+\postmulticols=\dimen131
 \multicolsep=\skip43
 \multicolbaselineskip=\skip44
 \partial@page=\box29
@@ -245,55 +241,56 @@ Package: multicol 2008/12/05 v1.6h multicolumn formatting (FMi)
 \@tempa=\box51
 \c@columnbadness=\count102
 \c@finalcolumnbadness=\count103
-\last@try=\dimen131
-\multicolovershoot=\dimen132
-\multicolundershoot=\dimen133
+\last@try=\dimen132
+\multicolovershoot=\dimen133
+\multicolundershoot=\dimen134
 \mult@nat@firstbox=\box52
 \colbreak@box=\box53
+\multicol@sort@counter=\count104
 )
-(/usr/local/texlive/2011/texmf-dist/tex/latex/tools/verbatim.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\tools\verbatim.sty"
 Package: verbatim 2003/08/22 v1.5q LaTeX2e package for verbatim enhancements
 \every@verbatim=\toks17
 \verbatim@line=\toks18
 \verbatim@in@stream=\read1
 )
-(/usr/local/texlive/2011/texmf-dist/tex/latex/wrapfig/wrapfig.sty
-\wrapoverhang=\dimen134
-\WF@size=\dimen135
-\c@WF@wrappedlines=\count104
+(C:\Users\George\AppData\Roaming\MiKTeX\2.9\tex\latex\wrapfig\wrapfig.sty
+\wrapoverhang=\dimen135
+\WF@size=\dimen136
+\c@WF@wrappedlines=\count105
 \WF@box=\box54
 \WF@everypar=\toks19
 Package: wrapfig 2003/01/31  v 3.6
 )
-(/usr/local/texlive/2011/texmf-dist/tex/latex/pdfpages/pdfpages.sty
-Package: pdfpages 2011/03/10 v0.4n Insert pages of external PDF documents (AM)
+(C:\Users\George\AppData\Roaming\MiKTeX\2.9\tex\latex\pdfpages\pdfpages.sty
+Package: pdfpages 2013/05/30 v0.4u Insert pages of external PDF documents (AM)
 
-(/usr/local/texlive/2011/texmf-dist/tex/latex/base/ifthen.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\ifthen.sty"
 Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
 )
-(/usr/local/texlive/2011/texmf-dist/tex/latex/tools/calc.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\tools\calc.sty"
 Package: calc 2007/08/22 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count105
-\calc@Bcount=\count106
-\calc@Adimen=\dimen136
-\calc@Bdimen=\dimen137
+\calc@Acount=\count106
+\calc@Bcount=\count107
+\calc@Adimen=\dimen137
+\calc@Bdimen=\dimen138
 \calc@Askip=\skip45
 \calc@Bskip=\skip46
 LaTeX Info: Redefining \setlength on input line 76.
 LaTeX Info: Redefining \addtolength on input line 77.
-\calc@Ccount=\count107
+\calc@Ccount=\count108
 \calc@Cskip=\skip47
 )
-(/usr/local/texlive/2011/texmf-dist/tex/latex/eso-pic/eso-pic.sty
+(C:\Users\George\AppData\Roaming\MiKTeX\2.9\tex\latex\eso-pic\eso-pic.sty
 Package: eso-pic 2010/10/06 v2.0c eso-pic (RN)
 
-(/usr/local/texlive/2011/texmf-dist/tex/generic/oberdiek/atbegshi.sty
-Package: atbegshi 2011/01/30 v1.15 At begin shipout hook (HO)
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\atbegshi.sty"
+Package: atbegshi 2011/10/05 v1.16 At begin shipout hook (HO)
 )
-(/usr/local/texlive/2011/texmf-dist/tex/latex/xcolor/xcolor.sty
+(C:\Users\George\AppData\Roaming\MiKTeX\2.9\tex\latex\xcolor\xcolor.sty
 Package: xcolor 2007/01/21 v2.11 LaTeX color extensions (UK)
 
-(/usr/local/texlive/2011/texmf-dist/tex/latex/latexconfig/color.cfg
+("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\color.cfg"
 File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
 Package xcolor Info: Driver file: pdftex.def on input line 225.
@@ -307,20 +304,19 @@ Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1358.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1359.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1360.
 ))
-(/usr/local/texlive/2011/texmf-dist/tex/latex/pdfpages/pppdftex.def
-File: pppdftex.def 2011/03/10 v0.4n Pdfpages driver for pdfTeX (AM)
+(C:\Users\George\AppData\Roaming\MiKTeX\2.9\tex\latex\pdfpages\pppdftex.def
+File: pppdftex.def 2013/05/30 v0.4u Pdfpages driver for pdfTeX (AM)
 )
 \AM@pagebox=\box55
 \AM@toc@title=\toks20
-\c@AM@survey=\count108
+\c@AM@survey=\count109
 \AM@templatesizebox=\box56
 )
-(/usr/local/texlive/2011/texmf-dist/tex/latex/url/url.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\ltxmisc\url.sty"
 \Urlmuskip=\muskip10
 Package: url 2006/04/12  ver 3.3  Verb mode for urls, etc.
-) (./report.aux)
-\openout1 = `report.aux'.
-
+)
+(C:\Users\George\Desktop\project7\report\report.aux)
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 15.
 LaTeX Font Info:    ... okay on input line 15.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 15.
@@ -331,7 +327,7 @@ LaTeX Font Info:    Checking defaults for OMS/pzccm/m/n on input line 15.
 LaTeX Font Info:    Try loading font information for OMS+pzccm on input line 15
 .
 
-(/usr/local/texlive/2011/texmf-dist/tex/latex/psnfss/omspzccm.fd
+("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\omspzccm.fd"
 File: omspzccm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/pzccm.
 )
 LaTeX Font Info:    ... okay on input line 15.
@@ -340,18 +336,18 @@ LaTeX Font Info:    ... okay on input line 15.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 15.
 LaTeX Font Info:    ... okay on input line 15.
 
-(/usr/local/texlive/2011/texmf-dist/tex/context/base/supp-pdf.mkii
+(C:\Users\George\AppData\Roaming\MiKTeX\2.9\tex\context\base\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count109
-\scratchdimen=\dimen138
+\scratchcounter=\count110
+\scratchdimen=\dimen139
 \scratchbox=\box57
-\nofMPsegments=\count110
-\nofMParguments=\count111
+\nofMPsegments=\count111
+\nofMParguments=\count112
 \everyMPshowfont=\toks21
-\MPscratchCnt=\count112
-\MPscratchDim=\dimen139
-\MPnumerator=\count113
-\makeMPintoPDFobject=\count114
+\MPscratchCnt=\count113
+\MPscratchDim=\dimen140
+\MPnumerator=\count114
+\makeMPintoPDFobject=\count115
 \everyMPtoPDFconversion=\toks22
 )
 Package caption Info: Begin \AtBeginDocument code.
@@ -361,19 +357,19 @@ Package caption Info: End \AtBeginDocument code.
 \AtBeginShipoutBox=\box58
 LaTeX Font Info:    Try loading font information for OT1+ptmcm on input line 17
 .
- (/usr/local/texlive/2011/texmf-dist/tex/latex/psnfss/ot1ptmcm.fd
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\ot1ptmcm.fd"
 File: ot1ptmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ptmcm.
 )
 LaTeX Font Info:    Try loading font information for OML+ptmcm on input line 17
 .
 
-(/usr/local/texlive/2011/texmf-dist/tex/latex/psnfss/omlptmcm.fd
+("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\omlptmcm.fd"
 File: omlptmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ptmcm.
 )
 LaTeX Font Info:    Try loading font information for OMX+psycm on input line 17
 .
 
-(/usr/local/texlive/2011/texmf-dist/tex/latex/psnfss/omxpsycm.fd
+("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\omxpsycm.fd"
 File: omxpsycm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/psycm.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
@@ -398,301 +394,303 @@ Package pdftex.def Info: mdfigure.png used on input line 38.
 (pdftex.def)             Requested size: 253.49762pt x 125.45271pt.
  [1
 
-{/usr/local/texlive/2011/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2 <./m
-dfigure.png>] [3]
+{C:/Users/George/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2 <C:/Use
+rs/George/Desktop/project7/report/mdfigure.png>] [3]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 132.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 144.
  [4] [5] [6]
-Overfull \hbox (3.44029pt too wide) in paragraph at lines 220--221
+Overfull \hbox (3.44029pt too wide) in paragraph at lines 231--232
 \OT1/ptm/m/n/12 ``NVFLAGS = -gencode arch=compute[]35,code=sm[]35" (see Make-fi
 le[]cuda). The
  []
 
-<gpu2.png, id=34, 511.1898pt x 321.8424pt>
+<gpu2.png, id=33, 511.1898pt x 321.8424pt>
 File: gpu2.png Graphic file (type png)
  <use gpu2.png>
-Package pdftex.def Info: gpu2.png used on input line 225.
+Package pdftex.def Info: gpu2.png used on input line 236.
 (pdftex.def)             Requested size: 390.0pt x 245.54074pt.
 
-Underfull \hbox (badness 5817) in paragraph at lines 226--226
+Underfull \hbox (badness 5817) in paragraph at lines 237--237
 []\OT1/ptm/m/n/12 Figure 2: |CUDA lay-out and how the host CPU com-mu-ni-cates 
 in-
  []
 
 
-Underfull \hbox (badness 6300) in paragraph at lines 226--226
+Underfull \hbox (badness 6300) in paragraph at lines 237--237
 \OT1/ptm/m/n/12 for-ma-tion to the GPU when a ker-nel is in-voked. (Adapted fro
 m
  []
 
-[7] [8 <./gpu2.png>] <cell_list.png, id=43, 582.175pt x 224.84pt>
+[7] [8 <C:/Users/George/Desktop/project7/report/gpu2.png>]
+<cell_list.png, id=42, 582.175pt x 224.84pt>
 File: cell_list.png Graphic file (type png)
-
-<use cell_list.png>
-Package pdftex.def Info: cell_list.png used on input line 239.
+ <use cell_list.png>
+Package pdftex.def Info: cell_list.png used on input line 250.
 (pdftex.def)             Requested size: 390.0pt x 150.62486pt.
- [9] [10 <./cell_list.png>]
-<nlist.png, id=51, 994.71625pt x 227.85126pt>
+ [9]
+<nlist.png, id=46, 994.71625pt x 227.85126pt>
 File: nlist.png Graphic file (type png)
  <use nlist.png>
-Package pdftex.def Info: nlist.png used on input line 251.
+Package pdftex.def Info: nlist.png used on input line 263.
 (pdftex.def)             Requested size: 390.0pt x 89.33446pt.
-
-Overfull \hbox (29.27295pt too wide) in paragraph at lines 256--257
-[]\OT1/ptm/m/n/12 In fact, in very ad-vanced codes such as HOOMD (http://codebl
-ue.umich.edu/hoomd-
+ [10 <C:/Users/George/Desktop/project7/report/cell_list.png>]
+Overfull \hbox (2.3124pt too wide) in paragraph at lines 272--273
+\OT1/ptm/m/n/12 We used Google Tests within our soft-ware (see Make-file TESTS,
+ and unittests.cpp)
  []
 
-[11 <./nlist.png>]
-Overfull \hbox (7.02814pt too wide) in paragraph at lines 275--278
+LaTeX Font Info:    Font shape `OT1/pcr/bx/n' in size <12> not available
+(Font)              Font shape `OT1/pcr/b/n' tried instead on input line 276.
+[11 <C:/Users/George/Desktop/project7/report/nlist.png>]
+Overfull \hbox (7.02814pt too wide) in paragraph at lines 287--290
 \OT1/ptm/m/n/12 The soft-ware is im-ple-mented in object-oriented C++ and versi
 on-controlled through
  []
 
 
-Overfull \hbox (26.24176pt too wide) in paragraph at lines 275--278
-\OT1/ptm/m/n/12 an ac-tively up-dated github repos-i-tory $\OT1/pcr/m/n/12 http
-s : / / github . com / PrincetonUniversity /
+Overfull \hbox (28.60587pt too wide) in paragraph at lines 287--290
+\OT1/ptm/m/n/12 an ac-tively up-dated github repos-i-tory, $\OT1/pcr/m/n/12 htt
+ps : / / github . com / PrincetonUniversity /
  []
 
 
-Overfull \hbox (11.06082pt too wide) in paragraph at lines 275--278
-\OT1/ptm/m/n/12 tory, which con-tains both an html and a pdf doc-u-ment (doc/ou
-tput/latex/\OT1/ptm/b/n/12 refman.pdf\OT1/ptm/m/n/12 )
+Overfull \hbox (40.38846pt too wide) in paragraph at lines 287--290
+\OT1/ptm/m/n/12 repos-i-tory, which con-tains both an html and a pdf doc-u-ment
+ (doc/output/latex/\OT1/ptm/b/n/12 refman.pdf\OT1/ptm/m/n/12 )
  []
 
-LaTeX Font Info:    Font shape `OT1/pcr/bx/n' in size <12> not available
-(Font)              Font shape `OT1/pcr/b/n' tried instead on input line 280.
 
-Overfull \hbox (2.21443pt too wide) in paragraph at lines 288--289
+Overfull \hbox (2.21443pt too wide) in paragraph at lines 300--301
 \OT1/ptm/m/n/12 par-ent of all in-te-gra-tors we im-ple-mented (NVE and NVT wit
 h Nos[]e-Hoover) 
  []
 
 
-Overfull \hbox (12.00314pt too wide) in paragraph at lines 292--293
+Overfull \hbox (12.00314pt too wide) in paragraph at lines 304--305
 []\OT1/ptm/m/n/12 This file con-tains the in-te-gra-tor class which im-ple-ment
 s the velocity-
  []
 
-[12]
-Overfull \hbox (12.00314pt too wide) in paragraph at lines 294--295
+
+Overfull \hbox (12.00314pt too wide) in paragraph at lines 306--307
 []\OT1/ptm/m/n/12 This file con-tains the in-te-gra-tor class which im-ple-ment
 s the velocity-
  []
 
-[13] [14] [15]
-Overfull \hbox (78.93013pt too wide) in paragraph at lines 334--336
+[12] [13] [14] [15]
+Overfull \hbox (78.93013pt too wide) in paragraph at lines 348--350
 \OT1/ptm/m/n/12 used in-stead. For-tu-nately, thrust pro-vides a built-in func-
 tion called ``thrust::raw[]pointer[]cast"
  []
 
 
-Overfull \hbox (2.44333pt too wide) in paragraph at lines 334--336
+Overfull \hbox (2.44333pt too wide) in paragraph at lines 348--350
 \OT1/ptm/m/n/12 help of the class (and sub-se-quent mem-bers of) sys-tem-Props 
 in cu-d-a-Helper.cu 
  []
 
-[16]
-Overfull \hbox (10.75916pt too wide) in paragraph at lines 344--345
+
+Overfull \hbox (10.75916pt too wide) in paragraph at lines 358--359
 \OT1/ptm/m/n/12 Both re-duc-tions and ``par-al-lel for" clauses were very use-f
 ul. Dy-namic schedul-
  []
 
-
-Overfull \hbox (7.23921pt too wide) in paragraph at lines 352--353
+[16]
+Overfull \hbox (7.23921pt too wide) in paragraph at lines 366--367
 []\OT1/ptm/m/n/12 This file con-tains the meth-ods for the sys-temDef-i-ni-tion
  class. These
  []
 
 [17] [18]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 383.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 397.
 
-Overfull \hbox (47.17393pt too wide) in paragraph at lines 383--397
+Overfull \hbox (47.17393pt too wide) in paragraph at lines 397--411
  [][][] 
  []
 
 [19]
 Package epstopdf Info: Source file: <scalingtiger_rs_000.eps>
-(epstopdf)                    date: 2014-01-11 16:27:58
-(epstopdf)                    size: 21814 bytes
+(epstopdf)                    date: 2014-01-12 18:02:39
+(epstopdf)                    size: 23093 bytes
 (epstopdf)             Output file: <scalingtiger_rs_000-eps-converted-to.pdf>
-(epstopdf)                    date: 2014-01-11 16:27:58
+(epstopdf)                    date: 2014-01-12 18:02:39
 (epstopdf)                    size: 15530 bytes
 (epstopdf)             Command: <epstopdf --outfile=scalingtiger_rs_000-eps-con
 verted-to.pdf scalingtiger_rs_000.eps>
-(epstopdf)             \includegraphics on input line 408.
+(epstopdf)             \includegraphics on input line 422.
 Package epstopdf Info: Output file is already uptodate.
- <scalingtiger_rs_000-eps-converted-to.pdf, id=83, 578.16pt x 433.62pt>
+ <scalingtiger_rs_000-eps-converted-to.pdf, id=82, 578.16pt x 433.62pt>
 File: scalingtiger_rs_000-eps-converted-to.pdf Graphic file (type pdf)
 
 <use scalingtiger_rs_000-eps-converted-to.pdf>
 Package pdftex.def Info: scalingtiger_rs_000-eps-converted-to.pdf used on input
- line 408.
+ line 422.
 (pdftex.def)             Requested size: 195.0pt x 146.24449pt.
 Package epstopdf Info: Source file: <scalingtiger_rs_050.eps>
-(epstopdf)                    date: 2014-01-11 16:27:58
-(epstopdf)                    size: 22682 bytes
+(epstopdf)                    date: 2014-01-12 18:02:39
+(epstopdf)                    size: 24033 bytes
 (epstopdf)             Output file: <scalingtiger_rs_050-eps-converted-to.pdf>
-(epstopdf)                    date: 2014-01-11 16:27:58
+(epstopdf)                    date: 2014-01-12 18:02:39
 (epstopdf)                    size: 15819 bytes
 (epstopdf)             Command: <epstopdf --outfile=scalingtiger_rs_050-eps-con
 verted-to.pdf scalingtiger_rs_050.eps>
-(epstopdf)             \includegraphics on input line 412.
+(epstopdf)             \includegraphics on input line 426.
 Package epstopdf Info: Output file is already uptodate.
 
-<scalingtiger_rs_050-eps-converted-to.pdf, id=84, 578.16pt x 433.62pt>
+<scalingtiger_rs_050-eps-converted-to.pdf, id=83, 578.16pt x 433.62pt>
 File: scalingtiger_rs_050-eps-converted-to.pdf Graphic file (type pdf)
 
 <use scalingtiger_rs_050-eps-converted-to.pdf>
 Package pdftex.def Info: scalingtiger_rs_050-eps-converted-to.pdf used on input
- line 412.
+ line 426.
 (pdftex.def)             Requested size: 195.0pt x 146.24449pt.
 Package epstopdf Info: Source file: <scalingtiger_rs_100.eps>
-(epstopdf)                    date: 2014-01-11 16:27:58
-(epstopdf)                    size: 24086 bytes
+(epstopdf)                    date: 2014-01-12 18:02:39
+(epstopdf)                    size: 25528 bytes
 (epstopdf)             Output file: <scalingtiger_rs_100-eps-converted-to.pdf>
-(epstopdf)                    date: 2014-01-11 16:27:58
+(epstopdf)                    date: 2014-01-12 18:02:39
 (epstopdf)                    size: 16537 bytes
 (epstopdf)             Command: <epstopdf --outfile=scalingtiger_rs_100-eps-con
 verted-to.pdf scalingtiger_rs_100.eps>
-(epstopdf)             \includegraphics on input line 416.
+(epstopdf)             \includegraphics on input line 430.
 Package epstopdf Info: Output file is already uptodate.
 
-<scalingtiger_rs_100-eps-converted-to.pdf, id=85, 578.16pt x 433.62pt>
+<scalingtiger_rs_100-eps-converted-to.pdf, id=84, 578.16pt x 433.62pt>
 File: scalingtiger_rs_100-eps-converted-to.pdf Graphic file (type pdf)
 
 <use scalingtiger_rs_100-eps-converted-to.pdf>
 Package pdftex.def Info: scalingtiger_rs_100-eps-converted-to.pdf used on input
- line 416.
+ line 430.
 (pdftex.def)             Requested size: 195.0pt x 146.24449pt.
 Package epstopdf Info: Source file: <gpu_time.eps>
-(epstopdf)                    date: 2014-01-12 13:17:47
-(epstopdf)                    size: 23370 bytes
+(epstopdf)                    date: 2014-01-12 18:02:39
+(epstopdf)                    size: 24371 bytes
 (epstopdf)             Output file: <gpu_time-eps-converted-to.pdf>
-(epstopdf)                    date: 2014-01-12 13:18:37
+(epstopdf)                    date: 2014-01-12 18:02:39
 (epstopdf)                    size: 9173 bytes
 (epstopdf)             Command: <epstopdf --outfile=gpu_time-eps-converted-to.p
 df gpu_time.eps>
-(epstopdf)             \includegraphics on input line 420.
+(epstopdf)             \includegraphics on input line 434.
 Package epstopdf Info: Output file is already uptodate.
 
-<gpu_time-eps-converted-to.pdf, id=86, 505.89pt x 722.7pt>
+<gpu_time-eps-converted-to.pdf, id=85, 505.89pt x 722.7pt>
 File: gpu_time-eps-converted-to.pdf Graphic file (type pdf)
 
 <use gpu_time-eps-converted-to.pdf>
-Package pdftex.def Info: gpu_time-eps-converted-to.pdf used on input line 420.
+Package pdftex.def Info: gpu_time-eps-converted-to.pdf used on input line 434.
 (pdftex.def)             Requested size: 136.4994pt x 194.99927pt.
 
-Overfull \hbox (2.28003pt too wide) in paragraph at lines 407--423
+Overfull \hbox (2.28003pt too wide) in paragraph at lines 421--437
 []$[]$ $[]$
  []
 
 
-Overfull \hbox (2.28003pt too wide) in paragraph at lines 407--423
+Overfull \hbox (2.28003pt too wide) in paragraph at lines 421--437
 []$ $[]$ 
  []
 
-[20] [21 <./scalingtiger_rs_000-eps-converted-to.pdf> <./scalingtiger_rs_050-ep
-s-converted-to.pdf> <./scalingtiger_rs_100-eps-converted-to.pdf> <./gpu_time-ep
-s-converted-to.pdf>] [22]
+[20] [21 <C:/Users/George/Desktop/project7/report/scalingtiger_rs_000-eps-conve
+rted-to.pdf> <C:/Users/George/Desktop/project7/report/scalingtiger_rs_050-eps-c
+onverted-to.pdf> <C:/Users/George/Desktop/project7/report/scalingtiger_rs_100-e
+ps-converted-to.pdf> <C:/Users/George/Desktop/project7/report/gpu_time-eps-conv
+erted-to.pdf>] [22]
 Package epstopdf Info: Source file: <T_compare.eps>
-(epstopdf)                    date: 2014-01-06 22:21:40
-(epstopdf)                    size: 24173 bytes
+(epstopdf)                    date: 2014-01-12 18:02:39
+(epstopdf)                    size: 25632 bytes
 (epstopdf)             Output file: <T_compare-eps-converted-to.pdf>
-(epstopdf)                    date: 2014-01-06 22:21:40
+(epstopdf)                    date: 2014-01-12 18:02:39
 (epstopdf)                    size: 18193 bytes
 (epstopdf)             Command: <epstopdf --outfile=T_compare-eps-converted-to.
 pdf T_compare.eps>
-(epstopdf)             \includegraphics on input line 467.
+(epstopdf)             \includegraphics on input line 478.
 Package epstopdf Info: Output file is already uptodate.
 
-<T_compare-eps-converted-to.pdf, id=191, 578.16pt x 433.62pt>
+<T_compare-eps-converted-to.pdf, id=190, 578.16pt x 433.62pt>
 File: T_compare-eps-converted-to.pdf Graphic file (type pdf)
 
 <use T_compare-eps-converted-to.pdf>
-Package pdftex.def Info: T_compare-eps-converted-to.pdf used on input line 467.
+Package pdftex.def Info: T_compare-eps-converted-to.pdf used on input line 478.
 
 (pdftex.def)             Requested size: 195.0pt x 146.24449pt.
 Package epstopdf Info: Source file: <PE_compare.eps>
-(epstopdf)                    date: 2014-01-06 22:21:40
-(epstopdf)                    size: 29461 bytes
+(epstopdf)                    date: 2014-01-12 18:02:39
+(epstopdf)                    size: 31209 bytes
 (epstopdf)             Output file: <PE_compare-eps-converted-to.pdf>
-(epstopdf)                    date: 2014-01-06 22:21:40
+(epstopdf)                    date: 2014-01-12 18:02:39
 (epstopdf)                    size: 23392 bytes
 (epstopdf)             Command: <epstopdf --outfile=PE_compare-eps-converted-to
 .pdf PE_compare.eps>
-(epstopdf)             \includegraphics on input line 471.
+(epstopdf)             \includegraphics on input line 482.
 Package epstopdf Info: Output file is already uptodate.
 
-<PE_compare-eps-converted-to.pdf, id=192, 578.16pt x 433.62pt>
+<PE_compare-eps-converted-to.pdf, id=191, 578.16pt x 433.62pt>
 File: PE_compare-eps-converted-to.pdf Graphic file (type pdf)
 
 <use PE_compare-eps-converted-to.pdf>
-Package pdftex.def Info: PE_compare-eps-converted-to.pdf used on input line 471
+Package pdftex.def Info: PE_compare-eps-converted-to.pdf used on input line 482
 .
 (pdftex.def)             Requested size: 195.0pt x 146.24449pt.
 Package epstopdf Info: Source file: <E_compare.eps>
-(epstopdf)                    date: 2014-01-06 22:21:40
-(epstopdf)                    size: 29887 bytes
+(epstopdf)                    date: 2014-01-12 18:02:39
+(epstopdf)                    size: 31668 bytes
 (epstopdf)             Output file: <E_compare-eps-converted-to.pdf>
-(epstopdf)                    date: 2014-01-06 22:21:40
+(epstopdf)                    date: 2014-01-12 18:02:39
 (epstopdf)                    size: 23432 bytes
 (epstopdf)             Command: <epstopdf --outfile=E_compare-eps-converted-to.
 pdf E_compare.eps>
-(epstopdf)             \includegraphics on input line 475.
+(epstopdf)             \includegraphics on input line 486.
 Package epstopdf Info: Output file is already uptodate.
 
-<E_compare-eps-converted-to.pdf, id=193, 578.16pt x 433.62pt>
+<E_compare-eps-converted-to.pdf, id=192, 578.16pt x 433.62pt>
 File: E_compare-eps-converted-to.pdf Graphic file (type pdf)
 
 <use E_compare-eps-converted-to.pdf>
-Package pdftex.def Info: E_compare-eps-converted-to.pdf used on input line 475.
+Package pdftex.def Info: E_compare-eps-converted-to.pdf used on input line 486.
 
 (pdftex.def)             Requested size: 195.0pt x 146.24449pt.
 Package epstopdf Info: Source file: <gr_compare.eps>
-(epstopdf)                    date: 2014-01-06 22:21:40
-(epstopdf)                    size: 23504 bytes
+(epstopdf)                    date: 2014-01-12 18:02:39
+(epstopdf)                    size: 24946 bytes
 (epstopdf)             Output file: <gr_compare-eps-converted-to.pdf>
-(epstopdf)                    date: 2014-01-06 22:21:40
+(epstopdf)                    date: 2014-01-12 18:02:39
 (epstopdf)                    size: 18486 bytes
 (epstopdf)             Command: <epstopdf --outfile=gr_compare-eps-converted-to
 .pdf gr_compare.eps>
-(epstopdf)             \includegraphics on input line 479.
+(epstopdf)             \includegraphics on input line 490.
 Package epstopdf Info: Output file is already uptodate.
 
-<gr_compare-eps-converted-to.pdf, id=194, 578.16pt x 433.62pt>
+<gr_compare-eps-converted-to.pdf, id=193, 578.16pt x 433.62pt>
 File: gr_compare-eps-converted-to.pdf Graphic file (type pdf)
 
 <use gr_compare-eps-converted-to.pdf>
-Package pdftex.def Info: gr_compare-eps-converted-to.pdf used on input line 479
+Package pdftex.def Info: gr_compare-eps-converted-to.pdf used on input line 490
 .
 (pdftex.def)             Requested size: 195.0pt x 146.24449pt.
 Package epstopdf Info: Source file: <msd.eps>
-(epstopdf)                    date: 2014-01-07 22:47:06
-(epstopdf)                    size: 24504 bytes
+(epstopdf)                    date: 2014-01-12 18:02:39
+(epstopdf)                    size: 25681 bytes
 (epstopdf)             Output file: <msd-eps-converted-to.pdf>
-(epstopdf)                    date: 2014-01-07 22:49:01
+(epstopdf)                    date: 2014-01-12 18:02:39
 (epstopdf)                    size: 11673 bytes
 (epstopdf)             Command: <epstopdf --outfile=msd-eps-converted-to.pdf ms
 d.eps>
-(epstopdf)             \includegraphics on input line 483.
+(epstopdf)             \includegraphics on input line 494.
 Package epstopdf Info: Output file is already uptodate.
 
-<msd-eps-converted-to.pdf, id=195, 505.89pt x 722.7pt>
+<msd-eps-converted-to.pdf, id=194, 505.89pt x 722.7pt>
 File: msd-eps-converted-to.pdf Graphic file (type pdf)
 
 <use msd-eps-converted-to.pdf>
-Package pdftex.def Info: msd-eps-converted-to.pdf used on input line 483.
+Package pdftex.def Info: msd-eps-converted-to.pdf used on input line 494.
 (pdftex.def)             Requested size: 126.74881pt x 181.07153pt.
 
-Overfull \hbox (2.28003pt too wide) in paragraph at lines 466--486
+Overfull \hbox (2.28003pt too wide) in paragraph at lines 477--497
 []$[]$ $[]$
  []
 
 
-Overfull \hbox (2.28003pt too wide) in paragraph at lines 466--486
+Overfull \hbox (2.28003pt too wide) in paragraph at lines 477--497
 []$ $[]$
  []
 
@@ -700,15 +698,18 @@ Overfull \hbox (2.28003pt too wide) in paragraph at lines 466--486
 Overfull \vbox (57.53775pt too high) has occurred while \output is active []
 
 
-[24 <./T_compare-eps-converted-to.pdf> <./PE_compare-eps-converted-to.pdf> <./E
-_compare-eps-converted-to.pdf> <./gr_compare-eps-converted-to.pdf> <./msd-eps-c
-onverted-to.pdf>] <vmd_image.png, id=375, 513.92pt x 513.92pt>
+[24 <C:/Users/George/Desktop/project7/report/T_compare-eps-converted-to.pdf> <C
+:/Users/George/Desktop/project7/report/PE_compare-eps-converted-to.pdf> <C:/Use
+rs/George/Desktop/project7/report/E_compare-eps-converted-to.pdf> <C:/Users/Geo
+rge/Desktop/project7/report/gr_compare-eps-converted-to.pdf> <C:/Users/George/D
+esktop/project7/report/msd-eps-converted-to.pdf>]
+<vmd_image.png, id=374, 513.92pt x 513.92pt>
 File: vmd_image.png Graphic file (type png)
-
-<use vmd_image.png>
-Package pdftex.def Info: vmd_image.png used on input line 496.
+ <use vmd_image.png>
+Package pdftex.def Info: vmd_image.png used on input line 510.
 (pdftex.def)             Requested size: 195.0pt x 195.00148pt.
- [25 <./vmd_image.png>] [26] (./report.bbl
+ [25 <C:/Users/George/Desktop/project7/report/vmd_image.png>] [26]
+(C:\Users\George\Desktop\project7\report\report.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 4--6
 []\OT1/ptm/m/n/12 Karplus M, Mc-Cam-mon JA. Molec-u-lar dy-nam-ics sim-u-la-tio
 ns of
@@ -746,31 +747,29 @@ Underfull \hbox (badness 1163) in paragraph at lines 83--87
 omputers--
  []
 
-[28]) [29] (./report.aux) ) 
+[28]) [29] (C:\Users\George\Desktop\project7\report\report.aux) ) 
 Here is how much of TeX's memory you used:
- 4518 strings out of 493633
- 68657 string characters out of 3143378
- 140698 words of memory out of 3000000
- 7678 multiletter control sequences out of 15000+200000
+ 4655 strings out of 493921
+ 71254 string characters out of 3147279
+ 135190 words of memory out of 3000000
+ 7810 multiletter control sequences out of 15000+200000
  56018 words of font info for 115 fonts, out of 3000000 for 9000
- 831 hyphenation exceptions out of 8191
- 42i,10n,39p,2054b,421s stack positions out of 5000i,500n,10000p,200000b,50000s
-{/usr/local/texlive/2011/texmf-dist/fonts/enc/dvips/
-base/8r.enc}</usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmex10.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mmi10.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-r10.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
-10.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb><
-/usr/local/texlive/2011/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/loc
-al/texlive/2011/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/
-2011/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2011/texmf
--dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2011/texmf-dist/font
-s/type1/urw/times/utmri8a.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/u
-rw/zapfchan/uzcmi8a.pfb>
-Output written on report.pdf (29 pages, 788124 bytes).
+ 841 hyphenation exceptions out of 8191
+ 42i,10n,39p,2008b,438s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Program Fi
+les/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Program Files/MiKTeX 2.9/fon
+ts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
+/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/
+amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/
+cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/courier/ucrb8a.pfb><
+C:/Program Files/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb><C:/Users/George
+/AppData/Roaming/MiKTeX/2.9/fonts/type1/urw/symbol/usyr.pfb><C:/Program Files/M
+iKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/t
+ype1/urw/times/utmr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/ut
+mri8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/zapfchan/uzcmi8a.pfb>
+Output written on report.pdf (29 pages, 820151 bytes).
 PDF statistics:
- 430 PDF objects out of 1000 (max. 8388607)
- 143 compressed objects within 2 object streams
+ 427 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  71 words of extra memory for PDF output out of 10000 (max. 10000000)
 

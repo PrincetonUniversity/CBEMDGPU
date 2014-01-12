@@ -21,11 +21,6 @@
 \citation{Salomon-Ferrer2013}
 \citation{Anderson2008}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}}
-\citation{Anderson2008}
-\citation{Brown2012}
-\citation{Brown2011}
-\citation{Gotz2012}
-\citation{Salomon-Ferrer2013}
 \citation{Case2010}
 \citation{MacKerell1998}
 \citation{Scott1999}
@@ -35,7 +30,7 @@
 \citation{Jorgensen1983}
 \citation{Rahman1964}
 \citation{Debenedetti2001}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Molecular Dynamics algorithm graphical overview. MD begins with a system of particles coordinates and velocities, and integrates Newton's equation of motion forward in time utilizing a specified algorithm. A thermostat can be used to control the temperature through physics-based relationships between velocities and temperature. In this work, we implement the Nos\'{e}-Hoover Thermostat to control temperature.\relax }}{2}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Graphical overview of molecular dynamics algorithm. MD begins with a system of particles initialized with positions and velocities, and numerically integrates Newton's equation of motion forward in time. A thermostat can be used to control the temperature through physics-based relationships between velocities and temperature. In this work, we implement the Nos\'{e}-Hoover Thermostat to control temperature.\relax }}{2}}
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
 \newlabel{fig:mdfigure}{{1}{2}}
 \citation{Swope1982}
@@ -71,11 +66,11 @@
 \newlabel{sec:gpukernel}{{3.2}{18}}
 \@writefile{toc}{\contentsline {section}{\numberline {4}Results}{19}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Profiling}{19}}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Profiling results of our code in terms of most expensive functions, in order.\relax }}{20}}
-\newlabel{tab:profiling}{{1}{20}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Profiling results of our code in terms of most expensive functions, in order.\relax }}{19}}
+\newlabel{tab:profiling}{{1}{19}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Scaling Studies}{20}}
 \newlabel{sec:scalingstudies}{{4.2}{20}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Scaling results from testing our molecular dynamics simulations on CPUs and GPUs for different combinations of particle numbers, $r_{s}$ values, and number of processors. (a) $r_{s}$ = 0.00 (b) $r_{s}$ = 0.50 (c) $r_{s}$ = 1.00 (d) Scaling on the GPU when the CPU fraction of the code used 1 and 4 processors compared to the CPU results on a single core at various skin radii.\relax }}{21}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Scaling results from testing our molecular dynamics simulations on CPUs and GPUs for different combinations of particle numbers, $r_{s}$ values, and number of processors. (a) $r_{s}$ = 0.00 (b) $r_{s}$ = 0.50 (c) $r_{s}$ = 1.00 (d) Scaling on the GPU when the CPU fraction of the code used 1 and 4 processors compared to the CPU results on a single core at various skin radii. Each curve corresponds to a different number of particles $N$\relax }}{21}}
 \newlabel{fig:scaling_compare}{{5}{21}}
 \citation{Anderson2008}
 \citation{Lipscomb2012}
@@ -85,6 +80,7 @@
 \newlabel{table:lmp_compare}{{2}{22}}
 \@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Comparison between CBEMDGPU simulation and LAMMPS simulation for 4000 Lennard Jones particles at $T=0.71$ and $\rho =0.8442$. (a) Comparison of temperature over time. (b) Comparison of potential energy/atom over time. (c) Comparison of total energy/atom over time. (d) Comparison of radial distribution functions. (e) Mean squared displacement of atoms over normalized time; we report results well into the diffusive regime, as evidenced by the slope of unity in log-log scale. Anticorrelation (from collisions) following the ballistic regime are responsible for the poor fit at short times as well as the local reduced slope.\relax }}{24}}
 \newlabel{fig:lmp_compare}{{6}{24}}
+\citation{HUMP96}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Example Movie}{25}}
 \@writefile{toc}{\contentsline {section}{\numberline {5}Conclusions and Future Work}{25}}
 \bibstyle{proteins1}
@@ -119,3 +115,4 @@
 \bibcite{Swope1982}{28}
 \bibcite{Tuckerman1992}{29}
 \bibcite{Lipscomb2012}{30}
+\bibcite{HUMP96}{31}
