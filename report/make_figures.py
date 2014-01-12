@@ -140,11 +140,41 @@ pylab.legend()
 pylab.savefig('gr_compare.eps')
 pylab.clf()
 
+# read in timing results tiger
+f = open('../data_files/timing_results.txt.tiger')
+nprocs_tmp = []
+natoms_tmp = []
+rs_tmp = []
+runtime_tmp = []
+
+for line in f.readlines():
+    nprocs_tmp.append(int(line.split()[0]))
+    natoms_tmp.append(int(line.split()[1]))
+    rs_tmp.append(float(line.split()[2]))
+    runtime_tmp.append(float(line.split()[4]))
+
+
+nprocs = sorted(list(set(nprocs_tmp)))
+natoms = sorted(list(set(natoms_tmp)))
+rs = sorted(list(set(rs_tmp)))
+runtime = np.zeros((len(nprocs), len(natoms), len(rs)))
+
+
+for (i, j, k, l) in zip(nprocs_tmp, natoms_tmp, rs_tmp, runtime_tmp):
+    i1 = nprocs.index(i)
+    j1 = natoms.index(j)
+    k1 = rs.index(k)
+    runtime[i1][j1][k1] = l
+
+f.close()
+
+# plot the tiger timing results
 for j in range(len(rs)):
     for i in range(len(natoms)):
         pylab.plot(nprocs, runtime[:,i, j], label = str(natoms[i]))
     pylab.legend()
     pylab.xlabel('number of processors')
     pylab.ylabel('runtime (seconds)')
-    pylab.savefig('scaling_rs_%2.2f.eps' % rs[j])
+    pylab.savefig('scalingtiger_rs_%2.2f.eps' % rs[j])
     pylab.clf()
+
