@@ -5,7 +5,17 @@ CBEMDGPU
 
 >> by Nathan A. Mahynski, George A. Khoury, and Carmeline J. Dsilva
 
+Our main report in located in the report/ directory (report.pdf).
+
 See main.cpp to set parameters which are documented by example in this file.
+Our code has the following dependencies:
+
+1. Boost (http://www.boost.org/).  Refer to Makefile for PATHTOBOOST variable which must be set.  Note that compilation on TIGER is easy since you are allowed to link to other user's directories.  George's installation is already provided in the Makefile.
+2. Cuda toolkit 5.5 (module load module cudatoolkit/5.5.22 on TIGER)
+3. Intel C++ Compilers (icpc) (module load openmpi/intel-12.1/1.4.5/64 on TIGER)
+4. googletest (https://code.google.com/p/googletest/).  Again George's GTEST_DIR directory (see Makefile) is provided to be linked against at compile time.
+
+See FYI section below for more details.  These must be taken care of before attempting to compile the code.
 
 To compile the CPU version, type 
 $ make MD
@@ -65,7 +75,7 @@ $ ./md <nthreads> <natoms> <rs> <nsteps>  > log 2> err
     
     $ pointFunction_t pp = slj;
     
-   $ a.setPotential(pp);
+	$ a.setPotential(pp);
 
 7. If the GPUs are used (NVCC compiler flag is defined) the number of threads and blocks the GPU kernel will be invoked with must be set.  This is done next.
 
@@ -112,7 +122,7 @@ There are a few known instances of bugs related to compiler options, etc.
 	In fact, compilation may succeed with a bad version but the run time behavior produces unexpected (incorrect) results.
 	For the K20 cards on tiger, the latest toolkit (v5.5) must be loaded.
 	To do so, load the module cudatoolkit/5.5.22 before attempting to compile the program.
-	The Makefile must include flags consistent with the GPUs version of CUDA (which on tiger in 3.5) so the Makefile_cuda contains a flag "NVFLAGS = -gencode arch=compute_35,code=sm_35"  for the .cu files. 
+	The Makefile must include flags consistent with the GPUs version of CUDA (which on TIGER in 3.5) so the Makefile_cuda contains a flag "NVFLAGS = -gencode arch=compute_35,code=sm_35"  for the .cu files. 
 	Furthermore, you will find that preprocessor flags NVCC and NOGPU are found throughout the code which act as switches to activate/deactivate GPU functionality throughout the compilation process.
 
 3. Tiger GPUs
