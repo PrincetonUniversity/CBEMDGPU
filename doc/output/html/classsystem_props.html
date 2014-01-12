@@ -105,9 +105,8 @@ Public Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsystem_props.html#a5268e0f1a250cdf0810e9d899b85bea2">displayAllProps</a> ()</td></tr>
 <tr class="memdesc:a5268e0f1a250cdf0810e9d899b85bea2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Display cpu host and device (if using GPUs) properties. <br/></td></tr>
 <tr class="separator:a5268e0f1a250cdf0810e9d899b85bea2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec22f83e71043fd60cb61a45fcc25b02"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aec22f83e71043fd60cb61a45fcc25b02"></a>
-__host__ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsystem_props.html#aec22f83e71043fd60cb61a45fcc25b02">displayCudaProps</a> ()</td></tr>
-<tr class="memdesc:aec22f83e71043fd60cb61a45fcc25b02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Display the properties of the GPU being used. <br/></td></tr>
+<tr class="memitem:aec22f83e71043fd60cb61a45fcc25b02"><td class="memItemLeft" align="right" valign="top">__host__ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsystem_props.html#aec22f83e71043fd60cb61a45fcc25b02">displayCudaProps</a> ()</td></tr>
+<tr class="memdesc:aec22f83e71043fd60cb61a45fcc25b02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Display the properties of the GPU being used.  <a href="#aec22f83e71043fd60cb61a45fcc25b02"></a><br/></td></tr>
 <tr class="separator:aec22f83e71043fd60cb61a45fcc25b02"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeec628e3f468a2b274f08a0777dea6f1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeec628e3f468a2b274f08a0777dea6f1"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsystem_props.html#aeec628e3f468a2b274f08a0777dea6f1">displayHost</a> ()</td></tr>
@@ -133,13 +132,64 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <dl class="section date"><dt>Date</dt><dd>11/21/13 </dd></dl>
 
 <p>Definition at line <a class="el" href="cuda_helper_8h_source.html#l00026">26</a> of file <a class="el" href="cuda_helper_8h_source.html">cudaHelper.h</a>.</p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="aec22f83e71043fd60cb61a45fcc25b02"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__host__ void systemProps::displayCudaProps </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Display the properties of the GPU being used. </p>
+<p>Display properties of all CUDA capable devices </p>
+
+<p>Definition at line <a class="el" href="cuda_helper_8cu_source.html#l00023">23</a> of file <a class="el" href="cuda_helper_8cu_source.html">cudaHelper.cu</a>.</p>
+
+<p>Referenced by <a class="el" href="cuda_helper_8h_source.html#l00031">displayAllProps()</a>.</p>
+<div class="fragment"><div class="line">                                             {</div>
+<div class="line">    checkCudaDevices_();</div>
+<div class="line">    </div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i = 0; i &lt; device_.size(); ++i) {</div>
+<div class="line">        *output_ &lt;&lt; <span class="stringliteral">&quot;# &gt; Device Name: &quot;</span> &lt;&lt;  device_[i].name &lt;&lt; endl;</div>
+<div class="line">        *output_ &lt;&lt; <span class="stringliteral">&quot;# -----------------------------------&quot;</span> &lt;&lt; endl;</div>
+<div class="line">        *output_ &lt;&lt; <span class="stringliteral">&quot;# Total Global Memory: &quot;</span> &lt;&lt; device_[i].totalGlobalMem/1024 &lt;&lt; <span class="stringliteral">&quot; KB&quot;</span> &lt;&lt; endl;</div>
+<div class="line">        *output_ &lt;&lt; <span class="stringliteral">&quot;# Shared Memory available per Block: &quot;</span> &lt;&lt; device_[i].sharedMemPerBlock/1024 &lt;&lt; <span class="stringliteral">&quot; KB&quot;</span> &lt;&lt; endl;</div>
+<div class="line">        *output_ &lt;&lt; <span class="stringliteral">&quot;# Registers per Thread Block: &quot;</span> &lt;&lt; device_[i].regsPerBlock &lt;&lt; endl;</div>
+<div class="line">        *output_ &lt;&lt; <span class="stringliteral">&quot;# Warp Size: &quot;</span> &lt;&lt; device_[i].warpSize &lt;&lt; endl;</div>
+<div class="line">        *output_ &lt;&lt; <span class="stringliteral">&quot;# Memory Pitch: &quot;</span> &lt;&lt; device_[i].memPitch &lt;&lt; endl;</div>
+<div class="line">        *output_ &lt;&lt; <span class="stringliteral">&quot;# Maximum Threads per Block: &quot;</span> &lt;&lt; device_[i].maxThreadsPerBlock &lt;&lt; endl;</div>
+<div class="line">        *output_ &lt;&lt; <span class="stringliteral">&quot;# Maximum Thread Dimensions (Block): &quot;</span> &lt;&lt; device_[i].maxThreadsDim[0] &lt;&lt; <span class="stringliteral">&quot;x&quot;</span> &lt;&lt; device_[i].maxThreadsDim[1] &lt;&lt; <span class="stringliteral">&quot;x&quot;</span> &lt;&lt; device_[i].maxThreadsDim[2] &lt;&lt; endl;</div>
+<div class="line">        *output_ &lt;&lt; <span class="stringliteral">&quot;# Maximum Thread Dimensions (Grid): &quot;</span> &lt;&lt; device_[i].maxGridSize[0] &lt;&lt; <span class="stringliteral">&quot;x&quot;</span> &lt;&lt; device_[i].maxGridSize[1] &lt;&lt; <span class="stringliteral">&quot;x&quot;</span> &lt;&lt; device_[i].maxGridSize[2] &lt;&lt; endl;</div>
+<div class="line">        *output_ &lt;&lt; <span class="stringliteral">&quot;# Total Constant Memory: &quot;</span> &lt;&lt; device_[i].totalConstMem &lt;&lt; <span class="stringliteral">&quot; bytes&quot;</span> &lt;&lt; endl;</div>
+<div class="line">        *output_ &lt;&lt; <span class="stringliteral">&quot;# CUDA version: &quot;</span> &lt;&lt; device_[i].major &lt;&lt; <span class="stringliteral">&quot;.&quot;</span> &lt;&lt; device_[i].minor &lt;&lt; endl;</div>
+<div class="line">        *output_ &lt;&lt; <span class="stringliteral">&quot;# Clock Rate: &quot;</span> &lt;&lt; device_[i].clockRate &lt;&lt; <span class="stringliteral">&quot; kHz&quot;</span> &lt;&lt; endl;</div>
+<div class="line">        *output_ &lt;&lt; <span class="stringliteral">&quot;# Texture Alignment: &quot;</span> &lt;&lt; device_[i].textureAlignment &lt;&lt; <span class="stringliteral">&quot; bytes&quot;</span>&lt;&lt; endl;</div>
+<div class="line">        <span class="keywordflow">if</span> (device_[i].deviceOverlap == 0) {</div>
+<div class="line">            *output_ &lt;&lt; <span class="stringliteral">&quot;# Device Overlap: Not Allowed&quot;</span> &lt;&lt; endl;</div>
+<div class="line">        } <span class="keywordflow">else</span> {</div>
+<div class="line">            *output_ &lt;&lt; <span class="stringliteral">&quot;# Device Overlap: Allowed&quot;</span> &lt;&lt; endl;</div>
+<div class="line">        }</div>
+<div class="line">        *output_ &lt;&lt; <span class="stringliteral">&quot;# Number of Multiprocessors: &quot;</span> &lt;&lt; device_[i].multiProcessorCount &lt;&lt; endl;</div>
+<div class="line">        *output_ &lt;&lt; <span class="stringliteral">&quot;# -----------------------------------&quot;</span>&lt;&lt; endl;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>/Users/nathanmahynski/Desktop/CBEMDGPU/<a class="el" href="cuda_helper_8h_source.html">cudaHelper.h</a></li>
+<li>/Users/nathanmahynski/Desktop/CBEMDGPU/<a class="el" href="cuda_helper_8cu_source.html">cudaHelper.cu</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jan 10 2014 10:22:58 for Parallel Molecular Dynamics with a Time-Reversible Nose-Hoover Thermostat on CPUs and GPUs by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jan 12 2014 14:56:52 for Parallel Molecular Dynamics with a Time-Reversible Nose-Hoover Thermostat on CPUs and GPUs by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

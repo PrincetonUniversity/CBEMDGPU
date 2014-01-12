@@ -19,8 +19,7 @@ Holds all information about the C\-P\-U and G\-P\-U the simulation is being perf
 \hypertarget{classsystem_props_a5268e0f1a250cdf0810e9d899b85bea2}{void \hyperlink{classsystem_props_a5268e0f1a250cdf0810e9d899b85bea2}{display\-All\-Props} ()}\label{classsystem_props_a5268e0f1a250cdf0810e9d899b85bea2}
 
 \begin{DoxyCompactList}\small\item\em Display cpu host and device (if using G\-P\-Us) properties. \end{DoxyCompactList}\item 
-\hypertarget{classsystem_props_aec22f83e71043fd60cb61a45fcc25b02}{\-\_\-\-\_\-host\-\_\-\-\_\- void \hyperlink{classsystem_props_aec22f83e71043fd60cb61a45fcc25b02}{display\-Cuda\-Props} ()}\label{classsystem_props_aec22f83e71043fd60cb61a45fcc25b02}
-
+\-\_\-\-\_\-host\-\_\-\-\_\- void \hyperlink{classsystem_props_aec22f83e71043fd60cb61a45fcc25b02}{display\-Cuda\-Props} ()
 \begin{DoxyCompactList}\small\item\em Display the properties of the G\-P\-U being used. \end{DoxyCompactList}\item 
 \hypertarget{classsystem_props_aeec628e3f468a2b274f08a0777dea6f1}{void \hyperlink{classsystem_props_aeec628e3f468a2b274f08a0777dea6f1}{display\-Host} ()}\label{classsystem_props_aeec628e3f468a2b274f08a0777dea6f1}
 
@@ -51,6 +50,71 @@ Definition at line 26 of file cuda\-Helper.\-h.
 
 
 
-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\subsection{Member Function Documentation}
+\hypertarget{classsystem_props_aec22f83e71043fd60cb61a45fcc25b02}{\index{system\-Props@{system\-Props}!display\-Cuda\-Props@{display\-Cuda\-Props}}
+\index{display\-Cuda\-Props@{display\-Cuda\-Props}!systemProps@{system\-Props}}
+\subsubsection[{display\-Cuda\-Props}]{\setlength{\rightskip}{0pt plus 5cm}\-\_\-\-\_\-host\-\_\-\-\_\- void system\-Props\-::display\-Cuda\-Props (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classsystem_props_aec22f83e71043fd60cb61a45fcc25b02}
+
+
+Display the properties of the G\-P\-U being used. 
+
+Display properties of all C\-U\-D\-A capable devices 
+
+Definition at line 23 of file cuda\-Helper.\-cu.
+
+
+
+Referenced by display\-All\-Props().
+
+
+\begin{DoxyCode}
+                                             \{
+    checkCudaDevices\_();
+    
+    \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i = 0; i < device\_.size(); ++i) \{
+        *output\_ << \textcolor{stringliteral}{"# > Device Name: "} <<  device\_[i].name << endl;
+        *output\_ << \textcolor{stringliteral}{"# -----------------------------------"} << endl;
+        *output\_ << \textcolor{stringliteral}{"# Total Global Memory: "} << device\_[i].totalGlobalMem/1024
+       << \textcolor{stringliteral}{" KB"} << endl;
+        *output\_ << \textcolor{stringliteral}{"# Shared Memory available per Block: "} << device\_[i].
+      sharedMemPerBlock/1024 << \textcolor{stringliteral}{" KB"} << endl;
+        *output\_ << \textcolor{stringliteral}{"# Registers per Thread Block: "} << device\_[i].regsPerBlock
+       << endl;
+        *output\_ << \textcolor{stringliteral}{"# Warp Size: "} << device\_[i].warpSize << endl;
+        *output\_ << \textcolor{stringliteral}{"# Memory Pitch: "} << device\_[i].memPitch << endl;
+        *output\_ << \textcolor{stringliteral}{"# Maximum Threads per Block: "} << device\_[i].
+      maxThreadsPerBlock << endl;
+        *output\_ << \textcolor{stringliteral}{"# Maximum Thread Dimensions (Block): "} << device\_[i].
+      maxThreadsDim[0] << \textcolor{stringliteral}{"x"} << device\_[i].maxThreadsDim[1] << \textcolor{stringliteral}{"x"} << device\_[i].
+      maxThreadsDim[2] << endl;
+        *output\_ << \textcolor{stringliteral}{"# Maximum Thread Dimensions (Grid): "} << device\_[i].
+      maxGridSize[0] << \textcolor{stringliteral}{"x"} << device\_[i].maxGridSize[1] << \textcolor{stringliteral}{"x"} << device\_[i].maxGridSize[2]
+       << endl;
+        *output\_ << \textcolor{stringliteral}{"# Total Constant Memory: "} << device\_[i].totalConstMem << \textcolor{stringliteral}{
+      " bytes"} << endl;
+        *output\_ << \textcolor{stringliteral}{"# CUDA version: "} << device\_[i].major << \textcolor{stringliteral}{"."} << device\_[i]
+      .minor << endl;
+        *output\_ << \textcolor{stringliteral}{"# Clock Rate: "} << device\_[i].clockRate << \textcolor{stringliteral}{" kHz"} << endl;
+        *output\_ << \textcolor{stringliteral}{"# Texture Alignment: "} << device\_[i].textureAlignment << \textcolor{stringliteral}{"
+       bytes"}<< endl;
+        \textcolor{keywordflow}{if} (device\_[i].deviceOverlap == 0) \{
+            *output\_ << \textcolor{stringliteral}{"# Device Overlap: Not Allowed"} << endl;
+        \} \textcolor{keywordflow}{else} \{
+            *output\_ << \textcolor{stringliteral}{"# Device Overlap: Allowed"} << endl;
+        \}
+        *output\_ << \textcolor{stringliteral}{"# Number of Multiprocessors: "} << device\_[i].
+      multiProcessorCount << endl;
+        *output\_ << \textcolor{stringliteral}{"# -----------------------------------"}<< endl;
+    \}
+\}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-/\-Users/nathanmahynski/\-Desktop/\-C\-B\-E\-M\-D\-G\-P\-U/cuda\-Helper.\-h\end{DoxyCompactItemize}
+/\-Users/nathanmahynski/\-Desktop/\-C\-B\-E\-M\-D\-G\-P\-U/cuda\-Helper.\-h\item 
+/\-Users/nathanmahynski/\-Desktop/\-C\-B\-E\-M\-D\-G\-P\-U/cuda\-Helper.\-cu\end{DoxyCompactItemize}

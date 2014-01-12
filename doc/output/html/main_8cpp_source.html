@@ -161,22 +161,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <a class="code" href="classnvt___n_h.html" title="Uses Nose-Hover integration method to thermostat a system (constant T rather than E)...">nvt_NH</a> integrate (1.0);     <span class="comment">// damping constant for thermostat = 1.0</span></div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    integrate.setTimestep(timestep);</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">int</span> report = nSteps/1000;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">long</span> step = 0; step &lt; nSteps; ++step) {</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        integrate.step(a);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <span class="keywordflow">if</span> (step%report == 0) {</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            std::cout &lt;&lt; step &lt;&lt; <span class="stringliteral">&quot;\t&quot;</span> &lt;&lt; a.<a class="code" href="classsystem_definition.html#a6ef7fed76c5774d85f3c78943df2ed90" title="Report the instantaneous kinetic energy of the system.">KinE</a>() &lt;&lt; <span class="stringliteral">&quot;\t&quot;</span> &lt;&lt; a.<a class="code" href="classsystem_definition.html#a0b2c9729ed74a21dc91cab199e0fd99c" title="Report the instantaneous potential energy of the system.">PotE</a>() &lt;&lt; <span class="stringliteral">&quot;\t&quot;</span> &lt;&lt; a.<a class="code" href="classsystem_definition.html#af7b322cfc8abe7042fdbeb0af8e7aa7e" title="Report the instantaneous temperature.">instantT</a>() &lt;&lt; <span class="stringliteral">&quot;\t&quot;</span> &lt;&lt; a.<a class="code" href="classsystem_definition.html#a6ef7fed76c5774d85f3c78943df2ed90" title="Report the instantaneous kinetic energy of the system.">KinE</a>() + a.<a class="code" href="classsystem_definition.html#a0b2c9729ed74a21dc91cab199e0fd99c" title="Report the instantaneous potential energy of the system.">PotE</a>() &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            a.<a class="code" href="classsystem_definition.html#ae7be021831635d359872d046f58b337a" title="Print a snapshot of the system.">writeSnapshot</a>();</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        }</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    }</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;}</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keywordtype">int</span> report = nSteps/1000;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordflow">if</span> (nSteps &lt; 1000) report = 1;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                                                         </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <span class="keywordtype">long</span> step = 0; step &lt; nSteps; ++step) {</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        integrate.step(a);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keywordflow">if</span> (step%report == 0) {</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            std::cout &lt;&lt; step &lt;&lt; <span class="stringliteral">&quot;\t&quot;</span> &lt;&lt; a.<a class="code" href="classsystem_definition.html#a6ef7fed76c5774d85f3c78943df2ed90" title="Report the instantaneous kinetic energy of the system.">KinE</a>() &lt;&lt; <span class="stringliteral">&quot;\t&quot;</span> &lt;&lt; a.<a class="code" href="classsystem_definition.html#a0b2c9729ed74a21dc91cab199e0fd99c" title="Report the instantaneous potential energy of the system.">PotE</a>() &lt;&lt; <span class="stringliteral">&quot;\t&quot;</span> &lt;&lt; a.<a class="code" href="classsystem_definition.html#af7b322cfc8abe7042fdbeb0af8e7aa7e" title="Report the instantaneous temperature.">instantT</a>() &lt;&lt; <span class="stringliteral">&quot;\t&quot;</span> &lt;&lt; a.<a class="code" href="classsystem_definition.html#a6ef7fed76c5774d85f3c78943df2ed90" title="Report the instantaneous kinetic energy of the system.">KinE</a>() + a.<a class="code" href="classsystem_definition.html#a0b2c9729ed74a21dc91cab199e0fd99c" title="Report the instantaneous potential energy of the system.">PotE</a>() &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            a.<a class="code" href="classsystem_definition.html#ae7be021831635d359872d046f58b337a" title="Print a snapshot of the system.">writeSnapshot</a>();</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        }</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    }</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jan 10 2014 10:22:57 for Parallel Molecular Dynamics with a Time-Reversible Nose-Hoover Thermostat on CPUs and GPUs by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jan 12 2014 14:56:52 for Parallel Molecular Dynamics with a Time-Reversible Nose-Hoover Thermostat on CPUs and GPUs by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

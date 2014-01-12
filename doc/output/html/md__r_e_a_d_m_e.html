@@ -90,26 +90,38 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </blockquote>
 <p></p>
 </blockquote>
-<p>See <a class="el" href="main_8cpp_source.html">main.cpp</a> to set parameters which are documented by example in this file.</p>
-<p>To compile the CPU version, type $ make MD</p>
-<p>To compile the GPU version, type $ make -f Makefile_cuda</p>
-<p>To compile tests, type $ make TESTS</p>
-<p>To compile the timing executable (used for scaling studies), type $ make TIMING</p>
-<p>To compile the program that runs a simulation to compare with LAMMPS output, type $ make LMP_COMPARE</p>
-<p>To compile the program that tests the NVE integrator, type $ make TEST_NVE</p>
+<p>Our main report in located in the report/ directory (report.pdf).</p>
+<h1>Compiling</h1>
+<p>See <a class="el" href="main_8cpp_source.html">main.cpp</a> to set parameters which are documented by example in this file. Our code has the following dependencies:</p>
+<ol type="1">
+<li>Boost (<a href="http://www.boost.org/">http://www.boost.org/</a>). Refer to Makefile for PATHTOBOOST variable which must be set. Note that compilation on TIGER is easy since you are allowed to link to other user's directories. George's installation is already provided in the Makefile.</li>
+<li>Cuda toolkit 5.5 (module load module cudatoolkit/5.5.22 on TIGER)</li>
+<li>Intel C++ Compilers (icpc) and OMP (module load openmpi/intel-12.1/1.4.5/64 on TIGER)</li>
+<li>googletest (<a href="https://code.google.com/p/googletest/">https://code.google.com/p/googletest/</a>). Again George's GTEST_DIR directory (see Makefile) is provided to be linked against at compile time.</li>
+</ol>
+<p>See FYI section below for more details. These must be taken care of before attempting to compile the code. Always use "make clean" before attempting a new compilation.</p>
+<p>To compile the CPU version, type $ make MD which produces a binary called md</p>
+<p>To compile the GPU version, type $ make -f Makefile_cuda which produces a binary called md</p>
+<p>To compile tests, type $ make TESTS which produces a binary called tests</p>
+<p>To compile the timing executable (used for CPU only scaling studies), type $ make TIMING which produces a binary called timing</p>
+<p>To obtain the CUDA scaling results go to the cuda_timing/ directory, type $ make -f Makefile_cuda which produces a binary called cuda_timing</p>
+<p>To compile the program that runs a simulation to compare with LAMMPS output, type $ make LMP_COMPARE which produces a binary called lmp_compare used to generate data at specific settings we also ran on LAMMPS with.</p>
+<p>To compile the program that tests the NVE integrator, type $ make TEST_NVE which produces a binary called test_nve</p>
 <p>In the Makefile, the PATHTOBOOST variable should point to the diretory where the C++ boost libraries are saved.</p>
 <p>In the GTEST_DIR variable should point to the directory where the Google Tests libraries are saved.</p>
 <p>Note that the Intel C++ compilers must be used; the GNU C++ compilers do not work with the OpenMP portion of our code (this is a known bug in the compiler, see FYI section).</p>
 <h1>Execution</h1>
-<p><a class="el" href="main_8cpp_source.html">main.cpp</a> expects 4 input, the number of threads to use with OMP, the number of atoms, the skin radius for the cell/neighbor lists, and the number of steps to simulate. $ ./md &lt;nthreads&gt; &lt;natoms&gt; &lt;rs&gt; &lt;nsteps&gt; &gt; log 2&gt; err</p>
+<p>Most binaries expects 4 input, the number of threads to use with OMP, the number of atoms, the skin radius for the cell/neighbor lists, and the number of steps to simulate. $ ./md nthreads natoms rs nsteps &gt; log 2&gt; err.</p>
+<p>The exceptions are (1) tests which is simply executed as ./tests, and (2) test_nve and (3) lmp_compare which are executed as ./binary_name nthreads. However, the latter two are not of much interest; if you want to check the code is running just check to see if ./tests works.</p>
 <p>This also produces a trajectory.xyz file which can be visualized with VMD (if you have it installed) $ vmd -xyz trajectory.xyz</p>
+<p>Submission scripts for TIGER are included in the run_scaling.sh* files. The integer suffix (i.e. run_scaling.sh.1) refers to the number of threads OMP will use.</p>
 <h1>Explanation of <a class="el" href="main_8cpp_source.html">main.cpp</a></h1>
 <blockquote class="doxtable">
 <p>How to use, change, and make your own in 10 steps.</p>
 <p></p>
 </blockquote>
 <ol type="1">
-<li><a class="el" href="main_8cpp_source.html">main.cpp</a> expects 4 input, the number of threads to use with OMP, the number of atoms, the skin radius for the cell/neighbor lists, and the number of steps to simulate. $ ./md &lt;nthreads&gt; &lt;natoms&gt; &lt;rs&gt; &lt;nsteps&gt; &gt; log 2&gt; err</li>
+<li>Most binaries expects 4 input, the number of threads to use with OMP, the number of atoms, the skin radius for the cell/neighbor lists, and the number of steps to simulate. $ ./md nthreads natoms rs nsteps &gt; log 2&gt; err</li>
 </ol>
 <ol type="1">
 <li>The random number generator seed is then set manually to ensure that results are reproducible.</li>
@@ -163,18 +175,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </blockquote>
 <p>There are a few known instances of bugs related to compiler options, etc.</p>
 <ol type="1">
-<li>Using icpc instead of g++ Our code uses OMP to parallelize many calculations. Specifically, the atoms member (vector) in the <a class="el" href="classsystem_definition.html" title="Contains all information pertaining to a system being simulated.">systemDefinition</a> object must be shared often. However, because it is a member of a class g++ struggles to properly share this in memory. This is a known bug in the g++ compiler which the intel (icpc) version handles rigorously. As a result, our code will produce errors if compiled with the g++ compiler when more than 1 core is used. To use this on tiger the module openmpi/intel-12.1/1.4.5/64 should be loaded to make the icpc compiler accessible.</li>
+<li>Using icpc instead of g++ Our code uses OMP to parallelize many calculations. Specifically, the atoms member (vector) in the <a class="el" href="classsystem_definition.html" title="Contains all information pertaining to a system being simulated.">systemDefinition</a> object must be shared often. However, because it is a member of a class g++ struggles to properly share this in memory. This is a known bug in the g++ compiler which the intel (icpc) version handles rigorously. As a result, our code will produce errors if compiled with the g++ compiler when more than 1 core is used. To use this on tiger the module openmpi/intel-12.1/1.4.5/64 should be loaded to make the icpc compiler accessible. This also provides the OMP libraries necessary.</li>
 </ol>
 <ol type="1">
-<li>Cuda toolkit 5.5 CUDA is a finicky tool. Different GPUs require different toolkits and versions to work properly. In fact, compilation may succeed with a bad version but the run time behavior produces unexpected (incorrect) results. For the K20 cards on tiger, the latest toolkit (v5.5) must be loaded. To do so, load the module cudatoolkit/5.5.22 before attempting to compile the program. The Makefile must include flags consistent with the GPUs version of CUDA (which on tiger in 3.5) so the Makefile_cuda contains a flag "NVFLAGS = -gencode arch=compute_35,code=sm_35" for the .cu files. Furthermore, you will find that preprocessor flags NVCC and NOGPU are found throughout the code which act as switches to activate/deactivate GPU functionality throughout the compilation process.</li>
+<li>Cuda toolkit 5.5 CUDA is a finicky tool. Different GPUs require different toolkits and versions to work properly. In fact, compilation may succeed with a bad version but the run time behavior produces unexpected (incorrect) results. For the K20 cards on tiger, the latest toolkit (v5.5) must be loaded. To do so, load the module cudatoolkit/5.5.22 before attempting to compile the program. The Makefile must include flags consistent with the GPUs version of CUDA (which on TIGER in 3.5) so the Makefile_cuda contains a flag "NVFLAGS = -gencode arch=compute_35,code=sm_35" for the .cu files. Furthermore, you will find that preprocessor flags NVCC and NOGPU are found throughout the code which act as switches to activate/deactivate GPU functionality throughout the compilation process.</li>
 </ol>
 <ol type="1">
-<li>Tiger GPUs Unfortunately it appears that the queueing system on tiger is having problems reserving all or some of the GPUs exclusively for single jobs by users. As a result, thrust (the GPU equivalent of the STL for C++) will have memory issues if one or more of the GPUs on a node are already in use. Because of the unusually high load on tiger over the past month, we have been unable to obtain good results on this cluster since usually this situation is encountered. Our private GPU cluster was used to obtian our results instead, though our Makefile_cuda is set so this should compile properly on tiger if you want to check. </li>
+<li>Tiger GPUs Unfortunately it appears that the queueing system on tiger is having problems reserving all or some of the GPUs exclusively for single jobs by users. As a result, thrust (the GPU equivalent of the STL for C++) will have memory issues if one or more of the GPUs on a node are already in use. Because of the unusually high load on tiger over the past month, we have been unable to obtain good results on this cluster since usually this situation is encountered. Our private GPU cluster was used to obtian our results instead, though our Makefile_cuda is set so this should compile properly on tiger if you want to check.</li>
+</ol>
+<ol type="1">
+<li>Use of preprocessor flags The use of NVCC and NOGPU flags is crucial during compilation to ensure the correct header files are linked and compiled, and certain sections of code are ignored depending on the compiler. The Makefiles provided already handle this appropriately, but one should be aware of these details while reading the code. </li>
 </ol>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jan 10 2014 10:22:58 for Parallel Molecular Dynamics with a Time-Reversible Nose-Hoover Thermostat on CPUs and GPUs by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jan 12 2014 14:56:52 for Parallel Molecular Dynamics with a Time-Reversible Nose-Hoover Thermostat on CPUs and GPUs by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>
