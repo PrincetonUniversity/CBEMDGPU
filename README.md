@@ -12,7 +12,7 @@ Our code has the following dependencies:
 
 1. Boost (http://www.boost.org/).  Refer to Makefile for PATHTOBOOST variable which must be set.  Note that compilation on TIGER is easy since you are allowed to link to other user's directories.  George's installation is already provided in the Makefile.
 2. Cuda toolkit 5.5 (module load module cudatoolkit/5.5.22 on TIGER)
-3. Intel C++ Compilers (icpc) (module load openmpi/intel-12.1/1.4.5/64 on TIGER)
+3. Intel C++ Compilers (icpc) and OMP (module load openmpi/intel-12.1/1.4.5/64 on TIGER) 
 4. googletest (https://code.google.com/p/googletest/).  Again George's GTEST_DIR directory (see Makefile) is provided to be linked against at compile time.
 
 See FYI section below for more details.  These must be taken care of before attempting to compile the code.
@@ -116,6 +116,7 @@ There are a few known instances of bugs related to compiler options, etc.
 	This is a known bug in the g++ compiler which the intel (icpc) version handles rigorously. 
 	As a result, our code will produce errors if compiled with the g++ compiler when more than 1 core is used.  
 	To use this on tiger the module openmpi/intel-12.1/1.4.5/64 should be loaded to make the icpc compiler accessible.
+	This also provides the OMP libraries necessary.
 
 2. Cuda toolkit 5.5
 	CUDA is a finicky tool.  Different GPUs require different toolkits and versions to work properly.  
