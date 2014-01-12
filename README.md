@@ -45,7 +45,7 @@ Note that the Intel C++ compilers must be used; the GNU C++ compilers do not wor
 Execution
 ====
 main.cpp expects 4 input, the number of threads to use with OMP, the number of atoms, the skin radius for the cell/neighbor lists, and the number of steps to simulate.
-$ ./md <nthreads> <natoms> <rs> <nsteps>  > log 2> err
+$ ./md nthreads natoms rs nsteps  > log 2> err
 
 This also produces a trajectory.xyz file which can be visualized with VMD (if you have it installed)
 $ vmd -xyz trajectory.xyz
@@ -55,7 +55,7 @@ Explanation of main.cpp
 > How to use, change, and make your own in 10 steps.
 
 1. main.cpp expects 4 input, the number of threads to use with OMP, the number of atoms, the skin radius for the cell/neighbor lists, and the number of steps to simulate.
-$ ./md <nthreads> <natoms> <rs> <nsteps>  > log 2> err
+$ ./md nthreads natoms rs nsteps  > log 2> err
 
 2. The random number generator seed is then set manually to ensure that results are reproducible.
 
@@ -131,3 +131,7 @@ There are a few known instances of bugs related to compiler options, etc.
 	As a result, thrust (the GPU equivalent of the STL for C++) will have memory issues if one or more of the GPUs on a node are already in use.
 	Because of the unusually high load on tiger over the past month, we have been unable to obtain good results on this cluster since usually this situation is encountered.  
 	Our private GPU cluster was used to obtian our results instead, though our Makefile_cuda is set so this should compile properly on tiger if you want to check.
+	
+4. Use of preprocessor flags
+	The use of NVCC and NOGPU flags is crucial during compilation to ensure the correct header files are linked and compiled, and certain sections of code are ignored depending on the compiler.
+	The Makefiles provided already handle this appropriately, but one should be aware of these details while reading the code.
