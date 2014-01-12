@@ -21,9 +21,9 @@
 
 Due to the dramatic increase in computing power over the last thirty years, molecular dynamics (MD) simulations have become a remarkably fruitful tool for scientific discovery and engineering exploration \cite{Karplus2002,Levitt2001}.
 %
-These simulations allow us to screen potential drug compounds \cite{Jorgensen2004}, explore protein folding dynamics \cite{Duan1998,Shaw2010,Piana2013,Lindorff-Larsen2011}, study \cite{Boero1998} and develop \cite{Zipoli2010} new catalysts, and explore extreme conditions (temperatures and pressures) that are experimentally inconvenient all without running expensive and time-consuming experiments in a laboratory.
+These simulations allow us to screen potential drug compounds \cite{Jorgensen2004}, explore protein folding dynamics \cite{Duan1998,Shaw2010,Piana2013,Lindorff-Larsen2011}, study \cite{Boero1998} and develop \cite{Zipoli2010} new catalysts, and explore extreme conditions (temperatures and pressures) that are experimentally inconvenient, all without running expensive and time-consuming experiments in a laboratory.
 %
-Early atomistic simulations were capable of running at only short physical timescales (picoseconds \cite{Karplus1979}), but due to enhancements in algorithms, hardware, and parallelization, physically relevant timescales (milliseconds \cite{Kohlhoff2014}) can now be tractably explored on current computers.
+Early atomistic simulations were only capable of running at  short timescales (picoseconds \cite{Karplus1979}), but due to advancements in algorithms, hardware, and parallelization, simulations on physically relevant timescales (milliseconds \cite{Kohlhoff2014}) are now tractable on current computers.
 
 At its core, molecular dynamics numerically integrates Newton's equation of motion ($force = mass \times acceleration$) forward in time.
 %
@@ -31,41 +31,53 @@ Different numerical integration schemes result in different numerical accuracies
 %
 Standard molecular dynamics fixes the number of particles, volume, and total energy of the system.
 %
-However, one can introduce thermostats and barostats to the integration algorithm to adjust the temperature and pressure of the system to attempt to keep them constant (See Figure~\ref{fig:mdfigure}).
+However, one can introduce thermostats and barostats to the integration algorithm to constrain the temperature and pressure of the system (See Figure~\ref{fig:mdfigure}).
 
 \begin{figure}
 \centering
 \includegraphics[width=0.65\textwidth]{mdfigure.png}
-\caption{Molecular Dynamics algorithm graphical overview. MD begins with a system of particles coordinates and velocities, and integrates Newton's equation of motion forward in time utilizing a specified algorithm. A thermostat can be used to control the temperature through physics-based relationships between velocities and temperature. In this work, we implement the Nos\'{e}-Hoover Thermostat to control temperature.}
+\caption{Graphical overview of molecular dynamics algorithm. MD begins with a system of particles initialized with positions and velocities, and numerically integrates Newton's equation of motion forward in time. A thermostat can be used to control the temperature through physics-based relationships between velocities and temperature. In this work, we implement the Nos\'{e}-Hoover Thermostat to control temperature.}
 \label{fig:mdfigure}
 \end{figure}
 
-Several molecular dynamics packages exist to perform parallelized atomistic molecular dynamics simulations on CPUs.
+Several molecular dynamics packages exist to perform parallelized atomistic molecular dynamics simulations on central processing units (CPUs); these include LAMMPS \cite{Plimpton1995}, AMBER \cite{Case2010}, CHARMM \cite{MacKerell1998}, GROMACS \cite{Scott1999}, and TINKER \cite{Ponder2003}.
 %
-These include LAMMPS \cite{Plimpton1995}, AMBER \cite{Case2010}, CHARMM \cite{MacKerell1998}, GROMACS \cite{Scott1999}, and TINKER \cite{Ponder2003}.
+Only very recently, some of these packages have been expanded to include implementations on graphics processing units (GPUs) \cite{Brown2012,Brown2011,Gotz2012,Salomon-Ferrer2013}, and new packages exclusive to GPUs such as HOOMD-Blue\cite{Anderson2008} have also been developed. 
 %
-Only very recently, some of these packages have been updated in order to be implemented on Graphics Processing Units (GPUs) \cite{Brown2012,Brown2011,Gotz2012,Salomon-Ferrer2013}, and new packages exclusive to GPUs such as HOOMD-Blue\cite{Anderson2008} have been developed. %
-The newly updated codes have not been nearly as extensively tested as their native CPU codebases, but can potentially offer significant speedups as pointed out by the AMBER developers (\url{http://ambermd.org/gpus/}).
+The newly updated codes have not been tested to the extent of their native CPU codebases, but offer the potential for significant speedups, as pointed out by the AMBER developers (\url{http://ambermd.org/gpus/}).
 
-Therefore, in this work we built a new software package from scratch to run molecular dynamics simulations in parallel on both CPUs and GPUs. The GPU implementation is an ambitious goal very much working on the cutting-edge of computational science since few and only recent implementations exist on GPUs \cite{Anderson2008,Brown2012,Brown2011,Gotz2012,Salomon-Ferrer2013}.
+In this work, we built a new software package to run molecular dynamics simulations in parallel on both CPUs and GPUs. 
 %
-The GPU implementation offers the promise of a significant speedup over CPU-only implementations.
+The GPU implementation was an ambitious goal very much working on the cutting-edge of computational science, 
+and offers the promise of a significant speedup over CPU-only implementations.
 %
-The software implements the Lennard-Jones potential for interatomic interactions, a velocity-Verlet integrator, and a Nos\'{e}-Hoover thermostat. The developed software is sufficiently modular that other integration algorithms and pair potentials can easily be incorporated in future versions.
+Because parallelization is essential for any modern day molecular dynamics software, we implemented our software to run in parallel on both CPUs (with shared memory) and GPUs, 
+making our code applicable to many different hardware architectures.
+
+Our software implements the Lennard-Jones potential for interatomic interactions, a velocity-Verlet integrator, and a Nos\'{e}-Hoover thermostat. 
+%
+Our developed software is sufficiently modular so that other integration algorithms and pair potentials can easily be incorporated in future versions.
 %
 We chose to include the Lennard-Jones potential because many of the standard force fields \cite{Case2010,MacKerell1998,Scott1999,Kaminski2001,Arnautova2006,Khoury2013} today are built on Lennard-Jones interactions.
 %
 For example, a commonly used model for water, the TIP3P water model \cite{Jorgensen1983}, is composed of Lennard-Jones interactions and an additional electrostatic term to account for water's ability to be polarized.
 %
 In addition, Lennard-Jones particles serve as a very good model for monotomic gases such as argon \cite{Rahman1964} and condensed amorphous phases such as glasses \cite{Debenedetti2001}.
-
-Because parallelization is essential for modern day molecular dynamics software, we implemented our software to run in parallel on both CPUs (with shared memory) and GPUs.
 %
-Our code is therefore fairly flexible and applicable to many different hardware architectures.
+We included the velocity-Verlet integration algorithm because it is an efficent, time-reversible, fourth-order accurrate integration scheme. 
+%
+We included the Nos\'{e}-Hoover thermostat because it is time-reversible.
+%
+In the remainder of this report, we will first outline the theory behind the algorithms we have implemented in our software.
+%
+We will then discuss the structure of our software.
+%
+We will show the results of our scaling and validation studies for our software, and then discuss some conclusions and future work.  
+
 
 \section{Theory and Algorithms}
 
-In the following section, we describe the theory and algorithms that underly the software developed.
+In the following section, we describe the theory and algorithms  underlying our software.
 %
 In what follows, we assume that our system of interest consists of $N$ particles.
 %
@@ -95,9 +107,9 @@ For a fixed number of particles (N), volume of the system (V), and energy (E), w
 \end{eqnarray}
 where $\mathbf{a}_i = \mathbf{F}_i/m$.
 %
-The forces can be calculated from the potential energy function and will be discussed further in subsection \ref{subsec:potential}.
+The forces can be calculated from the potential energy function and will be further discussed in Section \ref{subsec:potential}.
 
-Because $\mathbf{v}_i$ depends on both $\mathbf{a}_i(t)$ and $\mathbf{a}_i(t+\Delta t)$, the order of computations goes as follows
+Because $\mathbf{v}_i$ depends on both $\mathbf{a}_i(t)$ and $\mathbf{a}_i(t+\Delta t)$, the order of computations is as follows
 \begin{enumerate}
 \item Calculate $\mathbf{r}_i(t + \Delta t)$ from $\mathbf{r}_i(t)$, $\mathbf{v}_i(t)$, and $\mathbf{a}_i(t)$.
 \item Calculate $\mathbf{a}_i(t + \Delta t)$ from $\mathbf{r}_i(t + \Delta t)$.
@@ -105,11 +117,11 @@ Because $\mathbf{v}_i$ depends on both $\mathbf{a}_i(t)$ and $\mathbf{a}_i(t+\De
 \end{enumerate}
 
 \subsection{Thermostats} \label{subsec:thermostat}
-The equations in \ref{subsec:integrator} are only for NVE simulations.
+The equations in Section \ref{subsec:integrator} are only for NVE simulations.
 %
-If we are instead interested in fixing temperature (T) rather than energy (E), we must introduce the idea of a {\em thermostat} to our simulations.
+If we are instead interested in fixing temperature (T) rather than energy (E), we must introduce a {\em thermostat} into our simulations.
 %
-A thermostat is necessary in most simulations since experiments are not typically done at constant energy.
+A thermostat is required for most physically relevant simulations, since experiments are not typically done at constant energy.
 %
 The thermostat adjusts the velocities of the particles so that they (on average) maintain a user-specified desired temperature.
 
@@ -123,11 +135,11 @@ Let $T_{set}$ be the desired temperature.
 %
 Then the acceleration of the thermostat is given by
 \begin{equation}
-\ddot{\xi} = \frac{1}{Q} \left[ \sum_{i=1}^{N} m_i v_i^2 - N_f k_B T_{set} \right]
+\ddot{\xi}(t) = \frac{1}{Q} \left[ \sum_{i=1}^{N} m_i v_i(t)^2 - N_f k_B T_{set} \right] = \frac{1}{\tau^{2}} \left[\frac{T(t)}{T_{target}} -1 \right]
 \end{equation}
+where $\tau^{2} = \frac{Q}{(3N-1)*T_{target}}$ and $Q$, which is the thermal mass of the thermostat spring (we take $Q=1$, although it is adjustable).
 
 The equations of motion for the particles and the thermostat are
-
 \small
 \begin{eqnarray}
 r_i(t + \Delta t) &=& r_i(t) + v_i(t) \Delta t + \left[ a_i(t) - v_i(t)\dot{\xi}(t) \right] \frac{\Delta t^2}{2}\\
@@ -138,7 +150,8 @@ v_i(t + \Delta t) &=& v_i(t) + \left[ a_i(t) - v_i(t) \dot{\xi}(t) \right] \frac
 \normalsize
 
 The Nos\'{e}-Hoover thermostat can be shown to be time-reversible when it is implemented via the following algorithm.
-First, update the thermostat velocity using a half-step in time
+\begin{enumerate}
+\item Update the thermostat velocity using a half-step in time
 \begin{equation}
 \dot{\xi} (t+ \Delta t/2) = \dot{\xi}(t) + \ddot{\xi}(t) \frac{\Delta t}{2}
 \end{equation}
@@ -146,35 +159,30 @@ and thermostat position.
 \begin{equation}
 \xi (t+ \Delta t) = \xi(t) + \dot{\xi}(t+\Delta t/2)\Delta t
 \end{equation}
-Second, evolve the particle velocities with a half-step.
+\item Evolve the particle velocities with a half-step.
 \begin{equation}
 v_i (t+\Delta t/2) = v_i (t) \exp^{-\dot{\xi}(t+\Delta t/2) \Delta t/2} + a_{i} (t) \Delta t/2
 \end{equation}
-Third, evolve particle positions.
+\item evolve particle positions.
 \begin{equation}
 r_{i} (t+\Delta t) + r_{i} (t) + v_{i}(t+ \Delta t/2) \Delta t
 \end{equation}
-Fourth, call the function \textbf{calcForce} to update the accelerations at the next timestep.
+\item Call the function \textbf{calcForce} to update the accelerations at the next timestep.
 \begin{equation}
 a_{i} (t+\Delta t) = F_{i} (t+ \Delta t)/m_{i}
 \end{equation}
-Fifth, evolve the particle velocities.
+\item Evolve the particle velocities.
 \begin{equation}
 v_{i} (t+ \Delta t)  = [v_{i}(t+\Delta t/2) + a_{i}(t+\Delta t) \Delta t/2]\exp^{-\dot{\xi}(t+\Delta t/2) \Delta t/2}
 \end{equation}
-Finally, the thermostat velocity is updated.
+\item Update the thermostat velocity.
 \begin{equation}
 \dot{\xi}(t+\Delta t) = \dot{\xi} (t+\Delta t/2) + \ddot{\xi} (t+\Delta t) \Delta t /2
 \end{equation}
-The thermostat acceleration, $\ddot{\xi}(t)$ is expressed in the form
-\begin{equation}
-\ddot{\xi}(t) = \frac{1}{\tau^{2}} [\frac{T(t)}{T_{target}} -1 ]
-\end{equation}
-where $\tau^{2} = \frac{Q}{(3N-1)*T_{target}}$ and $Q$, which is the thermal mass of the thermostat spring equal to unity (although it is adjustable).
-Because this algorithm is time-reversible, we implemented it in our software.
-% END OF THAT DOC.
-
-The ability for this algorithm to be time-reversible is the result of a Trotter factorization of the Liouville propagator derived by Martyna and coworkers 20 years ago. Through their Trotter factorization they proved that any resulting integrator will be time-reversible \cite{Tuckerman1992}.
+\end{enumerate}
+Martyna and coworkers showed 20 years ago, using a Trotter factorization of the Liouville propagator, that this algorithm is time-reversible \cite{Tuckerman1992}.
+%
+We therefore chose to implement this algorithm in our software.
 
 \subsection{Pair potentials} \label{subsec:potential}
 
@@ -190,7 +198,7 @@ The total potential energy of the system is then given by
 \begin{equation}
 U_{tot} = \sum_{i=1}^{N} \sum_{j=1}^{i-1} U\left( \| r_i - r_j \| \right)
 \end{equation}
-
+%
 The force on a particle $F_i$ is the negative gradient of the potential, $F_i = -\nabla_i U_{tot}$.
 %
 It can be shown that
@@ -198,28 +206,31 @@ It can be shown that
 F_{i, x} = -\sum_{j \ne i} \frac{d U\left( \| r_i - r_j \| \right)}{d \| r_i - r_j \| } \frac{x_i - x_j}{\|r_i - r_j\|}.
 \end{equation}
 
-The potential energy and force calculations involve at worst-case $\mathcal{O}(N^2)$ calculations, since each of the $N$ particles can interact with the remaining $N-1$ particles.
+The potential energy and force calculations involve at most $\mathcal{O}(N^2)$ calculations, since each of the $N$ particles can interact with the remaining $N-1$ particles.
 %
-Therefore, the potential energy and force calculation are the portions that are typically parallelized and optimized in an MD code.
+Therefore, the potential energy and force calculations are the portions of the code that are typically parallelized and optimized in an MD software package.
 
 \subsection{Parallelization}
 
-We implemented parallelization on CPUs and GPUs in our molecular dynamics software.
+We parallelized our software on both CPUs and GPUs.
 %
-On CPUs, we parallelized our code using OpenMP and therefore, our code can run in parallel on any shared memory cluster.
+On CPUs, we parallelized our code using OpenMP so that our code can run in parallel on a shared memory cluster.
 %
-On GPUs, we parallelized our code using CUDA.
-The parallelization on GPUs is implemented in the force calculation, which accounts for 27\% percent of the cost of the simulation according to our profiling studies (see Table~\ref{tab:profiling}).
+We parallelized our code for GPUs using CUDA.
 %
-Parallelization and scaling were tested on the TIGER cluster, and through a private GPU cluster, ANDROS through the Panagiotopoulos Lab due to unusually heavy usage of TIGER GPUs over the past month.
+The parallelization on GPUs is implemented in the force calculation, which accounts for 27\% percent of the cost of the simulation (see Table~\ref{tab:profiling}).
+%
+Parallelization and scaling were tested on the TIGER cluster for the CPU parallelization, and through a private cluster (ANDROS, through the Panagiotopoulos Lab) for the GPU parallelization.
 
 \subsubsection{CUDA}
-CUDA stands for Compute Unified Device Architecture and is the product of the NVIDIA corporation.  CUDA is a programming language  that extends the C and C++ languages to allow a user to perform highly accelerated Single Instruction Multiple Data (SIMD) calculations by taking control of a GPU device.  Although this is a complex topic which cannot be discussed in complete detail here, the basic principle of a
-GPU code is to allocate memory on the device, copy information from the host CPU to the device into the previously allocated slot(s), perform calculations, then copy the results back.  Clearly, this process is bandwidth limited as will be discussed in detail in following sections.  To simplify the above process, a very convenient library called \textbf{thrust} has been developed which essentially extends the C++ STL onto GPU devices and takes advantage of iterators, scoping, etc. which make coding significantly easier.  This is now a standard in modern versions of CUDA (version 4.0 and greater).
+Compute Unified Device Architecture, or CUDA, is the product of the NVIDIA corporation.  
+%
+CUDA is a programming language  that extends the C and C++ languages to allow a user to perform highly accelerated Single Instruction Multiple Data (SIMD) calculations by taking control of a GPU device.  Although this is a complex topic which cannot be discussed in complete detail here, the basic principle of a
+GPU code is to allocate memory on the device, copy information from the host CPU to the device into the previously allocated slot(s), perform calculations, then copy the results back. This process is bandwidth limited, as will be discussed in detail in following sections.  To simplify the above process, a very convenient library called \textbf{thrust} has been developed which extends the C++ standard template library (STL) onto GPU devices and takes advantage of higher-level constructs (e.g. iterators, scoping) which make coding significantly easier.  Modern versions of CUDA (versions 4.0 and above) also implement a standard.
 
 CUDA code must be written in files with a ``.cu" extension to be interpreted by the nvcc compiler.  The CUDA toolkit used to compile and run the code must be the same.  On TIGER, we used the module cudatoolkit/5.5.22 which must be loaded before compilation and in the submission script for jobs.  Furthermore, the correct version flags must be enabled during compilation to make thrust work properly.  For the K20 GPUs on TIGER this requires the compiler flag ``NVFLAGS = -gencode arch=compute\_35,code=sm\_35" (see Makefile\_cuda).  The success of GPU codes is very sensitive to these details, and failure to strictly adhere to these (and many other) subtleties can produce code which compiles without error, but whose run time behavior is erroneous.
 
-A CUDA kernel function is a function which, when invoked, performs SIMD operations on a team of threads, processed in groups called warps.  Each warp is 32 threads, and there are a set number of threads per ``block".  Each block of threads is loaded on the GPU as a single unit and has access to shared memory allowing them to communicate locally but not with threads in other blocks.  To do so, global, constant, and texture memory must be used, and are valuable resources.  You will see we have included a class called systemProps in cudaHelper.h (also see cudaHelper.cu) which evaluates the properties of each device the code detects on a CPU host such as the maximum number of threads per block, etc. allowing the code to dynamically adjust to different GPUs.  We have found that a block size of 512 threads is roughly optimal, which is set in main.cpp.  Because the GPUs are generally memory and bandwidth limited, we set out to design an algorithm that uses a minimal amount of memory when performing GPU operations.
+A CUDA kernel function is a function which, when invoked, performs SIMD operations on a team of threads, processed in groups called warps.  Each warp is 32 threads, and there are a set number of threads per ``block".  Each block of threads is loaded on the GPU as a single unit and has access to shared memory, allowing them to communicate locally but not with threads in other blocks.  For communication, global, constant, and texture memory must be used.  We have included a class called systemProps in cudaHelper.h (also see cudaHelper.cu) which evaluates the properties of each device the code detects on a CPU host such as the maximum number of threads per block, etc. allowing the code to dynamically adjust to different GPUs.  We have found that a block size of 512 threads is roughly optimal, which is set in main.cpp.  Because the GPUs are generally memory and bandwidth limited, we set out to design an algorithm that uses a minimal amount of memory when performing GPU operations.
 
 \begin{figure}[H]
    	\includegraphics[width=\textwidth]{gpu2.png}
@@ -227,13 +238,13 @@ A CUDA kernel function is a function which, when invoked, performs SIMD operatio
 	\label{fig:cuda}
 \end{figure}
 
-The CUDA kernel we created parallelize the calculation of forces onto the GPU.  As shown in Table~\ref{tab:profiling} later, this is the primary place where time is spent when performing these simulations.  In order to minimize the number of pairs that need to be evaluated when performing this calculation, we employ neighbor lists when performing GPU simulations.  The reason we use neighbor lists over cell lists is that each thread on the GPU is calculating the net force on a given particle.  This all the possible atoms that contribute must be locally available (local memory).  If we used cell lists, this number (per atom) could be far too large and we did not expect this to be efficient.  However, on the CPU cell lists are much easier to maintain and so are more efficient when such size concerns are irrelevant.  In both cases, a coherent memory pool makes maintenance of these lists easy. Therefore in both the GPU and CPU version of our code these lists are maintained on the CPU and hence the name of the class ``cellList\_cpu" (see cellList.h).  Although for the both the GPU and CPU versions of the code the name of the class does not change, in the former it is actually a neighbor list while in the latter it is a true cell list.  A preprocessor flag separates the two at compile time depending on whether the NVCC compiler flag is defined (see Makefiles for comparison).  This is one of many examples which illustrate the need for fundamentally different algorithms on GPUs than CPUs.
+Our CUDA kernel parallelizes the force calculation onto the GPU.  As shown in Table~\ref{tab:profiling}, this is where the bulk of the computing time is spent.  In order to minimize the number of pairwise interatomic forces that need to be evaluated, we employ neighbor lists when performing GPU simulations.  We use neighbor lists, rather cell lists, because each thread on the GPU calulcates the net force on a given particle.  Therefore, all atoms that contribute to the force on an atom must be locally available (local memory).  If we used cell lists, this number (per atom) could be far too large, therefore compromising efficiency.  However, when parallelizing on CPUs, cell lists are much easier to maintain and are more efficient when size and memory concerns are irrelevant.  In both cases, a coherent memory pool makes maintenance of these lists easy. In both the GPU and CPU version of our code, these lists are maintained on the CPU in the class ``cellList\_cpu" (see cellList.h).  Although in both the GPU and CPU versions of the code, the name of the class does not change, in the former it is actually a neighbor list while in the latter it is a true cell list.  A preprocessor flag (NVCC) separates the two at compile time (see Makefiles for comparison).  This is one of many examples which illustrates the need for fundamentally different algorithms on GPUs than CPUs.
 
 \subsection{Cell Lists}
-On CPUs we maintain cell lists to minimize the number of pairwise comparisons each particle must check to compute the net force on each particle.  The easiest way to do this is by decomposing the simulation box domain into rectangular cells of size $r_s + r_{cut}$ where $r_{cut}$ is the cutoff in the pairwise potential and $r_s$ is the skin radius beyond this.  The use of a finite $r_s$ means that as the system evolve, the cell list does not need to be rebuilt (expensive) at every step.  Instead, one can simply check the net displacement since the last build of each particle.  If the sum of the two largest displacements exceeds $r_s$, then it is possible (if these displacements are antiparallel) that two particles which were not initially in each others' lists, now need to be (see cellList\_cpu::checkUpdate).  At this point the list must be rebuilt.  Full implementation details may be found in cellLists.cpp
+In the parallization on CPUs, we maintain cell lists to minimize the number of pairwise comparisons each particle must check to compute the net force on each particle.  The easiest way to do this is by decomposing the simulation box domain into rectangular cells of size $r_s + r_{cut}$ where $r_{cut}$ is the cutoff in the pairwise potential and $r_s$ is the skin radius beyond this.  The use of a finite $r_s$ means that as the system evolves, the cell list does not need to be rebuilt (which is expensive) at every step.  Instead, one can simply check the net displacement since the last build of each particle; if the sum of the two largest displacements exceeds $r_s$, then it is possible (if these displacements are antiparallel) that two particles now need to be in each others' lists (see cellList\_cpu::checkUpdate), and so we must rebuild the cell lists.  Full implementation details may be found in cellLists.cpp
 
-A cell list is created the first time the force calculation is called.  This is comprised of two vectors in the cellList\_cpu class (which is a member of the virtual base class ``integrator") called ``head" and ``list" (private members of cellList\_cpu) which define a minimal linked list.
-The head vector is a vector which contains the index of the ``first" atom in each cell.  This location is then iteratively looked up in ``list" which contains the index of the next atom in the cell.  The value located at that index in ``list"  provides the next, and so on until the value at a location in ``list" is 0 (in our C++ implementation we actually set this to be a negative number).  This is shown schematically in Fig.~\ref{fig:cell}.
+A cell list is created the first time the force calculation is called.  The cell list is comprised of two vectors in the cellList\_cpu class (which is a member of the virtual base class ``integrator") called ``head" and ``list" (private members of cellList\_cpu) which define a minimal linked list.
+The head vector is a vector which contains the index of the ``first" atom in each cell.  This location is then iteratively looked up in ``list" which contains the index of the next atom in the cell.  The value located at that index in ``list"  provides the next, and so on until the value at a location in ``list" is 0 (in our C++ implementation we actually set this to be a negative number).  This is depicted schematically in Fig.~\ref{fig:cell}.
 
 \begin{figure}[H]
    	\includegraphics[width=\textwidth]{cell_list.png}
@@ -241,11 +252,12 @@ The head vector is a vector which contains the index of the ``first" atom in eac
 	\label{fig:cell}
 \end{figure}
 
-The advantage of this technique is its simplicity; cell lists are easy to iterate through and only require $\mathcal{O}(N)$ space to store the information, where $N$ is the number of particles.  On a practical note, however, this iteration means that subsequent members of the list are not stored near each other in memory.  As a result, memory prefetching cannot be taken advantage of as cache misses become prevalent as N becomes large.  However, profiling has revealed that this is not too costly and we chose not to focus our efforts on changing this.
-\subsection{Neighbor Lists}
-On GPUs we maintain a neighbor list for each atom.  This neighbor list again keeps a record of all other atoms that are within $r_s + r_{cut}$ of each atom.  The addition of a finite skin radius again means the neighbor lists do not need to be rebuilt at every time step. If this radius is too large, each atom checks an excessive number of neighbors at each integration step, however, if it is too small the lists must be rebuilt more often.  We investigated the effects of changing this radius systematically as discussed in detail in following sections.
+The advantage of this technique is its simplicity; cell lists are easy to iterate through and only require $\mathcal{O}(N)$ space to store the information, where $N$ is the number of particles.  On a practical note, however, this iteration means that subsequent members of the list are not stored near each other in memory.  As a result, memory prefetching cannot be utilized, as cache misses become prevalent as $N$ becomes large.  However, profiling has shown that this is not too costly, and we chose not to focus our efforts on optimizing this portion of the software.
 
-These lists are stored as two linear arrays called ``nlist" and ``nlist\_index" (see cellList.cpp).  Element $j$ of the latter contains the index of the former where the information pertaining to the neighbors of $j$ is located.  At nlist[j] is an integer which is the number of neighbors, $n$, atom $j$ has, whose indices are recorded in the following $n$ elements of nlist (see Fig.~\ref{fig:nlist}).  This linear storage is optimal for passing it to the GPU.  These lists are built and maintained on the CPU since, when being built, every atom must be compared to every other one ($\mathcal{O}(N^2)$ process) which we deemed to be far too much communication for the GPU to handle locally on the device.
+\subsection{Neighbor Lists}
+In the paralleization on GPUs, we maintain a neighbor list for each atom.  This neighbor list again keeps a record of all other atoms that are within $r_s + r_{cut}$ of each atom.  The addition of a finite skin radius means the neighbor lists do not need to be rebuilt at every time step. If this radius is too large, each atom checks an excessive number of neighbors at each integration step; if $r_s$ is too small, the lists must be rebuilt too frequently.  We investigated the effects of changing this radius systematically; this will be discussed in following sections.
+
+These lists are stored as two linear arrays called ``nlist" and ``nlist\_index" (see cellList.cpp).  Element $j$ of the latter contains the index of the former where the information pertaining to the neighbors of $j$ is located.  At nlist[j] is an integer which is the number of neighbors, $n$, atom $j$ has, whose indices are recorded in the following $n$ elements of nlist (see Fig.~\ref{fig:nlist}).  This linear storage is optimal for passing it to the GPU.  These lists are built and maintained on the CPU since, when being built, every atom must be compared to every other one ($\mathcal{O}(N^2)$ process) which is too much communication for the GPU to handle locally.
 
 \begin{figure}[H]
    	\includegraphics[width=\textwidth]{nlist.png}
@@ -253,26 +265,26 @@ These lists are stored as two linear arrays called ``nlist" and ``nlist\_index" 
 	\label{fig:nlist}
 \end{figure}
 
-In fact, in very advanced codes such as HOOMD (http://codeblue.umich.edu/hoomd-blue/)~\cite{Anderson2008}, the neighbor lists themselves may be maintained on the GPUs.  This \emph{significantly} improves the speed of the code because it reduces the number of times data (memory) has to be sent back to the CPU. However, this requires communication between threads outside different blocks, various clever reductions, and a very careful consideration of the cache coherency on the GPU.  As a result, it is (unfortunately) well beyond what we found feasible in the time-frame allotted for this project, though we did investigate this in the literature~\cite{Lipscomb2012}. As will be shown in the following sections, this communication loss actually makes the GPU code slower than it can be, even though we will show that it overall is faster than our CPU code and significantly improves the speed of the force calculation, which were major deliverables of this project.
+In very advanced codes such as HOOMD (http://codeblue.umich.edu/hoomd-blue/)~\cite{Anderson2008}, the neighbor lists themselves may be maintained on the GPUs.  This \emph{significantly} improves the speed of the code because it reduces the number of times data (memory) has to be sent back to the CPU. However, this requires communication between threads outside different blocks, various clever reductions, and a very careful consideration of the cache coherency on the GPU.  As a result, it is (unfortunately) well beyond what we found feasible for this project, though we did investigate this in the literature~\cite{Lipscomb2012}. %As will be shown in the following sections, this communication loss actually makes the GPU code slower than it can be, even though we will show that it overall is faster than our CPU code and significantly improves the speed of the force calculation, which were major deliverables of this project.
 
 \subsection{Testing}
 
-We implemented Google Tests within our software (see Makefile TESTS, and unit tests.cpp) to ensure our code was functioning properly.
+We used Google Tests within our software (see Makefile TESTS, and unittests.cpp) to ensure our code was functioning properly.
 
 We implemented the following tests:
-	\begin{itemize}
+	\begin{description}
 	\item[\texttt{NumAtoms}] verifies that the system class stores the correct number of atoms
 	\item[\texttt{KineticEnergy}] calculates the kinetic energy for a two-atom system, and verifies that it is correctly returned by the KinE() function
 	\item[\texttt{PotentialEnergy}] calculates the potential energy for a two-atom system, and verifies that it is correctly returned by the PotE() function
 	\item[\texttt{ChangeBox}] changes the length of the simulation box and verifies that the box is correctly changed in the system definition
 	\item[\texttt{PBC}] computes the distance between two particles using the minimum image convention and verifies that it is correctly computed for different scenarios (out of box, inside box, etc.)
-	\end{itemize}
+	\end{description}
 
-Additionally, we benchmarked/validated our code's results against LAMMPS \cite{Plimpton1995}, described later in this report.
+Additionally, we validated our code's results against the results from a simulation in LAMMPS \cite{Plimpton1995}, described later in this report.
 
 \section{Code Structure and Implementation Notes}
 
-The software is implemented in object-oriented C++ and version-controlled through an actively updated github repository \url{https://github.com/PrincetonUniversity/CBEMDGPU}. The code is completely documented using \textbf{Doxygen} in the /doc directory, which contains both an html and a pdf document (doc/output/latex/\textbf{refman.pdf}) outlining the code structure and commenting all of the functions in the software.
+The software is implemented in object-oriented C++ and version-controlled through an actively updated github repository, \url{https://github.com/PrincetonUniversity/CBEMDGPU}. The code is documented using \textbf{Doxygen} in the doc directory of our repository, which contains both an html and a pdf document (doc/output/latex/\textbf{refman.pdf}) outlining the code structure and commenting all of the functions in the software.
 %
 The code structure is briefly summarized as follows:
 \begin{description}
@@ -311,20 +323,22 @@ We used a test fixture to initialize the same system construct for multiple test
 \end{description}
 
 \subsection{Optimizations}
-This section provides an overview of the optimizations performed in our software to lead to the final submitted version.  Iterative profiling was performed during development to prove these led to speed improvements, generally on the order of 5-20\% each between successive iterations.  The principle optimization tool was the use of OMP wherever possible, though intelligent C/C++ programming techniques also led to expected improvements. We outline the major optimizations employed in each file here.
+This section provides an overview of the optimizations we implemented in our software.  We used profiling during development to demonstrate these optimizations led to speed improvements, generally on the order of 5-20\% each.  The principal optimization tool was parallelization with OMP wherever possible, though intelligent C/C++ programming techniques also led to improvements. The major optimizations employed in each file are as follows:
 
 \begin{description}
 
-\item[\texttt{cellLists.cpp}] In order to maintain the cell and neighbor lists on the CPU efficiently we implemented a number of optimizations in the cellList\_cpu class, mostly in the cellList\_cpu::checkUpdate method which is responsible for checking whether the lists need to be updated.  Most algorithms we found in textbooks and in the literature simply state that if any pair of particles move toward each other more than the skin radius added to the cutoff radius of the potential used to build these lists, then the lists must be rebuilt.  This implies checking all pairs of particles which is an $\mathcal{O}(N^2)$ expense.  In fact, it is clear that this can be made truly $\mathcal{O}(N)$ by simply storing the positions of each atom at the time the lists are constructed, then calculating the displacement from those positions at each step. The largest two displacement magnitudes are then recorded (which does not require a full sorting of all the displacements, which is, in itself, an improvement). If one always assumes the worst possible scenario, that is, these two displacements are antiparallel, then if the sum of the displacements exceeds the skin radius, the lists should be reconstructed.  We employ this for both the CPU (cell lists) and GPU (neighbor lists) implementations.  This assumption is more restrictive than if each pair were truly calculated, especially since no assumption about the direction of each displacement is necessary, however this requires $N^2$ calculations each of which involve taking a square root which is very costly.  By making this blind, worst case scenario assumption, in fact we find that the code speeds up between 5 and 20\% depending on the system depending on the density, cutoff and skin radius, etc.
+\item[\texttt{cellLists.cpp}] In order to maintain the cell and neighbor lists on the CPU efficiently, we implemented a number of optimizations in the cellList\_cpu class, mostly in the cellList\_cpu::checkUpdate method which is responsible for checking whether the lists need to be updated.  Most algorithms in textbooks and literature simply state that if any pair of particles move toward each other more than $r_c + r_s$, the lists must be rebuilt, which is na\"{i}vely $\mathcal{O}(N^2)$.
+%
+  In fact, this can be an $\mathcal{O}(N)$ calculation by simply storing the positions of each atom at the time the lists are constructed, and calculating the displacement from those initial positions at each step. The largest two displacement magnitudes are recorded (which does not require a full sorting of all the displacements). If one always assumes the worst possible scenario (the two displacements are antiparallel), then the lists need to be rebuilt only if the sum of the displacements exceeds the skin radius.  We employ this algorithm for both the CPU (cell lists) and GPU (neighbor lists) implementations.  Although this assumption of displacements being antiparallel is more restrictive than if each pair of displacements were truly calculated, because the na\"{i}ve implementation requires $N^2$ calculations (each of which involve taking a square root), we find we achieve a speed up of between 5 and 20\% by making this assumption.
 
-On the GPU, where we implement neighbor lists, we also use some basic tricks of memory allocation to speed up the creation of the list.  As previously discussed, this must be a linear array in memory so they cane sent efficiently to the GPU.  However, since the number of neighbors changes, so does the size of each region between the green colored indices in Fig.~\ref{fig:nlist}. In fact, we preallocate a 2D array with space for each particles neighbors, into which each the list is built initially.  However, instead of simply appending each dimension every time an additional neighbor is found (beyond what was initially allocated in the 2D array), that list is doubled in size each time a new neighbor would otherwise overflow the current list.  Afterward the list is trimmed and linearized.  This dramatically reduces the number of memory operations and led to an estimated speed up of 10\%.
+On the GPU, where we implement neighbor lists, we also use some memory allocation tricks to speed up the list creation.  As previously discussed, this must be a linear array in memory so they can be sent efficiently to the GPU.  However, since the number of neighbors changes, so does the size of each region between the green colored indices in Fig.~\ref{fig:nlist}. We preallocate a 2D array with space for each particle's neighbors to store the initial list.  However, instead of simply  increasing the size of the array by one every time an additional neighbor is found (beyond what was initially allocated in the 2D array), the list is doubled in size each time a new neighbor would otherwise overflow the current list.  Afterward the list is trimmed and linearized.  This dramatically reduces the number of memory operations and led to an estimated speed up of 10\%.
 
-Such considerations were not necessary on the CPU since the ``head" and ``list" arrays (linked lists) are constant in size.  However, because of the memory operations for neighbor lists and the iterative nature of linked lists, neither list construction could be parallelized with OMP.  For true cell lists on the CPU, each cell must be linked to each of its neighbors so their constituent atoms could be compared.  Precomputing this, rather than on the fly led to another increase in speed of about 15\%.
+Such considerations were not necessary on the CPU since the ``head" and ``list" arrays (linked lists) are constant in size.  However, because of the memory operations for neighbor lists and the iterative nature of linked lists, neither list construction could be parallelized with OMP.  For true cell lists on the CPU, each cell must be linked to each of its neighbors so their constituent atoms could be compared.  Precomputing this led to another increase in speed of about 15\%.
 
 \item[\texttt{integrator.cpp}]
-The integrator::calcForce member of the virtual base class ``integrator" calculates the pairwise forces for all atoms in the simulation.  It first calls the checkUpdate member of its private cell list to see if the list needs to be updated, then proceeds to calculate the forces by comparing all the particles in a cell with those in the neighboring cells.  The cell width (skin radius plus the potential cutoff) is such that all particles within these neighbors are the only particles that need to be compared with those in the central cell.  Thus the loop executes by going cell by cell through the list.  OMP can be exploited to parallelize this and to compute the total potential energy simultaneously by using an ``omp parallel reduction" clause.  Dynamic scheduling was found to be the fastest (marginally since the system's density was generally homogeneous) with a chunk size of 1.  Because each thread is comparing all particles in a cell to all of those in the neighboring cells, a chunk size of 1 was actually found to be optimal.
+The integrator::calcForce member of the virtual base class ``integrator" calculates the pairwise forces for all atoms in the simulation.  It first calls the checkUpdate member of its private cell list to see if the list needs to be updated, then proceeds to calculate the forces by comparing all the particles in a cell with those in the neighboring cells.  The cell width (skin radius plus the potential cutoff) is such that all particles within these neighbors are the only particles that need to be compared with those in the central cell.  Thus the loop executes by going cell by cell through the list.  OMP can be exploited to parallelize this and to compute the total potential energy simultaneously by using an ``omp parallel reduction" clause.  Dynamic scheduling was found to be the fastest (marginally since the system's density was generally homogeneous) with a chunk size of 1.  Because each thread is comparing all particles in a cell to all of those in the neighboring cells, a chunk size of 1 was found to be optimal.
 
-In addition, since the instantaneous accelerations of each atom is the result of a sum over all pairwise interactions, we stored the accelerations in a separate vector rather than storing them locally in each atom structure.  This is because the instantaneous accelerations would otherwise have to be set to zero initially before each integration step which becomes a significant cost once the simulation incorporates many thousand of atoms.  OMP can then be used to assign these after the loop has finished, which gave us optimal performance.  Such considerations were irrelevant in the GPU implementation.
+In addition, since the instantaneous accelerations of each atom is the result of a sum over all pairwise interactions, we stored the accelerations in a separate vector rather than storing them locally in each atom structure.  This is because the instantaneous accelerations would otherwise have to be set to zero initially before each integration step, which becomes a significant cost once the simulation incorporates many thousands of atoms.  OMP can be used to assign the accelerations after the loop has finished, which gave us optimal performance.  Such considerations were irrelevant in the GPU implementation.
 
 \item[\texttt{integrator.cu}]
 The GPU functions necessary for our simulation must be compiled with NVIDIA's nvcc compiler which only recognizes .cu extensions.  As a result, we placed all the necessary functions to parallelize the force calculation in this file.  ``Device" analogs of functions that otherwise would execute on the host in the CPU version are indicated with ``dev\_" prefixes.  This includes dev\_pbcDist2, dev\_pairUF, and dev\_slj.  These include similar optimizations as applied to their CPU counterparts which are discussed in the following sections, so we will not repeat them here.  The GPU kernel ``loopOverNeighbors" is discussed in Section~\ref{sec:gpukernel} which we also neglect for the moment.
@@ -344,15 +358,15 @@ Highly optimized codes are actually capable of maintaining these lists directly 
 Both of these integrators make straightforward, extensive use of OMP parallelization to perform the necessary calculations.  Both reductions and ``parallel for" clauses were very useful.  Dynamic scheduling with a chunk size of 100 was found to be roughly optimal in most cases, hence we defined the OMP\_CHUNK macro in common.h to reflect this, which is used by default for these loops whenever possible.
 
 \item[\texttt{potential.cpp}]
-Two pair potentials are actually provided in this file; one is called ``pairUF" which is the potential from the last homework assignment (which was used as another test to verify our code worked properly) and the shifted Lennard-Jones (``slj").  The implementation of the latter was the primary goal of this project, however, we tested and implemented both.  Basic optimization generally apply to both cases and were a fruitful endeavor since the potential calculation constitutes a significant fraction of the overall simulation time.  After the following optimizations the total time spent in these routines dropped by about 10\% overall (see Table~\ref{tab:profiling}).
+Two pair potentials are provided in this file; ``pairUF" is the potential from the last homework assignment (which was used as another test to verify our code worked properly), and ``slj'' is the shifted Lennard-Jones potential.  The implementation of the shifted Lennard-Jones potential was the primary goal of this project; however, we tested and implemented both.  Basic optimizations generally apply to both potentials and were a fruitful endeavor, since the potential calculation constitutes a significant fraction of the overall simulation time.  After the following optimizations the total time spent in these routines dropped by about 10\% overall (see Table~\ref{tab:profiling}).
 
-To begin, the pair potential is zero if two atoms are beyond a certain cutoff distance and require no computational effort; using the square of this to compare before any calculation is performed is actually faster since when the distances are computed (see utils.cpp) the distance function can avoid taking an expensive square root.  Furthermore, precomputing factors which are constantly reused led to increased performance.  This was particularly noticeable for cases where we replaced quotients with products, that is, replacing a division by $x$ with a multiplication by $1/x$, at least when compiling the g++ compiler.  The intel compiler (icpc) actually seemed intelligent enough to replace this automatically when optimization flags were specified at compile time and we saw no significant change, though we left the code with the hard-coded improvements anyway.  In addition, the slj function must take certain quotients to the powers of 12 and 6; replacing this with products (say x2 = x*x; x6 = x2*x2*x2; x12 = x6*x6) also led to noticeable improvements in some cases.
+To begin, the pair potential is zero if two atoms are beyond a certain cutoff distance; using the squared distance for comparison is faster since the distance function can avoid taking an expensive square root (see utils.cpp).  Furthermore, precomputing factors which are constantly reused led to increased performance.  This was particularly noticeable for cases where we replaced quotients with products (e.g. replacing a division by $x$ with a multiplication by $1/x$) when compiling the \texttt{g++} compiler.  The intel compiler (icpc) did such substitutions automatically at compile-time when optimization flags were specified and we saw no significant change.  In addition, the slj function must take certain quotients to the powers of 12 and 6; replacing this with products (e.g. \texttt{x2 = x*x}; \texttt{x6 = x2*x2*x2}; \texttt{x12 = x6*x6}) also led to noticeable improvements.
 
 \item[\texttt{system.cpp}]
-This file contains the methods for the systemDefinition class.  These routines are involved in start-up and tear-down of the simulation and are not called on a regular basis except systemDefinition::writeSnapshot (which prints instantaneous snapshots of the system to a file).  As a result optimizations were not typically employed here, though we did use an OMP statement in systemDefinition::initRandom (creates a random initial condition) just to illustrate the point.  We did, however, make use of the boost library's ``normal\_distribution" to generate initial velocities according to a Maxwell-Boltzmann distribution which helps the system reach equilibrium faster during simulation.
+This file contains the methods for the systemDefinition class.  These routines are involved in start-up and tear-down of the simulation and are not called on a regular basis except systemDefinition::writeSnapshot (which prints instantaneous snapshots of the system to a file).  Therefore, optimizations were not typically employed here, though we did use an OMP statement in systemDefinition::initRandom (creates a random initial condition).  We did make use of the boost library's ``normal\_distribution" to generate initial velocities according to a Maxwell-Boltzmann distribution which helps the system reach equilibrium faster during simulation.
 
 \item[\texttt{utils.cpp}]
-The functions in this file pertain to handling the so-called ``minimum image" convention used in simulations with periodic boundaries.  The ``minimum image distance" is the distance between the two nearest periodic images of a pair of atoms.  Often the ``real distance" is initially computed by simply subtracting the two coordinates to obtain a vector, then each dimension is reduced by L*floor($dx$/L), where $dx$ is the component of the vector in a given principle cartesian direction and L is the box length in that direction.  While general, the floor function is costly and can be replicated with while loops as illustrated in the functions ``pbc" and ``pbcDist2."  In the latter function, for reasons previously discussed, we also choose to return the square (magnitude) of the minimum image distance to avoid taking a square root uneccessarily.
+The functions in this file handle the minimum image convention used in simulations with periodic boundaries.  The {\em minimum image distance} is the distance between the two nearest periodic images of a pair of atoms.  Often the ``real distance" is initially computed by simply subtracting the two coordinates to obtain a vector, then each dimension is reduced by L*floor($dx$/L), where $dx$ is the component of the vector in a given principle cartesian direction and L is the box length in that direction.  While general, the floor function is costly and can be replicated with while loops as illustrated in the functions ``pbc" and ``pbcDist2."  In the latter function, we also choose to return the square (magnitude) of the minimum image distance to avoid taking a square root uneccessarily.
 
 \end{description}
 
@@ -373,7 +387,7 @@ We point out that the way the neighbor list is organized is not very cache-coher
 
 \subsection{Profiling}
 
-Profiling was performed on the TIGER computer cluster using gprof with a number of different processor, skin radius, and particle combinations. We found that using 4 processors, 400 particles, a skin radius of 0.5 for 100 steps produced the most representative results. The software was compiled using the \textit{-pg} compiler option. The top 7 most expensive components of the software are presented in Table~\ref{tab:profiling}.
+Profiling was performed on the TIGER computer cluster using gprof, while varying number of processors, skin radius, and number of particle. We found that using 4 processors, 400 particles, and a skin radius of 0.5 for 100 steps produced the most representative results. The top 7 most expensive components of the software are presented in Table~\ref{tab:profiling}.
 
 % Table generated by Excel2LaTeX from sheet 'Sheet1'
 \begin{table}[htbp]
@@ -396,12 +410,12 @@ Profiling was performed on the TIGER computer cluster using gprof with a number 
   \label{tab:profiling}%
 \end{table}%
 
-The \textbf{calcForce} function consisted of the most expensive function in the program, followed by \textbf{pbcDist2}. The function calls to the shifted lennard-jones \textbf{slj} potential and cellLists that are maintained on the CPU \textbf{cellList\_cpu}. It would be expected that the \textbf{calcForce} function utilizes the majority of the computing time and this has been observed elsewhere in MD codes. Due to the expense of this function, this function was parallelized on the GPUs.
+The \textbf{calcForce} function was the most time-intensive portion of the program, followed by \textbf{pbcDist2}. It was expected that the \textbf{calcForce} function utilizes the majority of the computing time and this has been observed elsewhere in MD codes. Due to the expense of this function, this function was parallelized on the GPUs.
 
 \subsection{Scaling Studies}
 \label{sec:scalingstudies}
 
-We performed several scaling studies on the TIGER cluster for CPUs and ANDROS/TIGER for GPUs. Runs were performed on 1,2,4,8, and 16 processors on tiger, for $r_{s}$ (skin) cutoffs of 0.00, 0.50, and 1.00 and for 1000, 2000, 4000, 8000 particles for 10,000 steps. We used the shifted Lennard-Jones potential with parameters $\sigma = 1.0$, $\delta = 0$, $U_{shift} = 0.0$, and $\epsilon = 1.0$ where the cutoff radius ($r_c$) was set to 2.5$\sigma$.  The system box size was set to the cube root of the number of particles to maintain a fluid-like density.  The scaling results are shown in Figure~\ref{fig:scaling_compare}.  
+We performed several scaling studies on the TIGER cluster for CPUs and ANDROS/TIGER for GPUs. Runs were performed on 1,2,4,8, and 16 processors on tiger, for $r_{s}$ (skin) cutoffs of 0.00, 0.50, and 1.00 and for 1000, 2000, 4000, 8000 particles for 10,000 steps. We used the shifted Lennard-Jones potential with parameters $\sigma = 1.0$, $\delta = 0$, $U_{shift} = 0.0$, and $\epsilon = 1.0$ where the cutoff radius ($r_c$) was set to 2.5$\sigma$.  The system box size was set to the cube root of the number of particles to maintain a fluid-like density, and the temperature was set to $T=0.5$ in all simulations.  The scaling results are shown in Figure~\ref{fig:scaling_compare}.  
 
 \begin{figure}[H]
 	\begin{subfigure}{0.5\textwidth}
@@ -420,13 +434,13 @@ We performed several scaling studies on the TIGER cluster for CPUs and ANDROS/TI
 	\includegraphics[width=0.7\textwidth, angle=-90]{gpu_time.eps}
 	\caption{}
 	\end{subfigure}
-	\caption{Scaling results from testing our molecular dynamics simulations on CPUs and GPUs for different combinations of particle numbers, $r_{s}$ values, and number of processors. (a) $r_{s}$ = 0.00 (b) $r_{s}$ = 0.50 (c) $r_{s}$ = 1.00 (d) Scaling on the GPU when the CPU fraction of the code used 1 and 4 processors compared to the CPU results on a single core at various skin radii.}
+	\caption{Scaling results from testing our molecular dynamics simulations on CPUs and GPUs for different combinations of particle numbers, $r_{s}$ values, and number of processors. (a) $r_{s}$ = 0.00 (b) $r_{s}$ = 0.50 (c) $r_{s}$ = 1.00 (d) Scaling on the GPU when the CPU fraction of the code used 1 and 4 processors compared to the CPU results on a single core at various skin radii. Each curve corresponds to a different number of particles $N$}
 	\label{fig:scaling_compare}
 \end{figure}
 
-We observed that for all particle numbers introducing more processors scaled the requisite simulation time down relatively well, except for the case of $r_{s} = 0.00$. Note that in this case, the simulations nearly always finished sooner than their corresponding simulations when $r_s > 0$.  When the skin radius is zero, the cell lists are rebuilt every time and no maintenance (checkUpdate routine) needs to be done.  In fact, this reveals that the maintenance cost for cell lists on these systems outweighs their advantages for (relatively) small numbers of particles.  Adjusting the chunk size for OMP did not lead to qualitative changes in these trends.  However, we expect that for extremely large systems, this would no longer hold.  In the case of $r_s = 0$ for 16 processors with 8,000 atoms some communication issues arose on TIGER's hardware and led to poor scaling.  
+We observed that for all particle numbers, introducing more processors reduced the requisite simulation time, except for the case of $r_{s} = 0.00$. Note that in this case, the simulations nearly always finished sooner than their corresponding simulations when $r_s > 0$.  When the skin radius is zero, the cell lists are rebuilt every time and no maintenance (checkUpdate routine) needs to be done.  In fact, this reveals that the maintenance cost for cell lists on these systems outweighs their advantages for (relatively) small numbers of particles.  Adjusting the chunk size for OMP did not lead to qualitative changes in these trends.  However, we expect that for extremely large systems, this would no longer hold.  In the case of $r_s = 0$ for 16 processors with 8,000 atoms, some communication issues arose on TIGER's hardware, leading to poor scaling.  
 
-On the GPU we found that our simulations were sped up by about 30-50\% over their CPU counterparts on a single processor for smaller system sizes.  This is an impressive step forward given that the only thing we parallelized was the force calculation which comprises only about 27\% of the cost in the CPU implementation (see Table~\ref{tab:profiling}).  However, given that we additionally deployed device functions for the ``slj" and ``pbcDist2" on the GPU we were also able to cut into how much time each of these functions contributed to the overall speed of the program.  Thus we found that our GPU code performed quite admirably in this regime.  The size of the skin radius had negligible effect on the GPU code's speed so the results in Fig.~\ref{fig:scaling_compare} are representative for $r_s = 0,0.5$, and 1.  This is not uncommon for neighbor list implementations.  We also tested the case of having a different number of processors available for the (albeit small) fraction of the GPU code's use of the CPU to perform additional tasks.  As evidenced, this is negligible so it made almost no difference going from 1 to 4 processors.  Compared to the purely CPU code on a single core, the GPU code was up to twice as fast for a small number of particles when using large skin radii.  However, as shown by the fitted curve, the GPU time scales as $N^2$.  This is because of its reliance on neighbor lists (which is $\mathcal{O}(N^2)$) rather than cell lists ($\mathcal{O}(N)$ expense).  For the system sizes we investigated this did not present an advantage because our systems were small enough that, it is likely cell lists could be feasibly implemented on the GPU.   However, it is known that for large systems this becomes untenable due to bandwidth limitations~\cite{Anderson2008, Lipscomb2012} which is why we chose not pursue this.  This simply emphasizes the importance of maintaining these lists directly on the GPU, though for reasons already discussed, we were not able to implement such a routine.
+On the GPU, we found that our simulations were 30-50\% faster than their CPU counterparts on a single processor for small system sizes.  This is an impressive step forward, given that the force calculation (which comprises only about 27\% of the cost in the CPU implementation, see Table~\ref{tab:profiling}) was the only thing that was parallelized on the GPUs.  However, because we additionally deployed device functions for the ``slj" and ``pbcDist2" on the GPU, we were also able to decrease the time spent in these functions. We found that our GPU code performed quite admirably in the regimes we considered.  The size of the skin radius had negligible effect on the GPU code's speed so the results in Fig.~\ref{fig:scaling_compare} are representative for $r_s = 0,0.5, 1$; this is not uncommon for neighbor list implementations.  We also varied number of processors available for the (albeit small) fraction of the GPU code's that is performed on the CPU.  Because these portions of the code are negligible (in computational cost), it made almost no difference increasing from 1 to 4 available processors.  Compared to the purely CPU code on a single core, the GPU code was up to twice as fast for a small number of particles when using large skin radii.  However, as shown by the fitted curve, the GPU time scales as $N^2$,, because of its reliance on neighbor lists (which is $\mathcal{O}(N^2)$) rather than cell lists ($\mathcal{O}(N)$ expense).  For the small systems we investigated, this did not present an advantagel it is likely cell lists could be feasibly implemented on the GPU.   However, it is known that, for large systems, this becomes untenable due to bandwidth limitations~\cite{Anderson2008, Lipscomb2012} and so we chose not pursue this.  This simply emphasizes the importance of maintaining these lists directly on the GPU, though for reasons already discussed, we were not able to implement such a routine.
 
 \subsection{Benchmarking and Validation against Literature Values}
 
@@ -448,14 +462,11 @@ On the GPU we found that our simulations were sped up by about 30-50\% over thei
 \end{centering}
 \end{table}
 
-We validated our code against LAMMPS \cite{Plimpton1995} (http://lammps.sandia.gov), an existing and widely-used and tested commercial molecular dynamics software package.
+We validated our code against LAMMPS \cite{Plimpton1995} (http://lammps.sandia.gov), a tested and widely-used commercial molecular dynamics software package.
 %
-We simulated a system of 4000 Lennard-Jones particles at a reduced temperature $T=0.71$.
-%
-We used a cubic box with edge length $L=16.796$, so that the reduced density of the system $\rho = 0.8442$.
+We simulated a system of 4000 Lennard-Jones particles in a cubic box with edge length $L=16.796$ at a reduced temperature $T=0.71$.
 %
 We used a timestep $\Delta t=0.005$, and simulated for $10,000$ timesteps.
-
 
 We compared the temperature, potential energy, total energy, radial distribution function, and mean squared displacement for the simulations calculated in our package against LAMMPS.
 %
@@ -487,10 +498,13 @@ The results are shown in Figure~\ref{fig:lmp_compare} and Table~\ref{table:lmp_c
 	\label{fig:lmp_compare}
 \end{figure}
 
-There is excellent agreement between our software (CBEMDGPU) and the LAMMPS results. The average temperature and the behavior of the temperature fluctuations were qualitatively and quantitatively in agreement. Our temperature fluctuations are more smooth since we don't have as much damping and since LAMMPS uses Nos\'{e}-Hoover \emph{chains} whereas we use a single ``spring" to dampen the fluctuations. The potential and total energies' behaviors are the same, and the radial distribution functions calculated in both programs are within numerical error. These results illustrate that the software we have developed can reproduce the thermodynamic and dynamic behavior of the LAMMPS software, and is a strong validation of our underlying code.
+There is excellent agreement between our software (CBEMDGPU) and the LAMMPS results. The average temperature and the behavior of the temperature fluctuations were in quantitative agreement. Our temperature fluctuations are smoother due to the reduced damping in our software, and since LAMMPS uses Nos\'{e}-Hoover \emph{chains} whereas we use a single ``spring" to dampen the fluctuations. The potential and total energies' behaviors are the same, and the radial distribution functions calculated in both programs are within numerical error. These results illustrate that the software we have developed can reproduce the thermodynamic and dynamic behavior of the LAMMPS software, and validates our underlying code.
 
 \subsection{Example Movie}
 To see an example movie of a short LJ fluid simulation, see the file \url{/report/movie1.mpg}.
+%
+The data was collected from our molecular dynamics software, and the movie was produced using the Visual Molecular Dynamics (VMD) \cite{HUMP96} software package. 
+
 \begin{figure}[H]
 	\begin{center}
     	\includegraphics[width=0.5\textwidth]{vmd_image.png}
@@ -498,7 +512,7 @@ To see an example movie of a short LJ fluid simulation, see the file \url{/repor
 \end{figure}
 \section{Conclusions and Future Work}
 
-In conclusion, we set out to design a molecular dynamics (MD) simulation package that performed time reversible integration on a system of Lennard-Jones particles in the constant temperature (NVT) ensemble.  We accomplished this in an object-oriented, extensible fashion on CPUs and successfully extended our code to work on GPUs as well.  We implemented numerous optimizations including neighbor/cell lists and parallelization involving OMP.  We profiled and benchmarked code along the way to continuously improve our code and algorithms during development.  In addition, our code is extensible to other pair potential functions beyond Lennard-Jones, exemplified by the pairUF potential we provided for the CPU code.  We additionally made no restrictions involving the integration method (which is related to what ensemble we choose to work in) as demonstrated by our inclusion of an NVE class integrator.  Our constant-temperature integration scheme is a time-reversible implementation of the Nos\'{e}-Hoover thermostat, which preserves the dynamics of these systems, hence our ability to obtain mean-squared displacement plots, etc.  Finally we compared our code against publicly available MD packages and found quantitative agreement.  We have thus accomplished all our goals, and a few more, we originally laid out for this project.
+In conclusion, we set out to design a molecular dynamics (MD) simulation package that performed time reversible integration on a system of Lennard-Jones particles in the constant temperature (NVT) ensemble.  We accomplished this in an object-oriented, extensible fashion on CPUs and successfully extended our code to work on GPUs.  We implemented numerous optimizations including neighbor/cell lists and parallelization involving OMP.  We profiled and benchmarked code along the way to continuously improve our code and algorithms during development.  In addition, our code is extensible to other pair potential functions beyond Lennard-Jones, exemplified by the pairUF potential we provided for the CPU code.  We additionally made no restrictions involving the integration method (which is related to what ensemble we choose to work in) as demonstrated by our inclusion of an NVE class integrator.  Our constant-temperature integration scheme is a time-reversible implementation of the Nos\'{e}-Hoover thermostat, which preserves the dynamics of these systems, hence our ability to obtain mean-squared displacement plots, etc.  Finally we compared our code against publicly available MD packages and found quantitative agreement.  We have thus accomplished all our goals, and a few more, we originally laid out for this project.
 
 
 
