@@ -7,6 +7,9 @@ CBEMDGPU
 
 Our main report in located in the report/ directory (report.pdf).
 
+Compiling
+========
+
 See main.cpp to set parameters which are documented by example in this file.
 Our code has the following dependencies:
 
@@ -15,25 +18,35 @@ Our code has the following dependencies:
 3. Intel C++ Compilers (icpc) and OMP (module load openmpi/intel-12.1/1.4.5/64 on TIGER) 
 4. googletest (https://code.google.com/p/googletest/).  Again George's GTEST_DIR directory (see Makefile) is provided to be linked against at compile time.
 
-See FYI section below for more details.  These must be taken care of before attempting to compile the code.
+See FYI section below for more details.  These must be taken care of before attempting to compile the code. Always use "make clean" before attempting a new compilation.
 
 To compile the CPU version, type 
 $ make MD
+which produces a binary called md
 
 To compile the GPU version, type
 $ make -f Makefile_cuda
+which produces a binary called md
 
 To compile tests, type
 $ make TESTS
+which produces a binary called tests
 
-To compile the timing executable (used for scaling studies), type
+To compile the timing executable (used for CPU only scaling studies), type
 $ make TIMING
+which produces a binary called timing
+
+To obtain the CUDA scaling results go to the cuda_timing/ directory, type
+$ make -f Makefile_cuda
+which produces a binary called cuda_timing
 
 To compile the program that runs a simulation to compare with LAMMPS output, type
 $ make LMP_COMPARE
+which produces a binary called lmp_compare
 
 To compile the program that tests the NVE integrator, type
 $ make TEST_NVE
+which produces a binary called test_nve
 
 In the Makefile, the PATHTOBOOST variable should point to the diretory where the C++ boost libraries are saved.
 
@@ -44,11 +57,13 @@ Note that the Intel C++ compilers must be used; the GNU C++ compilers do not wor
 
 Execution
 ====
-main.cpp expects 4 input, the number of threads to use with OMP, the number of atoms, the skin radius for the cell/neighbor lists, and the number of steps to simulate.
+Most binaries expects 4 input, the number of threads to use with OMP, the number of atoms, the skin radius for the cell/neighbor lists, and the number of steps to simulate.
 $ ./md nthreads natoms rs nsteps  > log 2> err
 
 This also produces a trajectory.xyz file which can be visualized with VMD (if you have it installed)
 $ vmd -xyz trajectory.xyz
+
+Submission scripts for TIGER are included in the run_scaling.sh* files.  The integer suffix (i.e. run_scaling.sh.1) refers to the number of threads OMP will use.
 
 Explanation of main.cpp
 ====
