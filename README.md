@@ -42,7 +42,7 @@ which produces a binary called cuda_timing
 
 To compile the program that runs a simulation to compare with LAMMPS output, type
 $ make LMP_COMPARE
-which produces a binary called lmp_compare
+which produces a binary called lmp_compare used to generate data at specific settings we also ran on LAMMPS with.
 
 To compile the program that tests the NVE integrator, type
 $ make TEST_NVE
@@ -58,7 +58,10 @@ Note that the Intel C++ compilers must be used; the GNU C++ compilers do not wor
 Execution
 ====
 Most binaries expects 4 input, the number of threads to use with OMP, the number of atoms, the skin radius for the cell/neighbor lists, and the number of steps to simulate.
-$ ./md nthreads natoms rs nsteps  > log 2> err
+$ ./md nthreads natoms rs nsteps  > log 2> err.  
+
+The exceptions are (1) tests which is simply executed as ./tests, and (2) test_nve and (3) lmp_compare which are executed as ./binary_name nthreads.
+However, the latter two are not of much interest; if you want to check the code is running just check to see if ./tests works.
 
 This also produces a trajectory.xyz file which can be visualized with VMD (if you have it installed)
 $ vmd -xyz trajectory.xyz
@@ -69,7 +72,7 @@ Explanation of main.cpp
 ====
 > How to use, change, and make your own in 10 steps.
 
-1. main.cpp expects 4 input, the number of threads to use with OMP, the number of atoms, the skin radius for the cell/neighbor lists, and the number of steps to simulate.
+1. Most binaries expects 4 input, the number of threads to use with OMP, the number of atoms, the skin radius for the cell/neighbor lists, and the number of steps to simulate.
 $ ./md nthreads natoms rs nsteps  > log 2> err
 
 2. The random number generator seed is then set manually to ensure that results are reproducible.
