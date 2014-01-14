@@ -1,49 +1,51 @@
 \contentsline {chapter}{\numberline {1}C\discretionary {-}{}{}B\discretionary {-}{}{}E\discretionary {-}{}{}M\discretionary {-}{}{}D\discretionary {-}{}{}G\discretionary {-}{}{}P\discretionary {-}{}{}U}{1}{chapter.1}
-\contentsline {chapter}{\numberline {2}Hierarchical Index}{3}{chapter.2}
-\contentsline {section}{\numberline {2.1}Class Hierarchy}{3}{section.2.1}
-\contentsline {chapter}{\numberline {3}Class Index}{5}{chapter.3}
-\contentsline {section}{\numberline {3.1}Class List}{5}{section.3.1}
-\contentsline {chapter}{\numberline {4}Class Documentation}{7}{chapter.4}
-\contentsline {section}{\numberline {4.1}atom Struct Reference}{7}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Detailed Description}{7}{subsection.4.1.1}
-\contentsline {section}{\numberline {4.2}cell\discretionary {-}{}{}List\discretionary {-}{}{}\_\discretionary {-}{}{}cpu Class Reference}{7}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Detailed Description}{8}{subsection.4.2.1}
-\contentsline {subsection}{\numberline {4.2.2}Constructor \& Destructor Documentation}{8}{subsection.4.2.2}
-\contentsline {subsubsection}{\numberline {4.2.2.1}cell\discretionary {-}{}{}List\discretionary {-}{}{}\_\discretionary {-}{}{}cpu}{8}{subsubsection.4.2.2.1}
-\contentsline {subsection}{\numberline {4.2.3}Member Function Documentation}{10}{subsection.4.2.3}
-\contentsline {subsubsection}{\numberline {4.2.3.1}cell}{10}{subsubsection.4.2.3.1}
-\contentsline {subsubsection}{\numberline {4.2.3.2}check\discretionary {-}{}{}Update}{10}{subsubsection.4.2.3.2}
-\contentsline {section}{\numberline {4.3}custom\discretionary {-}{}{}Exception Class Reference}{11}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}Detailed Description}{12}{subsection.4.3.1}
-\contentsline {section}{\numberline {4.4}float3 Struct Reference}{12}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}Detailed Description}{12}{subsection.4.4.1}
-\contentsline {section}{\numberline {4.5}int3 Struct Reference}{12}{section.4.5}
-\contentsline {subsection}{\numberline {4.5.1}Detailed Description}{13}{subsection.4.5.1}
-\contentsline {section}{\numberline {4.6}integrator Class Reference}{13}{section.4.6}
-\contentsline {subsection}{\numberline {4.6.1}Detailed Description}{13}{subsection.4.6.1}
-\contentsline {subsection}{\numberline {4.6.2}Member Function Documentation}{14}{subsection.4.6.2}
-\contentsline {subsubsection}{\numberline {4.6.2.1}calc\discretionary {-}{}{}Force}{14}{subsubsection.4.6.2.1}
-\contentsline {section}{\numberline {4.7}nve Class Reference}{15}{section.4.7}
-\contentsline {subsection}{\numberline {4.7.1}Detailed Description}{15}{subsection.4.7.1}
-\contentsline {subsection}{\numberline {4.7.2}Member Function Documentation}{16}{subsection.4.7.2}
-\contentsline {subsubsection}{\numberline {4.7.2.1}calc\discretionary {-}{}{}Force}{16}{subsubsection.4.7.2.1}
-\contentsline {subsubsection}{\numberline {4.7.2.2}step}{17}{subsubsection.4.7.2.2}
-\contentsline {section}{\numberline {4.8}nvt\discretionary {-}{}{}\_\discretionary {-}{}{}\discretionary {-}{}{}N\discretionary {-}{}{}H Class Reference}{18}{section.4.8}
-\contentsline {subsection}{\numberline {4.8.1}Detailed Description}{19}{subsection.4.8.1}
-\contentsline {subsection}{\numberline {4.8.2}Constructor \& Destructor Documentation}{19}{subsection.4.8.2}
-\contentsline {subsubsection}{\numberline {4.8.2.1}nvt\discretionary {-}{}{}\_\discretionary {-}{}{}\discretionary {-}{}{}N\discretionary {-}{}{}H}{19}{subsubsection.4.8.2.1}
-\contentsline {subsection}{\numberline {4.8.3}Member Function Documentation}{20}{subsection.4.8.3}
-\contentsline {subsubsection}{\numberline {4.8.3.1}calc\discretionary {-}{}{}Force}{20}{subsubsection.4.8.3.1}
-\contentsline {subsubsection}{\numberline {4.8.3.2}step}{21}{subsubsection.4.8.3.2}
-\contentsline {section}{\numberline {4.9}system\discretionary {-}{}{}Definition Class Reference}{22}{section.4.9}
-\contentsline {subsection}{\numberline {4.9.1}Detailed Description}{24}{subsection.4.9.1}
-\contentsline {subsection}{\numberline {4.9.2}Member Function Documentation}{24}{subsection.4.9.2}
-\contentsline {subsubsection}{\numberline {4.9.2.1}init\discretionary {-}{}{}Random}{24}{subsubsection.4.9.2.1}
-\contentsline {subsubsection}{\numberline {4.9.2.2}init\discretionary {-}{}{}Thermal}{24}{subsubsection.4.9.2.2}
-\contentsline {subsubsection}{\numberline {4.9.2.3}set\discretionary {-}{}{}Potential}{26}{subsubsection.4.9.2.3}
-\contentsline {subsubsection}{\numberline {4.9.2.4}write\discretionary {-}{}{}Snapshot}{26}{subsubsection.4.9.2.4}
-\contentsline {section}{\numberline {4.10}system\discretionary {-}{}{}Props Class Reference}{26}{section.4.10}
-\contentsline {subsection}{\numberline {4.10.1}Detailed Description}{27}{subsection.4.10.1}
-\contentsline {section}{\numberline {4.11}System\discretionary {-}{}{}Test Class Reference}{27}{section.4.11}
-\contentsline {subsection}{\numberline {4.11.1}Detailed Description}{28}{subsection.4.11.1}
-\contentsline {part}{Index}{28}{subsection.4.11.1}
+\contentsline {chapter}{\numberline {2}Hierarchical Index}{5}{chapter.2}
+\contentsline {section}{\numberline {2.1}Class Hierarchy}{5}{section.2.1}
+\contentsline {chapter}{\numberline {3}Class Index}{7}{chapter.3}
+\contentsline {section}{\numberline {3.1}Class List}{7}{section.3.1}
+\contentsline {chapter}{\numberline {4}Class Documentation}{9}{chapter.4}
+\contentsline {section}{\numberline {4.1}atom Struct Reference}{9}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Detailed Description}{9}{subsection.4.1.1}
+\contentsline {section}{\numberline {4.2}cell\discretionary {-}{}{}List\discretionary {-}{}{}\_\discretionary {-}{}{}cpu Class Reference}{9}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Detailed Description}{10}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}Constructor \& Destructor Documentation}{10}{subsection.4.2.2}
+\contentsline {subsubsection}{\numberline {4.2.2.1}cell\discretionary {-}{}{}List\discretionary {-}{}{}\_\discretionary {-}{}{}cpu}{10}{subsubsection.4.2.2.1}
+\contentsline {subsection}{\numberline {4.2.3}Member Function Documentation}{12}{subsection.4.2.3}
+\contentsline {subsubsection}{\numberline {4.2.3.1}cell}{12}{subsubsection.4.2.3.1}
+\contentsline {subsubsection}{\numberline {4.2.3.2}check\discretionary {-}{}{}Update}{12}{subsubsection.4.2.3.2}
+\contentsline {section}{\numberline {4.3}custom\discretionary {-}{}{}Exception Class Reference}{13}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Detailed Description}{14}{subsection.4.3.1}
+\contentsline {section}{\numberline {4.4}float3 Struct Reference}{14}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Detailed Description}{14}{subsection.4.4.1}
+\contentsline {section}{\numberline {4.5}int3 Struct Reference}{15}{section.4.5}
+\contentsline {subsection}{\numberline {4.5.1}Detailed Description}{15}{subsection.4.5.1}
+\contentsline {section}{\numberline {4.6}integrator Class Reference}{15}{section.4.6}
+\contentsline {subsection}{\numberline {4.6.1}Detailed Description}{16}{subsection.4.6.1}
+\contentsline {subsection}{\numberline {4.6.2}Member Function Documentation}{16}{subsection.4.6.2}
+\contentsline {subsubsection}{\numberline {4.6.2.1}calc\discretionary {-}{}{}Force}{16}{subsubsection.4.6.2.1}
+\contentsline {section}{\numberline {4.7}nve Class Reference}{17}{section.4.7}
+\contentsline {subsection}{\numberline {4.7.1}Detailed Description}{18}{subsection.4.7.1}
+\contentsline {subsection}{\numberline {4.7.2}Member Function Documentation}{18}{subsection.4.7.2}
+\contentsline {subsubsection}{\numberline {4.7.2.1}calc\discretionary {-}{}{}Force}{18}{subsubsection.4.7.2.1}
+\contentsline {subsubsection}{\numberline {4.7.2.2}step}{20}{subsubsection.4.7.2.2}
+\contentsline {section}{\numberline {4.8}nvt\discretionary {-}{}{}\_\discretionary {-}{}{}\discretionary {-}{}{}N\discretionary {-}{}{}H Class Reference}{21}{section.4.8}
+\contentsline {subsection}{\numberline {4.8.1}Detailed Description}{22}{subsection.4.8.1}
+\contentsline {subsection}{\numberline {4.8.2}Constructor \& Destructor Documentation}{22}{subsection.4.8.2}
+\contentsline {subsubsection}{\numberline {4.8.2.1}nvt\discretionary {-}{}{}\_\discretionary {-}{}{}\discretionary {-}{}{}N\discretionary {-}{}{}H}{22}{subsubsection.4.8.2.1}
+\contentsline {subsection}{\numberline {4.8.3}Member Function Documentation}{22}{subsection.4.8.3}
+\contentsline {subsubsection}{\numberline {4.8.3.1}calc\discretionary {-}{}{}Force}{23}{subsubsection.4.8.3.1}
+\contentsline {subsubsection}{\numberline {4.8.3.2}step}{24}{subsubsection.4.8.3.2}
+\contentsline {section}{\numberline {4.9}system\discretionary {-}{}{}Definition Class Reference}{26}{section.4.9}
+\contentsline {subsection}{\numberline {4.9.1}Detailed Description}{27}{subsection.4.9.1}
+\contentsline {subsection}{\numberline {4.9.2}Member Function Documentation}{27}{subsection.4.9.2}
+\contentsline {subsubsection}{\numberline {4.9.2.1}init\discretionary {-}{}{}Random}{27}{subsubsection.4.9.2.1}
+\contentsline {subsubsection}{\numberline {4.9.2.2}init\discretionary {-}{}{}Thermal}{28}{subsubsection.4.9.2.2}
+\contentsline {subsubsection}{\numberline {4.9.2.3}set\discretionary {-}{}{}Potential}{29}{subsubsection.4.9.2.3}
+\contentsline {subsubsection}{\numberline {4.9.2.4}write\discretionary {-}{}{}Snapshot}{29}{subsubsection.4.9.2.4}
+\contentsline {section}{\numberline {4.10}system\discretionary {-}{}{}Props Class Reference}{30}{section.4.10}
+\contentsline {subsection}{\numberline {4.10.1}Detailed Description}{30}{subsection.4.10.1}
+\contentsline {subsection}{\numberline {4.10.2}Member Function Documentation}{30}{subsection.4.10.2}
+\contentsline {subsubsection}{\numberline {4.10.2.1}display\discretionary {-}{}{}Cuda\discretionary {-}{}{}Props}{30}{subsubsection.4.10.2.1}
+\contentsline {section}{\numberline {4.11}System\discretionary {-}{}{}Test Class Reference}{31}{section.4.11}
+\contentsline {subsection}{\numberline {4.11.1}Detailed Description}{32}{subsection.4.11.1}
+\contentsline {part}{Index}{32}{subsection.4.11.1}

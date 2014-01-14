@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.7.3)  4 JAN 2014 19:08
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.7.3)  13 JAN 2014 22:54
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1147,15 +1147,15 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
 
 ]
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 49.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 51.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 10.79993pt on input line 49.
+(Font)              scaled to size 10.79993pt on input line 51.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 49.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 51.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 49.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 51.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 49.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 51.
 )
 \tf@toc=\write5
 \openout5 = `refman.toc'.
@@ -1176,37 +1176,39 @@ LaTeX Font Info:    Font shape `T1/phv/b/n' will be
 (Font)              scaled to size 18.66588pt on input line 66.
 LaTeX Font Info:    Font shape `OT1/phv/bc/n' will be
 (Font)              scaled to size 18.66588pt on input line 66.
-(./md__r_e_a_d_m_e.tex) [1
+(./md__r_e_a_d_m_e.tex
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 19.
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
+(Font)              scaled to size 12.9599pt on input line 19.
+LaTeX Font Info:    Font shape `OT1/phv/bc/n' will be
+(Font)              scaled to size 12.9599pt on input line 19.
+LaTeX Font Info:    Try loading font information for T1+pcr on input line 25.
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/psnfss/t1pcr.fd
+File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
+) [1
 
 
-] [2
+] [2])
+[3] [4
 
 ]
 Chapter 2.
-(./hierarchy.tex
-LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 1.
-LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 12.9599pt on input line 1.
-LaTeX Font Info:    Font shape `OT1/phv/bc/n' will be
-(Font)              scaled to size 12.9599pt on input line 1.
-) [3] [4
+(./hierarchy.tex) [5] [6
 
 ]
 Chapter 3.
-(./annotated.tex) [5] [6
+(./annotated.tex) [7] [8
 
 ]
 Chapter 4.
 (./structatom.tex
-LaTeX Font Info:    Try loading font information for T1+pcr on input line 11.
- (/usr/local/texlive/2011/texmf-dist/tex/latex/psnfss/t1pcr.fd
-File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
-)
 LaTeX Font Info:    Font shape `OT1/phv/bc/n' will be
 (Font)              scaled to size 10.79993pt on input line 13.
 LaTeX Font Info:    Try loading font information for TS1+phv on input line 16.
- (/usr/local/texlive/2011/texmf-dist/tex/latex/psnfss/ts1phv.fd
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/psnfss/ts1phv.fd
 File: ts1phv.fd 2001/06/04 scalable font definitions for TS1/phv.
 )
 LaTeX Font Info:    Font shape `TS1/phv/m/n' will be
@@ -1216,106 +1218,113 @@ LaTeX Font Info:    Font shape `T1/phv/m/it' in size <9> not available
 LaTeX Font Info:    Font shape `T1/phv/m/sl' will be
 (Font)              scaled to size 8.09995pt on input line 18.
 )
-(./classcell_list__cpu.tex [7]
+(./classcell_list__cpu.tex [9]
 LaTeX Font Info:    Font shape `OT1/phv/bc/n' will be
 (Font)              scaled to size 8.99994pt on input line 35.
 LaTeX Font Info:    Font shape `OT1/phv/bc/it' in size <10> not available
-(Font)              Font shape `OT1/phv/bc/sl' tried instead on input line 53.
+(Font)              Font shape `OT1/phv/bc/sl' tried instead on input line 56.
 LaTeX Font Info:    Font shape `OT1/phv/bc/sl' will be
-(Font)              scaled to size 8.99994pt on input line 53.
+(Font)              scaled to size 8.99994pt on input line 56.
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 61.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 67.
 LaTeX Font Info:    Font shape `T1/phv/m/sl' will be
-(Font)              scaled to size 8.99994pt on input line 61.
+(Font)              scaled to size 8.99994pt on input line 67.
 
-Underfull \vbox (badness 10000) detected at line 67
+Underfull \vbox (badness 10000) detected at line 73
  []
 
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 6.29996pt on input line 77.
-[8]
+(Font)              scaled to size 6.29996pt on input line 83.
+[10]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [9]
-Underfull \vbox (badness 10000) detected at line 199
+ [11]
+Underfull \vbox (badness 10000) detected at line 205
  []
 
 
-Underfull \vbox (badness 10000) detected at line 242
+Underfull \vbox (badness 10000) detected at line 248
  []
 
-[10]) (./classcustom_exception.tex
+[12]) (./classcustom_exception.tex
 Package epstopdf Info: Source file: <classcustom_exception.eps>
-(epstopdf)                    date: 2014-01-04 19:08:04
+(epstopdf)                    date: 2014-01-13 22:54:02
 (epstopdf)                    size: 3790 bytes
 (epstopdf)             Output file: <classcustom_exception-eps-converted-to.pdf
 >
-(epstopdf)                    date: 2014-01-04 19:08:21
+(epstopdf)                    date: 2014-01-13 22:54:16
 (epstopdf)                    size: 5041 bytes
 (epstopdf)             Command: <epstopdf --outfile=classcustom_exception-eps-c
 onverted-to.pdf classcustom_exception.eps>
 (epstopdf)             \includegraphics on input line 16.
 Package epstopdf Info: Output file is already uptodate.
 
-<classcustom_exception-eps-converted-to.pdf, id=460, 501.875pt x 352.1958pt>
+<classcustom_exception-eps-converted-to.pdf, id=514, 501.875pt x 352.1958pt>
 File: classcustom_exception-eps-converted-to.pdf Graphic file (type pdf)
 
 <use classcustom_exception-eps-converted-to.pdf>
 Package pdftex.def Info: classcustom_exception-eps-converted-to.pdf used on inp
 ut line 16.
 (pdftex.def)             Requested size: 81.09041pt x 56.9055pt.
- [11 <./classcustom_exception-eps-converted-to.pdf>]) (./structfloat3.tex) (./s
-tructint3.tex [12])
+ [13 <./classcustom_exception-eps-converted-to.pdf>]) (./structfloat3.tex) (./s
+tructint3.tex [14])
 (./classintegrator.tex
 Package epstopdf Info: Source file: <classintegrator.eps>
-(epstopdf)                    date: 2014-01-04 19:08:04
+(epstopdf)                    date: 2014-01-13 22:54:02
 (epstopdf)                    size: 3879 bytes
 (epstopdf)             Output file: <classintegrator-eps-converted-to.pdf>
-(epstopdf)                    date: 2014-01-04 19:08:21
+(epstopdf)                    date: 2014-01-13 22:54:16
 (epstopdf)                    size: 4958 bytes
 (epstopdf)             Command: <epstopdf --outfile=classintegrator-eps-convert
 ed-to.pdf classintegrator.eps>
 (epstopdf)             \includegraphics on input line 16.
 Package epstopdf Info: Output file is already uptodate.
 
-<classintegrator-eps-converted-to.pdf, id=490, 501.875pt x 271.28351pt>
+<classintegrator-eps-converted-to.pdf, id=540, 501.875pt x 271.28351pt>
 File: classintegrator-eps-converted-to.pdf Graphic file (type pdf)
 
 <use classintegrator-eps-converted-to.pdf>
 Package pdftex.def Info: classintegrator-eps-converted-to.pdf used on input lin
 e 16.
 (pdftex.def)             Requested size: 105.27432pt x 56.9055pt.
- [13 <./classintegrator-eps-converted-to.pdf>]
-Underfull \vbox (badness 10000) detected at line 80
+ [15 <./classintegrator-eps-converted-to.pdf>]
+Underfull \vbox (badness 10000) detected at line 86
  []
 
 
-Underfull \hbox (badness 3428) in paragraph at lines 87--88
+Underfull \vbox (badness 10000) detected at line 93
+ []
+
+
+Underfull \hbox (badness 3428) in paragraph at lines 100--101
 \T1/phv/m/n/10 cell-List-_-cpu-::list(), system-Definition-::mass(), cell-List-
 _-cpu-::n-Cells, cell-List-_-cpu-::neighbors(), system-Definition-
  []
 
-[14]) (./classnve.tex
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [16])
+(./classnve.tex
 Package epstopdf Info: Source file: <classnve.eps>
-(epstopdf)                    date: 2014-01-04 19:08:04
+(epstopdf)                    date: 2014-01-13 22:54:02
 (epstopdf)                    size: 3768 bytes
 (epstopdf)             Output file: <classnve-eps-converted-to.pdf>
-(epstopdf)                    date: 2014-01-04 19:08:21
+(epstopdf)                    date: 2014-01-13 22:54:16
 (epstopdf)                    size: 4676 bytes
 (epstopdf)             Command: <epstopdf --outfile=classnve-eps-converted-to.p
 df classnve.eps>
 (epstopdf)             \includegraphics on input line 16.
 Package epstopdf Info: Output file is already uptodate.
-
-<classnve-eps-converted-to.pdf, id=564, 501.875pt x 542.567pt>
+ <classnve-eps-converted-to.pdf, id=615, 501.875pt x 542.567pt>
 File: classnve-eps-converted-to.pdf Graphic file (type pdf)
 
 <use classnve-eps-converted-to.pdf>
 Package pdftex.def Info: classnve-eps-converted-to.pdf used on input line 16.
 (pdftex.def)             Requested size: 52.63333pt x 56.9055pt.
-pdfTeX warning (ext4): destination with the same identifier (name{classintegrat
-or_a493bed6cf5d45fe41a9a6430bd063106}) has been already used, duplicate ignored
-
+ [17 <./classnve-eps-converted-to.pdf>]pdfTeX warning (ext4): destination with 
+the same identifier (name{classintegrator_a493bed6cf5d45fe41a9a6430bd063106}) h
+as been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.24 ...bd063106}{set\-Timestep} (const float dt)}
@@ -1348,57 +1357,61 @@ or_a5b3546a765d8a83b6db8a6d890ace480}) has been already used, duplicate ignored
                    \relax 
 l.41 ...6a765d8a83b6db8a6d890ace480}{start\-\_\-}}
                                                   \label{classintegrator_a5b...
-[15 <./classnve-eps-converted-to.pdf>]pdfTeX warning (ext4): destination with t
-he same identifier (name{classintegrator_ad630bf7c9b7339fa34f36fe43b0d9e3c}) ha
-s been already used, duplicate ignored
+pdfTeX warning (ext4): destination with the same identifier (name{classintegrat
+or_ad630bf7c9b7339fa34f36fe43b0d9e3c}) has been already used, duplicate ignored
+
 <to be read again> 
                    \relax 
-l.65 )\hspace{0.3cm}{\ttfamily [inherited]}}}
+l.68 )\hspace{0.3cm}{\ttfamily [inherited]}}}
                                              \label{classintegrator_ad630bf7...
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 65.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 68.
 (/usr/local/texlive/2011/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
 
 LaTeX Font Warning: Font shape `OT1/pcr/bc/n' undefined
-(Font)              using `OT1/pcr/m/n' instead on input line 65.
+(Font)              using `OT1/pcr/m/n' instead on input line 68.
 
 
-Underfull \vbox (badness 10000) detected at line 79
+Underfull \vbox (badness 10000) detected at line 85
  []
 
-[16]
-Underfull \vbox (badness 10000) detected at line 164
+[18]
+Underfull \vbox (badness 10000) detected at line 92
+ []
+
+[19]
+Underfull \vbox (badness 10000) detected at line 180
  []
 
 
-Underfull \hbox (badness 1584) in paragraph at lines 175--176
-\T1/phv/m/n/10 Definition-::mass(), system-Definition-::num-Atoms(), system-Def
-inition-::set-Kin-E(), integrator-::start-_-, and system-
+Underfull \hbox (badness 756) in paragraph at lines 191--192
+[]\T1/phv/m/n/10 References system-Definition-::atoms, system-Definition-::box(
+), integrator-::calc-Force(), integrator-::cl-_-, integrator-
  []
 
-[17]) (./classnvt___n_h.tex
+[20]) (./classnvt___n_h.tex
 Package epstopdf Info: Source file: <classnvt___n_h.eps>
-(epstopdf)                    date: 2014-01-04 19:08:04
+(epstopdf)                    date: 2014-01-13 22:54:02
 (epstopdf)                    size: 3774 bytes
 (epstopdf)             Output file: <classnvt___n_h-eps-converted-to.pdf>
-(epstopdf)                    date: 2014-01-04 19:08:22
+(epstopdf)                    date: 2014-01-13 22:54:17
 (epstopdf)                    size: 4968 bytes
 (epstopdf)             Command: <epstopdf --outfile=classnvt___n_h-eps-converte
 d-to.pdf classnvt___n_h.eps>
 (epstopdf)             \includegraphics on input line 16.
 Package epstopdf Info: Output file is already uptodate.
 
-<classnvt___n_h-eps-converted-to.pdf, id=709, 501.875pt x 542.567pt>
+<classnvt___n_h-eps-converted-to.pdf, id=761, 501.875pt x 542.567pt>
 File: classnvt___n_h-eps-converted-to.pdf Graphic file (type pdf)
 
 <use classnvt___n_h-eps-converted-to.pdf>
 Package pdftex.def Info: classnvt___n_h-eps-converted-to.pdf used on input line
  16.
 (pdftex.def)             Requested size: 52.63333pt x 56.9055pt.
- [18 <./classnvt___n_h-eps-converted-to.pdf>]pdfTeX warning (ext4): destination
- with the same identifier (name{classintegrator_a493bed6cf5d45fe41a9a6430bd0631
-06}) has been already used, duplicate ignored
+pdfTeX warning (ext4): destination with the same identifier (name{classintegrat
+or_a493bed6cf5d45fe41a9a6430bd063106}) has been already used, duplicate ignored
+
 <to be read again> 
                    \relax 
 l.26 ...bd063106}{set\-Timestep} (const float dt)}
@@ -1410,9 +1423,9 @@ or_ad1f7813c9cf3c31898aa7d78fc22232a}) has been already used, duplicate ignored
                    \relax 
 l.34 ...f7813c9cf3c31898aa7d78fc22232a}{cl\-\_\-}}
                                                   \label{classintegrator_ad1...
-pdfTeX warning (ext4): destination with the same identifier (name{classintegrat
-or_a3e183a65eb6a777479dca47e7f9a2676}) has been already used, duplicate ignored
-
+[21 <./classnvt___n_h-eps-converted-to.pdf>]pdfTeX warning (ext4): destination 
+with the same identifier (name{classintegrator_a3e183a65eb6a777479dca47e7f9a267
+6}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.37 ...ca47e7f9a2676}{last\-Accelerations\-\_\-}}
@@ -1432,67 +1445,74 @@ or_a5b3546a765d8a83b6db8a6d890ace480}) has been already used, duplicate ignored
 l.43 ...6a765d8a83b6db8a6d890ace480}{start\-\_\-}}
                                                   \label{classintegrator_a5b...
 
-Underfull \vbox (badness 10000) detected at line 77
+Underfull \vbox (badness 10000) detected at line 80
  []
 
-[19]pdfTeX warning (ext4): destination with the same identifier (name{classinte
-grator_ad630bf7c9b7339fa34f36fe43b0d9e3c}) has been already used, duplicate ign
-ored
+pdfTeX warning (ext4): destination with the same identifier (name{classintegrat
+or_ad630bf7c9b7339fa34f36fe43b0d9e3c}) has been already used, duplicate ignored
+
 <to be read again> 
                    \relax 
-l.103 )\hspace{0.3cm}{\ttfamily [inherited]}}}
+l.106 )\hspace{0.3cm}{\ttfamily [inherited]}}}
                                               \label{classintegrator_ad630bf...
 
-Underfull \vbox (badness 10000) detected at line 117
+Underfull \vbox (badness 1314) has occurred while \output is active []
+
+ [22]
+Underfull \vbox (badness 10000) detected at line 123
  []
 
-[20]
-Underfull \vbox (badness 10000) detected at line 199
+
+Underfull \vbox (badness 10000) detected at line 130
  []
 
-[21]) (./classsystem_definition.tex [22] [23]
-Underfull \vbox (badness 10000) detected at line 124
+[23]
+Underfull \vbox (badness 10000) detected at line 212
  []
 
-[24]
-Underfull \vbox (badness 10000) detected at line 192
+[24]) (./classsystem_definition.tex [25] [26]
+Underfull \vbox (badness 10000) detected at line 127
  []
 
-[25]
-Underfull \vbox (badness 10000) detected at line 296
+[27]
+Underfull \vbox (badness 10000) detected at line 195
+ []
+
+[28]
+Underfull \vbox (badness 10000) detected at line 298
  []
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 338.
-) (./classsystem_props.tex [26]) (./class_system_test.tex
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 345.
+[29]) (./classsystem_props.tex [30]) (./class_system_test.tex
 Package epstopdf Info: Source file: <class_system_test.eps>
-(epstopdf)                    date: 2014-01-04 19:08:05
+(epstopdf)                    date: 2014-01-13 22:54:02
 (epstopdf)                    size: 3770 bytes
 (epstopdf)             Output file: <class_system_test-eps-converted-to.pdf>
-(epstopdf)                    date: 2014-01-04 19:08:22
+(epstopdf)                    date: 2014-01-13 22:54:17
 (epstopdf)                    size: 4543 bytes
 (epstopdf)             Command: <epstopdf --outfile=class_system_test-eps-conve
 rted-to.pdf class_system_test.eps>
 (epstopdf)             \includegraphics on input line 7.
 Package epstopdf Info: Output file is already uptodate.
 
-<class_system_test-eps-converted-to.pdf, id=1004, 501.875pt x 483.73723pt>
+<class_system_test-eps-converted-to.pdf, id=1066, 501.875pt x 483.73723pt>
 File: class_system_test-eps-converted-to.pdf Graphic file (type pdf)
 
 <use class_system_test-eps-converted-to.pdf>
 Package pdftex.def Info: class_system_test-eps-converted-to.pdf used on input l
 ine 7.
 (pdftex.def)             Requested size: 59.0354pt x 56.9055pt.
- [27 <./class_system_test-eps-converted-to.pdf>])
+ [31 <./class_system_test-eps-converted-to.pdf>])
 No file refman.ind.
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 88.
-[28]
+[32]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 88.
  (./refman.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 88.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 88.
 Package rerunfilecheck Info: File `refman.out' has not changed.
-(rerunfilecheck)             Checksum: A1DE0A8362BBF0664ACE5E4DAEDBB84D;7758.
+(rerunfilecheck)             Checksum: F1E81D64CBE7EC2C94076647E4677FAD;8127.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
@@ -1503,15 +1523,21 @@ LaTeX Warning: There were multiply-defined labels.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 88.
  ) 
 Here is how much of TeX's memory you used:
- 11819 strings out of 493633
- 169506 string characters out of 3143378
- 293836 words of memory out of 3000000
- 14658 multiletter control sequences out of 15000+200000
+ 11857 strings out of 493633
+ 169867 string characters out of 3143378
+ 291838 words of memory out of 3000000
+ 14663 multiletter control sequences out of 15000+200000
  78727 words of font info for 122 fonts, out of 3000000 for 9000
  831 hyphenation exceptions out of 8191
- 41i,13n,58p,510b,517s stack positions out of 5000i,500n,10000p,200000b,50000s
-pdfTeX warning (dest): name{main_8cpp_source} has been referenced but does no
-t exist, replaced by a fixed one
+ 41i,13n,58p,951b,517s stack positions out of 5000i,500n,10000p,200000b,50000s
+pdfTeX warning (dest): name{integrator_8cu_source} has been referenced but do
+es not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{test__nve_8cpp_source} has been referenced but does
+ not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{main_8cpp_source} has been referenced but does not 
+exist, replaced by a fixed one
 
 {/usr/local/texlive/2011/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/tex
 live/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texl
@@ -1522,10 +1548,10 @@ ist/fonts/type1/urw/helvetic/uhvb8ac.pfb></usr/local/texlive/2011/texmf-dist/fo
 nts/type1/urw/helvetic/uhvbo8ac.pfb></usr/local/texlive/2011/texmf-dist/fonts/t
 ype1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/ur
 w/helvetic/uhvro8a.pfb>
-Output written on refman.pdf (32 pages, 174058 bytes).
+Output written on refman.pdf (36 pages, 187457 bytes).
 PDF statistics:
- 1106 PDF objects out of 1200 (max. 8388607)
- 1043 compressed objects within 11 object streams
- 189 named destinations out of 1000 (max. 500000)
- 418 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1171 PDF objects out of 1200 (max. 8388607)
+ 1103 compressed objects within 12 object streams
+ 222 named destinations out of 1000 (max. 500000)
+ 434 words of extra memory for PDF output out of 10000 (max. 10000000)
 
